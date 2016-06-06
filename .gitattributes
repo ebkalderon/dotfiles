@@ -1,0 +1,2 @@
+# Strip out confidential tokens or passwords
+bash/exports filter=remove-pass

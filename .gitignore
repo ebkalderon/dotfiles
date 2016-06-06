@@ -1,0 +1,13 @@
+# MPD
+mpd/database
+mpd/log
+mpd/socket
+mpd/state
+
+# NCMPCPP
+ncmpcpp/error.log
+
+# Neovim
+config/nvim/.init.vim-rplugin~
+config/nvim/.netrwhist
+config/nvim/plugged
