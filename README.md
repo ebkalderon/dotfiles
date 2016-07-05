@@ -1,17 +1,23 @@
 # Dotfiles
 
-These are for my own personal use, frequent breakage may occur.
+Many people are posting their configuration files on GitHub, so here are mine.
+Keep in mind that these dotfiles are for my own personal use, so occasional
+breakage may occur.
+
+The install script backs up your existing dotfiles to `~/.dotfiles_old/`, in
+case you don't like my setup.
 
 ![Screenshot](./screenshot.png)
 
 ## Included configs
 
-* Bash
-* Git
-* mpd/ncmpcpp
-* NeoVim
-* tmux
-* top
+* [bash](./bash/)
+* [git](./gitconfig)
+* [mpd](./mpd)
+* [ncmpcpp](./ncmpcpp)
+* [neovim](./nvim/)
+* [tmux](./tmux.conf)
+* [top](./toprc)
 
 ## Installation
 
@@ -20,6 +26,8 @@ $ git clone https://github.com/ebkalderon/dotfiles ~/.dotfiles
 $ cd ~/.dotfiles
 $ ./bootstrap.sh
 ```
+
+## Updating
 
 To grab the latest version from Git, run:
 
