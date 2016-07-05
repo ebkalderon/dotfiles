@@ -39,6 +39,6 @@ sed -i "s,DIR=.*,DIR=\"$DIR\",g" $DIR/shell/bashrc
 mkdir -p ~/.config/nvim/{backup,undo}
 mkdir -p ~/.mpd/playlists
 
-# Download and install NeoVim plugins
+# Download and install Neovim plugins
 nvim +PlugInstall +UpdateRemotePlugins +qall
 
