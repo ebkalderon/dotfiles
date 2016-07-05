@@ -10,15 +10,15 @@ under the terms of the [MIT License](./COPYING).
 * Bash
 * Git
 * mpd/ncmpcpp
-* Neovim
+* NeoVim
 * tmux
 * top
 
 ## Installation
 
 ```
-git clone https://github.com/ebkalderon/dotfiles ~/.dotfiles
-cd ~/.dotfiles
-./bootstrap.sh
+$ git clone https://github.com/ebkalderon/dotfiles ~/.dotfiles
+$ cd ~/.dotfiles
+$ ./bootstrap.sh
 ```
 
