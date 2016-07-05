@@ -4,7 +4,7 @@
 
 # If in a Git repository, display branch
 _prompt() {
-    local BRANCH=`git rev-parse --abbrev-ref HEAD 2> /dev/null`
+    BRANCH=`git rev-parse --abbrev-ref HEAD 2> /dev/null`
 
     if [ $? -eq 0 ]; then
         echo -e "$txtblu\u$txtrst@$txtgrn\h $txtred\W $txtpur$BRANCH" \
