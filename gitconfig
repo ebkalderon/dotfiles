@@ -2,3 +2,5 @@
 	email = ebkalderon@gmail.com
 	name = Eyal Kalderon
 
+[credential]
+	helper = cache
