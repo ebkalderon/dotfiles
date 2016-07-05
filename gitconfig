@@ -5,6 +5,3 @@
 [credential]
 	helper = cache
 
-[filter "remove-pass"]
-	clean = "sed -e 's/^export WECHALLUSER=.*/#export WECHALLUSER=NOPE/' -e s/^export WECHALLTOKEN=.*/#export WECHALLTOKEN=NOPE/"
-

@@ -1,5 +1,5 @@
 #
-# bash/functions
+# bash/functions.sh
 #
 
 # Hide .desktop file

@@ -1,11 +1,14 @@
-# MPD
+# Private tokens
+bash/wechall.sh
+
+# mpd
 mpd/database
 mpd/log
 mpd/pid
 mpd/socket
 mpd/state
 
-# NCMPCPP
+# ncmpcpp
 ncmpcpp/error.log
 
 # Neovim

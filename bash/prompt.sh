@@ -1,5 +1,5 @@
 #
-# bash/prompt
+# bash/prompt.sh
 #
 
 # If in a Git repository, display branch

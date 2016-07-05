@@ -1,5 +1,5 @@
 #
-# bash/exports
+# bash/exports.sh
 #
 
 # Defaults
@@ -9,10 +9,6 @@ export EDITOR=nvim
 export GCC_COLORS=always
 export GROFF_NO_SGR=1
 export TERM=screen-256color
-
-# Vars for WeChall wargaming network
-export WECHALLUSER=TODO
-export WECHALLTOKEN=TODO
 
 # Color codes
 export txtblk='\[\e[0;30m\]' # Black - Regular
