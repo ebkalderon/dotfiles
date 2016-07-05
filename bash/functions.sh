@@ -32,6 +32,7 @@ deskshow() {
         $1 || echo 'NoDisplay=false' >> $1
 }
 
+# Download latest dotfiles from GitHub
 updaterc() {
     local DIR="/home/ekalderon/.dotfiles"
     git -C $DIR pull
