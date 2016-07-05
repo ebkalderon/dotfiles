@@ -2,22 +2,17 @@
 # bash/prompt
 #
 
-# Different colored prompts for root and regular users
-function _prompt() {
-    if [[ "$?" != "0" ]]; then
-        errcolor=$bldred
-    else
-        errcolor=$bldblk
-    fi
+# If in a Git repository, display branch
+_prompt() {
+    BRANCH=`git rev-parse --abbrev-ref HEAD 2> /dev/null`
 
-    if [[ $EUID == 0 ]]; then
-        echo -ne "\[\033]0;\u@\h:\w\007\]$errcolor» $txtylw\u@\h$bldblk╺─╸[$txtwht\W$bldblk]$bldred;$txtrst "
+    if [ $? -eq 0 ]; then
+        echo -e "$txtblu\u$txtrst@$txtgrn\h $txtred\W $txtpur$BRANCH" \
+                "$txtylw\\\$ $txtrst"
     else
-        echo -ne "\[\033]0;\u@\h:\w\007\]$errcolor» $txtylw\u@\h$bldblk╺─╸[$txtwht\W$bldblk]$bldblu;$txtrst "
+        echo -e "$txtblu\u$txtrst@$txtgrn\h $txtred\W $txtylw\\\$ $txtrst"
     fi
 }
 
-#PROMPT_COMMAND='PS1=$(_prompt)'
-
-PS1="$txtblu\u$txtrst@$txtgrn\h $txtred\W $txtylw\\\$ $txtrst"
+PROMPT_COMMAND='PS1=$(_prompt)'
 
