@@ -17,9 +17,8 @@ under the terms of the [MIT License](./COPYING).
 ## Installation
 
 ```
-cd
-git clone https://github.com/ebkalderon/dotfiles .dotfiles
-cd .dotfiles
+git clone https://github.com/ebkalderon/dotfiles ~/.dotfiles
+cd ~/.dotfiles
 ./bootstrap.sh
 ```
 

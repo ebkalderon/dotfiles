@@ -8,6 +8,9 @@ mpd/state
 ncmpcpp/error.log
 
 # Neovim
-config/nvim/.init.vim-rplugin~
-config/nvim/.netrwhist
-config/nvim/plugged
+nvim/.init.vim-rplugin~
+nvim/.netrwhist
+nvim/backup
+nvim/plugged
+nvim/undo
+

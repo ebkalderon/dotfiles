@@ -57,3 +57,4 @@ song_window_title_format = "MPD: {%a > }{%t}{ [%b{ Disc %d}]}|{%f}"
 search_engine_display_mode = "columns" (classic/columns)
 follow_now_playing_lyrics = "yes"
 #display_screens_numbers_on_start = "no"
+
