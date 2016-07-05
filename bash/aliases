@@ -1,3 +1,7 @@
+#
+# bash/aliases
+#
+
 # Color support
 if [ -x /usr/bin/dircolors ]; then
     test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval \
@@ -22,3 +26,4 @@ alias pacman-autoclean='sudo pacman -R $(pacman -Qdtq)'
 alias reloadrc='source ~/.bash_profile'
 alias vi='nvim'
 alias vim='nvim'
+

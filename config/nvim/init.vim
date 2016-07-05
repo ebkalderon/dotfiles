@@ -8,6 +8,12 @@ set laststatus=2
 set noshowmode
 set number
 
+" Backup options
+set backup
+set backupdir=~/.config/nvim/backup
+set undofile
+set undodir=~/.config/nvim/undo
+
 " Indentation options
 set tabstop=4
 set shiftwidth=4
@@ -27,6 +33,7 @@ hi NonText ctermbg=NONE
 " Install Vundle plugins
 call plug#begin()
 
+Plug 'itchyny/lightline.vim'
 Plug 'rust-lang/rust.vim'
 Plug 'scrooloose/syntastic'
 Plug 'Shougo/deoplete.nvim', { 'do': 'UpdateRemotePlugins' }
@@ -66,7 +73,7 @@ let g:lightline = {
 	\ 	          [ 'fugitive', 'filename' ] ],
 	\	'right': [ [ 'syntastic', 'lineinfo' ],
 	\ 	           [ 'percent' ],
-	\                  [ 'fileformat', 'fileencoding', 'filetype' ] ]
+	\              [ 'fileformat', 'fileencoding', 'filetype' ] ]
 	\ },
 	\ 'component': {
 	\ 	'lineinfo': ' %3l:%-2v'

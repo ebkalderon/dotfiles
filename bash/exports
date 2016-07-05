@@ -1,9 +1,13 @@
+#
+# bash/exports
+#
+
 # Defaults
 export BROWSER=firefox
 export CACA_DRIVER=ncurses # Enable watching videos as ASCII art in terminal
 export EDITOR=nvim
 export GCC_COLORS=always
-export PATH=$PATH:/home/ekalderon/.multirust/toolchains/nightly/cargo/bin
+export GROFF_NO_SGR=1
 export TERM=screen-256color
 
 # Vars for WeChall wargaming network
@@ -44,3 +48,4 @@ export bakpur='\[\e[45m\]'   # Purple
 export bakcyn='\[\e[46m\]'   # Cyan
 export bakwht='\[\e[47m\]'   # White
 export txtrst='\[\e[0m\]'    # Text Reset
+
