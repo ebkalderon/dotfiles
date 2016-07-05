@@ -15,21 +15,25 @@ man() {
         man "$@"
 }
 
-# Launch .desktop files from terminal
-# https://stackoverflow.com/questions/7131670/make-bash-alias-that-takes-parameter
-deskopen() {
-    `grep '^Exec' $1 | tail -1 | sed 's/^Exec=//' | sed 's/%.//'` &
-}
-
 # Hide .desktop file
 deskhide() {
     grep -q '^NoDisplay' $1 && sed -i 's/^NoDisplay.*/NoDisplay=true/' $1 \
         || echo 'NoDisplay=true' >> $1
 }
 
+# Launch .desktop files from terminal
+deskopen() {
+    `grep '^Exec' $1 | tail -1 | sed 's/^Exec=//' | sed 's/%.//'` &
+}
+
 # Make .desktop file visible
 deskshow() {
     grep -q '^NoDisplay' $1 && sed -i 's/^NoDisplay.*/NoDisplay=false/' \
         $1 || echo 'NoDisplay=false' >> $1
+}
+
+updaterc() {
+    local DIR="/home/ekalderon/.dotfiles"
+    git -C $DIR pull
 }
 

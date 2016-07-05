@@ -12,7 +12,7 @@ DOTFILES["shell/profile"]=".profile"
 DOTFILES["tmux.conf"]=".tmux.conf"
 DOTFILES["toprc"]=".toprc"
 
-# Get base directory where dotfiles were installed
+# Get absolute location of `.dotfiles` directory
 DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 # Create a backup directory to store old dotfiles
@@ -31,8 +31,9 @@ for SRC in ${!DOTFILES[@]}; do
     ln -s $DIR/$SRC $DST
 done
 
-# Update `.bashrc` with correct dotfiles base dir
-sed -i "s,DIR=.*,DIR=\"$DIR\",g" ~/.bashrc
+# Update these files with correct dotfiles location
+sed -i "s,local DIR=.*,local DIR=\"$DIR\",g" $DIR/bash/functions.sh
+sed -i "s,DIR=.*,DIR=\"$DIR\",g" $DIR/shell/bashrc
 
 # Create needed empty folders
 mkdir -p ~/.config/nvim/{backup,undo}

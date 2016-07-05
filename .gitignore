@@ -1,6 +1,7 @@
 # MPD
 mpd/database
 mpd/log
+mpd/pid
 mpd/socket
 mpd/state
 

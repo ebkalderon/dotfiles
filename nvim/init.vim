@@ -1,3 +1,7 @@
+"
+" nvim/init.vim
+"
+
 " General options
 set colorcolumn=80
 set cursorline
