@@ -36,4 +36,6 @@ man() {
 updaterc() {
     local DIR="/home/ekalderon/.dotfiles"
     git -C $DIR pull
+    source ~/.bashrc
 }
+
