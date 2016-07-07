@@ -40,7 +40,7 @@ updaterc() {
     git -C $DOTFILES pull
 
     # Restore any local uncommitted changes
-    if git stash show -u > /dev/null; then
+    if git stash show -u 2>&1 > /dev/null; then
         echo "Preserved uncommitted changes."
         git -C $DOTFILES stash pop > /dev/null
     fi
