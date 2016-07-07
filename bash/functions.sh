@@ -2,24 +2,24 @@
 # bash/functions.sh
 #
 
-# Hide .desktop file
+# Hides .desktop file
 deskhide() {
     grep -q '^NoDisplay' $1 && sed -i 's/^NoDisplay.*/NoDisplay=true/' $1 \
         || echo 'NoDisplay=true' >> $1
 }
 
-# Launch .desktop files from terminal
+# Launches .desktop file from terminal
 deskopen() {
     `grep '^Exec' $1 | tail -1 | sed 's/^Exec=//' | sed 's/%.//'` &
 }
 
-# Make .desktop file visible
+# Makes .desktop file visible
 deskshow() {
     grep -q '^NoDisplay' $1 && sed -i 's/^NoDisplay.*/NoDisplay=false/' \
         $1 || echo 'NoDisplay=false' >> $1
 }
 
-# Colored man pages
+# Colorized man pages
 man() {
     env \
         LESS_TERMCAP_mb=$(printf "\e[1;31m") \
@@ -32,7 +32,7 @@ man() {
         man "$@"
 }
 
-# Download latest dotfiles from GitHub
+# Downloads latest dotfiles from GitHub
 updaterc() {
     # Pull dotfiles from git, overwriting the $DOTFILES variable in .bashrc
     git -C $DOTFILES checkout origin/master shell/bashrc > /dev/null
