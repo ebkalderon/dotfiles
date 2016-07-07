@@ -75,35 +75,35 @@ let g:racer_experimental_completer = 1
 
 " Lightline configuration (requires Powerline-patched font)
 let g:lightline = {
-	\ 'colorscheme': 'powerline',
-	\ 'active': {
-	\  	'left': [ [ 'mode', 'paste' ],
-	\ 	          [ 'fugitive', 'filename' ] ],
-	\	'right': [ [ 'syntastic', 'lineinfo' ],
-	\ 	           [ 'percent' ],
-	\              [ 'fileformat', 'fileencoding', 'filetype' ] ]
-	\ },
-	\ 'component': {
-	\ 	'lineinfo': ' %3l:%-2v'
-	\ },
-	\ 'component_function': {
-	\ 	'fugitive': 'MyFugitive',
-	\ 	'readonly': 'MyReadonly',
-	\	'modified': 'MyModified',
-	\ 	'filename': 'MyFilename'
-	\ },
-	\ 'component_expand': {
-	\ 	'syntastic': 'SyntasticStatuslineFlag'
-	\ },
-	\ 'component_type': {
-	\ 	'syntastic': 'error'
-	\ },
-	\ 'separator': {
-	\ 	'left': '', 'right': ''
-	\ },
-	\ 'subseparator': {
-	\ 	'left': '', 'right': ''
-	\ }
+    \ 'colorscheme': 'powerline',
+    \ 'active': {
+    \     'left': [ [ 'mode', 'paste' ],
+    \               [ 'fugitive', 'filename' ] ],
+    \     'right': [ [ 'syntastic', 'lineinfo' ],
+    \                [ 'percent' ],
+    \                [ 'fileformat', 'fileencoding', 'filetype' ] ]
+    \ },
+    \ 'component': {
+    \     'lineinfo': ' %3l:%-2v'
+    \ },
+    \ 'component_function': {
+    \     'fugitive': 'MyFugitive',
+    \     'readonly': 'MyReadonly',
+    \     'modified': 'MyModified',
+    \     'filename': 'MyFilename'
+    \ },
+    \ 'component_expand': {
+    \     'syntastic': 'SyntasticStatuslineFlag'
+    \ },
+    \ 'component_type': {
+    \     'syntastic': 'error'
+    \ },
+    \ 'separator': {
+    \     'left': '', 'right': ''
+    \ },
+    \ 'subseparator': {
+    \     'left': '', 'right': ''
+    \ }
 \}
 
 function! MyFilename()
