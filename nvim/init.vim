@@ -55,7 +55,7 @@ Plug 'zchee/deoplete-clang'
 
 call plug#end()
 
-" Syntastic configuration
+" Syntastic configuration (needs `clang` and `g++`)
 let g:syntastic_check_on_open = 1
 let g:syntastic_cpp_compiler = 'clang++'
 let g:syntastic_cpp_compiler_options = ' -std=c++14 -stdlib=libc++ -pedantic'
@@ -64,14 +64,14 @@ let g:syntastic_cpp_include_dirs = [ '~/Documents/amethyst/include', '/usr/inclu
 let g:syntastic_enable_signs = 1
 let g:syntastic_mode_map = { "mode": "active" }
 
-" Deoplete configuration
+" Deoplete configuration (needs `clang`)
 let g:deoplete#enable_at_startup = 1
 let g:deoplete#sources#clang#libclang_path = '/usr/lib64/libclang.so'
 let g:deoplete#sources#clang#clang_header = '/usr/lib64/clang'
 
-" Racer configuration
-let $RUST_SRC_PATH = "/home/ekalderon/Documents/rustc-nightly/src"
-let g:racer_cmd = "/home/ekalderon/.multirust/toolchains/nightly/cargo/bin/racer"
+" Racer configuration (needs `multirust` and `rust-nightly-src`)
+let $RUST_SRC_PATH = "/usr/src/rust"
+let g:racer_cmd = "~/.cargo/bin/racer"
 let g:racer_experimental_completer = 1
 
 " Lightline configuration (requires Powerline-patched font)
