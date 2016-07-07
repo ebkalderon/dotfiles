@@ -40,5 +40,5 @@ mkdir -p ~/.config/nvim/{backup,undo}
 mkdir -p ~/.mpd/playlists
 
 # Download and install Neovim plugins
-nvim +PlugInstall +UpdateRemotePlugins +qall
+nvim +PlugInstall +qall
 

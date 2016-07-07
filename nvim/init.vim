@@ -34,6 +34,11 @@ syntax on
 hi Normal ctermbg=NONE
 hi NonText ctermbg=NONE
 
+" Called after Deoplete plugin is installed or updated
+function! UpdateRemote()
+    UpdateRemotePlugins
+endfunction
+
 " Install Vundle plugins
 call plug#begin()
 
@@ -63,11 +68,6 @@ let g:syntastic_mode_map = { "mode": "active" }
 let g:deoplete#enable_at_startup = 1
 let g:deoplete#sources#clang#libclang_path = '/usr/lib64/libclang.so'
 let g:deoplete#sources#clang#clang_header = '/usr/lib64/clang'
-
-" Deoplete update manifest funcition
-function! UpdateRemote()
-    UpdateRemotePlugins
-endfunction
 
 " Racer configuration
 let $RUST_SRC_PATH = "/home/ekalderon/Documents/rustc-nightly/src"
