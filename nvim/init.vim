@@ -14,9 +14,8 @@ set number
 
 " Backup options
 set backup
-set backupdir=~/.config/nvim/backup
+set backupdir=~/.local/share/nvim/backup
 set undofile
-set undodir=~/.config/nvim/undo
 
 " Indentation options
 set tabstop=4
