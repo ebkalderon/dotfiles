@@ -24,7 +24,7 @@ alias l='ls -CF'
 alias la='ls -A'
 alias ll='ls -alF'
 alias pacman-autoclean='sudo pacman -R $(pacman -Qdtq)'
-alias reloadrc='source ~/.bash_profile'
+alias reloadrc='source ~/.bashrc'
 alias vi='nvim'
 alias vim='nvim'
 
