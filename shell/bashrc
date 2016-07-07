@@ -14,7 +14,7 @@ if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
     . /etc/bash_completion
 fi
 
-# Enable extra features if we're in a VTE terminal
+# Use VTE features if available, like keeping the same CWD when opening new tabs
 [[ -f /etc/profile.d/vte.sh ]] && . /etc/profile.d/vte.sh
 
 # Locate bash dotfiles
