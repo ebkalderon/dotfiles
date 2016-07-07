@@ -15,7 +15,7 @@ if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
 fi
 
 # Enable extra features if we're in a VTE terminal
-. /etc/profile.d/vte.sh
+[[ -f /etc/profile.d/vte.sh ]] && . /etc/profile.d/vte.sh
 
 # Locate bash dotfiles
 DIR="/home/ekalderon/.dotfiles"
