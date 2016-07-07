@@ -35,12 +35,10 @@ man() {
 # Download latest dotfiles from GitHub
 updaterc() {
     # Pull dotfiles while preserving local uncommitted changes
-    pushd $DOTFILES > /dev/null
-    git checkout origin/master shell/bashrc > /dev/null
-    git stash > /dev/null
-    git pull
-    local STATUS=`git stash pop 2>&1`
-    popd > /dev/null
+    git -C $DOTFILES checkout origin/master shell/bashrc > /dev/null
+    git -C $DOTFILES stash > /dev/null
+    git -C $DOTFILES pull
+    local STATUS=`git -C $DOTFILES stash pop 2>&1`
 
     # Notify users if we have local uncommitted changes
     if [ "$STATUS" != 'No stash found.' ]; then
