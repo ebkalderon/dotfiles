@@ -28,7 +28,7 @@ for SRC in ${!DOTFILES[@]}; do
     [[ -f $DST ]] && mv $DST ~/.dotfiles_old/
 
     # Create new symlink
-    ln -sr $DIR/$SRC $DST
+    ln -sr $DIR/$SRC $DST 2> /dev/null
     if [ $? -ne 0 ]; then
         ln -s $DIR/$SRC $DST
     fi
