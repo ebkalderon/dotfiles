@@ -40,8 +40,8 @@ updaterc() {
     git -C $DOTFILES pull
     git -C $DOTFILES stash pop > /dev/null
 
-    # Reinstall and re-apply shell settings
+    # Reinstall and restart shell
     $DOTFILES/bootstrap.sh
-    source ~/.bashrc
+    exec bash
 }
 
