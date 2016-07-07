@@ -35,9 +35,9 @@ man() {
 # Download latest dotfiles from GitHub
 updaterc() {
     # Pull dotfiles while preserving local uncommitted changes
+    git -C $DOTFILES checkout origin/master shell/bashrc
     git -C $DOTFILES stash
-    git -C $DOTFILES fetch --all
-    git -C $DOTFILES reset --hard origin/master
+    git -C $DOTFILES pull
     git -C $DOTFILES stash pop
 
     # Reinstall and re-apply shell settings
