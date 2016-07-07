@@ -28,7 +28,10 @@ for SRC in ${!DOTFILES[@]}; do
     [[ -f $DST ]] && mv $DST ~/.dotfiles_old/
 
     # Create new symlink
-    ln -s $DIR/$SRC $DST
+    ln -sr $DIR/$SRC $DST
+    if [ $? -ne 0 ]; then
+        ln -s $DIR/$SRC $DST
+    fi
 done
 
 # Update these files with correct dotfiles location
