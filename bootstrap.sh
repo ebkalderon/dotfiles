@@ -1,16 +1,16 @@
 #!/bin/bash
 
 # Build up list of dotfiles to install
-declare -A DOTFILES
-DOTFILES["gitconfig"]=".gitconfig"
-DOTFILES["mpd"]=".mpd"
-DOTFILES["ncmpcpp"]=".ncmpcpp"
-DOTFILES["nvim"]=".config/nvim"
-DOTFILES["shell/bash_profile"]=".bash_profile"
-DOTFILES["shell/bashrc"]=".bashrc"
-DOTFILES["shell/profile"]=".profile"
-DOTFILES["tmux.conf"]=".tmux.conf"
-DOTFILES["toprc"]=".toprc"
+declare -A FILES
+FILES["gitconfig"]=".gitconfig"
+FILES["mpd"]=".mpd"
+FILES["ncmpcpp"]=".ncmpcpp"
+FILES["nvim"]=".config/nvim"
+FILES["shell/bash_profile"]=".bash_profile"
+FILES["shell/bashrc"]=".bashrc"
+FILES["shell/profile"]=".profile"
+FILES["tmux.conf"]=".tmux.conf"
+FILES["toprc"]=".toprc"
 
 # Get absolute location of `.dotfiles` directory
 DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
@@ -18,8 +18,8 @@ DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 # Create a backup directory to store old dotfiles
 mkdir -p ~/.dotfiles_old
 
-for SRC in ${!DOTFILES[@]}; do
-    DST=~/${DOTFILES[$SRC]}
+for SRC in ${!FILES[@]}; do
+    DST=~/${FILES[$SRC]}
     
     # If old symlink exits, delete it
     [[ -L $DST ]] && rm $DST
