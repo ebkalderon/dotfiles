@@ -38,7 +38,10 @@ updaterc() {
     git -C $DOTFILES checkout origin/master shell/bashrc > /dev/null
     git -C $DOTFILES stash > /dev/null
     git -C $DOTFILES pull
-    git -C $DOTFILES stash pop > /dev/null
+    local NO_STASHED=`git -C $DOTFILES stash pop > /dev/null`
+
+    # If there are uncommitted changes notify user
+    [ -z "$NO_STASHED" ] && echo "Preserved uncommitted changes."
 
     # Reinstall and restart shell
     $DOTFILES/bootstrap.sh
