@@ -35,10 +35,10 @@ man() {
 # Download latest dotfiles from GitHub
 updaterc() {
     # Pull dotfiles while preserving local uncommitted changes
-    git -C $DOTFILES checkout origin/master shell/bashrc
-    git -C $DOTFILES stash
+    git -C $DOTFILES checkout origin/master shell/bashrc > /dev/null
+    git -C $DOTFILES stash > /dev/null
     git -C $DOTFILES pull
-    git -C $DOTFILES stash pop
+    git -C $DOTFILES stash pop > /dev/null
 
     # Reinstall and re-apply shell settings
     $DOTFILES/bootstrap.sh
