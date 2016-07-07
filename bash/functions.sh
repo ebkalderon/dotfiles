@@ -43,8 +43,8 @@ updaterc() {
     # If there are uncommitted changes notify user
     [ -z "$NO_STASHED" ] && echo "Preserved uncommitted changes."
 
-    # Reinstall and restart shell
+    # Reinstall and re-apply shell settings
     $DOTFILES/bootstrap.sh
-    exec bash
+    source ~/.bashrc
 }
 
