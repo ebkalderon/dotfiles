@@ -35,7 +35,7 @@ hi Normal ctermbg=NONE
 hi NonText ctermbg=NONE
 
 " Called after Deoplete plugin is installed or updated
-function! UpdateRemote()
+function! UpdateRemote(arg)
     UpdateRemotePlugins
 endfunction
 
