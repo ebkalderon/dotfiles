@@ -8,7 +8,6 @@ export CACA_DRIVER=ncurses # Enable watching videos as ASCII art in terminal
 export EDITOR=nvim
 export GCC_COLORS=always
 export GROFF_NO_SGR=1
-export TERM=screen-256color
 
 # Color codes
 export txtblk='\[\e[0;30m\]' # Black - Regular

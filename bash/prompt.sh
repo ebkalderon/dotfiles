@@ -2,6 +2,12 @@
 # bash/prompt.sh
 #
 
+_is_vte_term() {
+    if [[ -f /etc/profile.d/vte.sh ]] && [[ -n "$VTE_VERSION" ]]; then
+        __vte_prompt_command
+    fi
+}
+
 _branch_git() {
     git rev-parse --abbrev-ref HEAD 2> /dev/null
 }
@@ -14,14 +20,14 @@ _branch_svn() {
 
 _prompt() {
     GIT_BRANCH=`_branch_git`
-    if [ $GIT_BRANCH ]; then
+    if [ -n "$GIT_BRANCH" ]; then
         echo -e "$txtblu\u$txtrst@$txtgrn\h $txtred\W $txtpur$GIT_BRANCH" \
                 "$txtylw\\\$ $txtrst"
         return
     fi
 
     SVN_BRANCH=`_branch_svn`
-    if [ $SVN_BRANCH ]; then
+    if [ -n "$SVN_BRANCH" ]; then
         echo -e "$txtblu\u$txtrst@$txtgrn\h $txtred\W $txtpur$SVN_BRANCH" \
                 "$txtylw\\\$ $txtrst"
         return
@@ -30,5 +36,5 @@ _prompt() {
     echo -e "$txtblu\u$txtrst@$txtgrn\h $txtred\W $txtylw\\\$ $txtrst"
 }
 
-PROMPT_COMMAND='PS1=$(_prompt)'
+PROMPT_COMMAND='_is_vte_term; PS1=$(_prompt)'
 
