@@ -39,7 +39,7 @@ sed -i "s,local DIR=.*,local DIR=\"$DIR\",g" $DIR/bash/functions.sh
 sed -i "s,DIR=.*,DIR=\"$DIR\",g" $DIR/shell/bashrc
 
 # Create needed empty folders
-mkdir -p ~/.config/nvim/{backup,undo}
+mkdir -p ~/.local/share/nvim/{backup,undo}
 mkdir -p ~/.mpd/playlists
 
 # Download and install Neovim plugins
