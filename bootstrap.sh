@@ -35,9 +35,8 @@ for SRC in ${!DOTFILES[@]}; do
     fi
 done
 
-# Update these files with correct dotfiles location
-sed -i "s,local DIR=.*,local DIR=\"$DIR\",g" $DIR/bash/functions.sh
-sed -i "s,DIR=.*,DIR=\"$DIR\",g" $DIR/shell/bashrc
+# Update .bashrc with correct dotfiles location if not set
+sed -i "s,DOTFILES=.*,DOTFILES=\"$DIR\",g" $DIR/shell/bashrc
 
 # Create needed empty folders
 mkdir -p ~/.local/share/nvim/{backup,undo}

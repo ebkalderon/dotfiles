@@ -34,8 +34,13 @@ man() {
 
 # Download latest dotfiles from GitHub
 updaterc() {
-    local DIR="/home/ekalderon/.dotfiles"
-    git -C $DIR pull
+    # Pull dotfiles while preserving local changes
+    git -C $DOTFILES stash
+    git -C $DOTFILES pull
+    git -C $DOTFILES stash pop
+
+    # Re-run `bootstrap.sh` and reload shell settings 
+    $DOTFILES/bootstrap.sh
     source ~/.bashrc
 }
 

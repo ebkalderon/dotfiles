@@ -18,11 +18,11 @@ fi
 [[ -f /etc/profile.d/vte.sh ]] && . /etc/profile.d/vte.sh
 
 # Locate bash dotfiles
-DIR="/home/ekalderon/.dotfiles"
-DOTFILES=`find $DIR/bash/ -type f | sort`
+export DOTFILES="/home/ekalderon/.dotfiles"
+FILES=`find $DOTFILES/bash/ -type f | sort`
 
 # Load all files found
-for FILE in $DOTFILES; do
+for FILE in $FILES; do
     . $FILE
 done
 
