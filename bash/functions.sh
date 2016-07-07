@@ -43,7 +43,7 @@ updaterc() {
     popd > /dev/null
 
     # Notify users if we have local uncommitted changes
-    if [ "$STATUS" != 'No stash found.' ] && [ "$STATUS" != 'Nothing to apply' ]; then
+    if [ "$STATUS" != 'No stash found.' ]; then
         echo "Preserved uncommitted changes."
     fi
 
