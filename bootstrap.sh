@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 # Build up list of dotfiles to install
 declare -A FILES
