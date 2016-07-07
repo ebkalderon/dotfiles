@@ -36,11 +36,11 @@ man() {
 updaterc() {
     # Pull dotfiles from git, overwriting the $DOTFILES variable in .bashrc
     git -C $DOTFILES checkout origin/master shell/bashrc > /dev/null
-    git -C $DOTFILES stash > /dev/null
+    git -C $DOTFILES stash &> /dev/null
     git -C $DOTFILES pull
 
     # Restore any local uncommitted changes
-    if git stash show -u > /dev/null; then
+    if git stash show -u &> /dev/null; then
         echo "Preserved uncommitted changes."
         git -C $DOTFILES stash pop > /dev/null
     fi
