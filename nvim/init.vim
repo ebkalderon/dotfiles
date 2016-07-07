@@ -40,7 +40,7 @@ call plug#begin()
 Plug 'itchyny/lightline.vim'
 Plug 'rust-lang/rust.vim'
 Plug 'scrooloose/syntastic'
-Plug 'Shougo/deoplete.nvim', { 'do': 'UpdateRemotePlugins' }
+Plug 'Shougo/deoplete.nvim', { 'do': function('UpdateRemote') }
 Plug 'Shougo/neoinclude.vim'
 Plug 'tikhomirov/vim-glsl'
 Plug 'timonv/vim-cargo', { 'for': 'rust' }
@@ -63,6 +63,11 @@ let g:syntastic_mode_map = { "mode": "active" }
 let g:deoplete#enable_at_startup = 1
 let g:deoplete#sources#clang#libclang_path = '/usr/lib64/libclang.so'
 let g:deoplete#sources#clang#clang_header = '/usr/lib64/clang'
+
+" Deoplete update manifest funcition
+function! UpdateRemote()
+    UpdateRemotePlugins
+endfunction
 
 " Racer configuration
 let $RUST_SRC_PATH = "/home/ekalderon/Documents/rustc-nightly/src"
