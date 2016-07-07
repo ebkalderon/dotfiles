@@ -29,7 +29,7 @@ $ ./bootstrap.sh
 
 ## Updating
 
-To grab the latest version from Git, run:
+To grab the latest version from Git, preserving most local changes, run:
 
 ```
 $ updaterc
