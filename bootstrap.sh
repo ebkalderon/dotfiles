@@ -24,8 +24,9 @@ for SRC in ${!DOTFILES[@]}; do
     # If old symlink exits, delete it
     [[ -L $DST ]] && rm $DST
 
-    # If file exists, back it up
+    # If file/folder exists, back it up
     [[ -f $DST ]] && mv $DST ~/.dotfiles_old/
+    [[ -d $DST ]] && mv $DST ~/.dotfiles_old/
 
     # Create new symlink
     ln -sr $DIR/$SRC $DST 2> /dev/null
