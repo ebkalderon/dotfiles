@@ -3,7 +3,6 @@
 "
 
 " General options
-set colorcolumn=80
 set cursorline
 set fillchars+=vert:\│
 set hidden
@@ -11,6 +10,12 @@ set hlsearch
 set laststatus=2
 set noshowmode
 set number
+
+if &filetype == "rust"
+    set colorcolumn=100
+else
+    set colorcolumn=80
+endif
 
 " Backup options
 set backup
@@ -43,6 +48,7 @@ call plug#begin()
 
 Plug 'itchyny/lightline.vim'
 Plug 'rust-lang/rust.vim'
+Plug 'racer-rust/vim-racer', { 'for': 'rust' }
 Plug 'scrooloose/syntastic'
 Plug 'Shougo/deoplete.nvim', { 'do': function('UpdateRemote') }
 Plug 'Shougo/neoinclude.vim'
@@ -53,6 +59,11 @@ Plug 'tpope/vim-commentary'
 Plug 'zchee/deoplete-clang'
 
 call plug#end()
+
+" Racer configuration (needs `rustup` and `rust-nightly-src`)
+let $RUST_SRC_PATH = "/usr/src/rust/src/"
+let g:racer_cmd = $HOME . "/.cargo/bin/racer"
+let g:racer_experimental_completer = 1
 
 " Syntastic configuration (needs `clang` and `g++`)
 let g:syntastic_check_on_open = 1
@@ -67,11 +78,6 @@ let g:syntastic_mode_map = { "mode": "active" }
 let g:deoplete#enable_at_startup = 1
 let g:deoplete#sources#clang#libclang_path = '/usr/lib64/libclang.so'
 let g:deoplete#sources#clang#clang_header = '/usr/lib64/clang'
-
-" Racer configuration (needs `multirust` and `rust-nightly-src`)
-let $RUST_SRC_PATH = "/usr/src/rust"
-let g:racer_cmd = "~/.cargo/bin/racer"
-let g:racer_experimental_completer = 1
 
 " Lightline configuration (requires Powerline-patched font)
 let g:lightline = {
