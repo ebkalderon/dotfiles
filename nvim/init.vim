@@ -46,13 +46,14 @@ endfunction
 " Install Vundle plugins
 call plug#begin()
 
+Plug 'artur-shaik/vim-javacomplete2', { 'for': 'java' }
 Plug 'itchyny/lightline.vim'
 Plug 'rust-lang/rust.vim'
 Plug 'racer-rust/vim-racer', { 'for': 'rust' }
-Plug 'scrooloose/syntastic'
 Plug 'Shougo/deoplete.nvim', { 'do': function('UpdateRemote') }
 Plug 'Shougo/neoinclude.vim'
-Plug 'tikhomirov/vim-glsl'
+Plug 'neomake/neomake'
+Plug 'tikhomirov/vim-glsl', { 'for': 'glsl' }
 Plug 'timonv/vim-cargo', { 'for': 'rust' }
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-commentary'
@@ -60,24 +61,18 @@ Plug 'zchee/deoplete-clang'
 
 call plug#end()
 
+" Javacomplete2 configuration
+autocmd FileType java setlocal omnifunc=javacomplete#Complete
+
 " Racer configuration (needs `rustup` and `rust-nightly-src`)
 let $RUST_SRC_PATH = "/usr/src/rust/src/"
 let g:racer_cmd = $HOME . "/.cargo/bin/racer"
 let g:racer_experimental_completer = 1
 
-" Syntastic configuration (needs `clang` and `g++`)
-let g:syntastic_check_on_open = 1
-let g:syntastic_cpp_compiler = 'clang++'
-let g:syntastic_cpp_compiler_options = ' -std=c++14 -stdlib=libc++ -pedantic'
-let g:syntastic_cpp_checkers = [ "clang_check", "gcc" ]
-let g:syntastic_cpp_include_dirs = [ '~/Documents/amethyst/include', '/usr/include' ]
-let g:syntastic_enable_signs = 1
-let g:syntastic_mode_map = { "mode": "active" }
-
 " Deoplete configuration (needs `clang`)
 let g:deoplete#enable_at_startup = 1
-let g:deoplete#sources#clang#libclang_path = '/usr/lib64/libclang.so'
 let g:deoplete#sources#clang#clang_header = '/usr/lib64/clang'
+let g:deoplete#sources#clang#libclang_path = '/usr/lib64/libclang.so'
 
 " Lightline configuration (requires Powerline-patched font)
 let g:lightline = {
@@ -85,7 +80,7 @@ let g:lightline = {
     \ 'active': {
     \     'left': [ [ 'mode', 'paste' ],
     \               [ 'fugitive', 'filename' ] ],
-    \     'right': [ [ 'syntastic', 'lineinfo' ],
+    \     'right': [ [ 'neomake', 'lineinfo' ],
     \                [ 'percent' ],
     \                [ 'fileformat', 'fileencoding', 'filetype' ] ]
     \ },
@@ -99,10 +94,10 @@ let g:lightline = {
     \     'filename': 'MyFilename'
     \ },
     \ 'component_expand': {
-    \     'syntastic': 'SyntasticStatuslineFlag'
+    \     'neomake': 'neomake#statusline#LoclistStatus'
     \ },
     \ 'component_type': {
-    \     'syntastic': 'error'
+    \     'neomake': 'error'
     \ },
     \ 'separator': {
     \     'left': '', 'right': ''
@@ -144,13 +139,10 @@ function! MyFugitive()
 endfunction
 
 " Integrate Syntastic into Lightline
-augroup AutoSyntastic
-    autocmd!
-    autocmd BufWritePost *.* call s:syntastic()
-augroup end
+autocmd User NeomakeFinished | call lightline#update()
 
-function! s:syntastic()
-    SyntasticCheck
-    call lightline#update()
-endfunction
+augroup AutoNeomake
+    autocmd!
+    autocmd BufWritePost *.* Neomake
+augroup end
 

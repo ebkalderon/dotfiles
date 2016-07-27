@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # Build up list of dotfiles to install
 declare -A FILES
@@ -19,7 +19,7 @@ DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 # Create a backup directory to store old dotfiles
 mkdir -p ~/.dotfiles_old
 
-for SRC in ${!FILES[@]}; do
+for SRC in "${!FILES[@]}"; do
     DST=~/${FILES[$SRC]}
     
     # If old symlink exits, delete it
@@ -30,14 +30,14 @@ for SRC in ${!FILES[@]}; do
     [[ -d $DST ]] && mv $DST ~/.dotfiles_old/
 
     # Create new symlink
-    ln -sr $DIR/$SRC $DST 2> /dev/null
+    ln -sr "$DIR/$SRC" $DST 2> /dev/null
     if [ $? -ne 0 ]; then
-        ln -s $DIR/$SRC $DST
+        ln -s "$DIR/$SRC" $DST
     fi
 done
 
 # Update .bashrc with correct dotfiles location if not set
-sed -i "s,DOTFILES=.*,DOTFILES=\"$DIR\",g" $DIR/shell/bashrc
+sed -i "s,DOTFILES=.*,DOTFILES=\"$DIR\",g" "$DIR/shell/bashrc"
 
 # Create needed empty folders
 mkdir -p ~/.local/share/nvim/{backup,undo}
@@ -45,4 +45,3 @@ mkdir -p ~/.mpd/playlists
 
 # Download and install Neovim plugins
 [[ ! -d ~/.config/nvim/plugged ]] && nvim +PlugInstall +qall
-
