@@ -12,6 +12,7 @@ case you don't like my setup.
 ## Included configs
 
 * [bash](./bash/)
+* [gdb](./gdbinit)
 * [git](./gitconfig)
 * [mpd](./mpd)
 * [ncmpcpp](./ncmpcpp)
