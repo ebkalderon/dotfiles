@@ -2,6 +2,7 @@
 
 # Build up list of dotfiles to install
 declare -A FILES
+FILES["gdbinit"]=".gdbinit"
 FILES["gitconfig"]=".gitconfig"
 FILES["mpd"]=".mpd"
 FILES["ncmpcpp"]=".ncmpcpp"
