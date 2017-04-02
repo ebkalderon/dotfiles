@@ -49,7 +49,8 @@ call plug#begin()
 Plug 'artur-shaik/vim-javacomplete2', { 'for': 'java' }
 Plug 'itchyny/lightline.vim'
 Plug 'rust-lang/rust.vim'
-Plug 'racer-rust/vim-racer', { 'for': 'rust' }
+" Plug 'racer-rust/vim-racer', { 'for': 'rust' }
+Plug 'sebastianmarkow/deoplete-rust'
 Plug 'Shougo/deoplete.nvim', { 'do': function('UpdateRemote') }
 Plug 'Shougo/neoinclude.vim'
 Plug 'neomake/neomake'
@@ -65,7 +66,6 @@ call plug#end()
 autocmd FileType java setlocal omnifunc=javacomplete#Complete
 
 " Racer configuration (needs `rustup` and `rust-nightly-src`)
-let $RUST_SRC_PATH = "/usr/src/rust/src/"
 let g:racer_cmd = $HOME . "/.cargo/bin/racer"
 let g:racer_experimental_completer = 1
 
@@ -73,6 +73,8 @@ let g:racer_experimental_completer = 1
 let g:deoplete#enable_at_startup = 1
 let g:deoplete#sources#clang#clang_header = '/usr/lib64/clang'
 let g:deoplete#sources#clang#libclang_path = '/usr/lib64/libclang.so'
+let g:deoplete#sources#rust#racer_binary = $HOME . '/.cargo/bin/racer'
+let g:deoplete#sources#rust#rust_source_path = $RUST_SRC_PATH
 
 " Lightline configuration (requires Powerline-patched font)
 let g:lightline = {
