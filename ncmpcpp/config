@@ -2,7 +2,7 @@
 # ncmpcpp/config
 #
 
-mpd_music_dir = "/home/ekalderon/music"
+mpd_music_dir = "/home/ekalderon/Music"
 mpd_crossfade_time = "5"
 
 # Visualizer

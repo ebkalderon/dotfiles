@@ -1,6 +1,7 @@
 [user]
 	email = ebkalderon@gmail.com
 	name = Eyal Kalderon
+	signingkey = 00AB4C0942DCBA25
 
 [credential]
 	helper = cache

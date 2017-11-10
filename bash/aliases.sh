@@ -6,6 +6,7 @@
 if [ -x /usr/bin/dircolors ]; then
     test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval \
             "$(dircolors -b)"
+    alias diff='diff --color=auto'
     alias dir='dir --color=auto'
     alias egrep='egrep --color=auto'
     alias fgrep='fgrep --color=auto'
@@ -27,4 +28,3 @@ alias pacman-autoclean='sudo pacman -R $(pacman -Qdtq)'
 alias reloadrc='source ~/.bashrc'
 alias vi='nvim'
 alias vim='nvim'
-

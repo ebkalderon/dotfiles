@@ -38,22 +38,18 @@ syntax on
 hi Normal ctermbg=NONE
 hi NonText ctermbg=NONE
 
-" Called after Deoplete plugin is installed or updated
-function! UpdateRemote(arg)
-    UpdateRemotePlugins
-endfunction
-
-" Install Vundle plugins
+" Install plugins
 call plug#begin()
 
 Plug 'artur-shaik/vim-javacomplete2', { 'for': 'java' }
+Plug 'autozimu/LanguageClient-neovim', { 'do': ':UpdateRemotePlugins' }
+Plug 'cespare/vim-toml', { 'for': 'toml' }
 Plug 'itchyny/lightline.vim'
-Plug 'rust-lang/rust.vim'
-" Plug 'racer-rust/vim-racer', { 'for': 'rust' }
-Plug 'sebastianmarkow/deoplete-rust'
-Plug 'Shougo/deoplete.nvim', { 'do': function('UpdateRemote') }
-Plug 'Shougo/neoinclude.vim'
 Plug 'neomake/neomake'
+Plug 'rust-lang/rust.vim'
+Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+Plug 'Shougo/echodoc.vim'
+Plug 'Shougo/neoinclude.vim'
 Plug 'tikhomirov/vim-glsl', { 'for': 'glsl' }
 Plug 'timonv/vim-cargo', { 'for': 'rust' }
 Plug 'tpope/vim-fugitive'
@@ -65,9 +61,14 @@ call plug#end()
 " Javacomplete2 configuration
 autocmd FileType java setlocal omnifunc=javacomplete#Complete
 
-" Racer configuration (needs `rustup` and `rust-nightly-src`)
-let g:racer_cmd = $HOME . "/.cargo/bin/racer"
-let g:racer_experimental_completer = 1
+" let g:racer_cmd = $HOME . "/.cargo/bin/racer"
+" let g:racer_experimental_completer = 1
+
+" Language server configuration
+let g:LanguageClient_autoStart = 1
+let g:LanguageClient_serverCommands = {
+    \ 'rust': ['rustup', 'run', 'nightly', 'rls'],
+\}
 
 " Deoplete configuration (needs `clang`)
 let g:deoplete#enable_at_startup = 1
@@ -80,11 +81,11 @@ let g:deoplete#sources#rust#rust_source_path = $RUST_SRC_PATH
 let g:lightline = {
     \ 'colorscheme': 'powerline',
     \ 'active': {
-    \     'left': [ [ 'mode', 'paste' ],
-    \               [ 'fugitive', 'filename' ] ],
-    \     'right': [ [ 'neomake', 'lineinfo' ],
-    \                [ 'percent' ],
-    \                [ 'fileformat', 'fileencoding', 'filetype' ] ]
+    \     'left': [['mode', 'paste'],
+    \              ['fugitive', 'filename']],
+    \     'right': [['neomake', 'lineinfo'],
+    \               ['percent'],
+    \               ['fileformat', 'fileencoding', 'filetype']]
     \ },
     \ 'component': {
     \     'lineinfo': ' %3l:%-2v'
@@ -147,4 +148,3 @@ augroup AutoNeomake
     autocmd!
     autocmd BufWritePost *.* Neomake
 augroup end
-
