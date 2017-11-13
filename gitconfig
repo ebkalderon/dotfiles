@@ -8,3 +8,6 @@
 
 [core]
 	autocrlf = input
+
+[commit]
+    gpgsign = true
