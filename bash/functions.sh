@@ -49,4 +49,3 @@ updaterc() {
     $DOTFILES/bootstrap.sh
     source ~/.bashrc
 }
-

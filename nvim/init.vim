@@ -26,6 +26,7 @@ set undofile
 set tabstop=4
 set shiftwidth=4
 set expandtab
+autocmd FileType html,css,scss setlocal shiftwidth=2 tabstop=2
 
 " Color options
 set t_Co=256
@@ -42,8 +43,9 @@ hi NonText ctermbg=NONE
 call plug#begin()
 
 Plug 'artur-shaik/vim-javacomplete2', { 'for': 'java' }
-Plug 'autozimu/LanguageClient-neovim', { 'do': ':UpdateRemotePlugins' }
+Plug 'autozimu/LanguageClient-neovim', { 'tag': 'binary-*-x86_64-unknown-linux-musl' }
 Plug 'cespare/vim-toml', { 'for': 'toml' }
+Plug 'fishbullet/deoplete-ruby'
 Plug 'itchyny/lightline.vim'
 Plug 'neomake/neomake'
 Plug 'rust-lang/rust.vim'
@@ -61,21 +63,28 @@ call plug#end()
 " Javacomplete2 configuration
 autocmd FileType java setlocal omnifunc=javacomplete#Complete
 
-" let g:racer_cmd = $HOME . "/.cargo/bin/racer"
-" let g:racer_experimental_completer = 1
-
-" Language server configuration
-let g:LanguageClient_autoStart = 1
-let g:LanguageClient_serverCommands = {
-    \ 'rust': ['rustup', 'run', 'nightly', 'rls'],
-\}
-
 " Deoplete configuration (needs `clang`)
 let g:deoplete#enable_at_startup = 1
 let g:deoplete#sources#clang#clang_header = '/usr/lib64/clang'
 let g:deoplete#sources#clang#libclang_path = '/usr/lib64/libclang.so'
-let g:deoplete#sources#rust#racer_binary = $HOME . '/.cargo/bin/racer'
-let g:deoplete#sources#rust#rust_source_path = $RUST_SRC_PATH
+
+" LanguageClient configuration
+"
+" Language | Server installation
+" ---------|------------------------------------------------------------------
+" Python   | sudo pip install python-language-server
+" Rust     | rustup component add rls-preview rust-analysis rust-src --toolchain nightly
+set hidden
+
+let g:languageClient_autoStart = 1
+let g:LanguageClient_serverCommands = {
+    \ 'python': ['pyls'],
+    \ 'rust': ['rustup', 'run', 'nightly', 'rls'],
+    \ }
+
+nnoremap <silent> K :call LanguageClient_textDocument_hover()<CR>
+nnoremap <silent> gd :call LanguageClient_textDocument_definition()<CR>
+nnoremap <silent> <F2> :call LanguageClient_textDocument_rename()<CR>
 
 " Lightline configuration (requires Powerline-patched font)
 let g:lightline = {
@@ -108,7 +117,7 @@ let g:lightline = {
     \ 'subseparator': {
     \     'left': '', 'right': ''
     \ }
-\}
+    \ }
 
 function! MyFilename()
     return ('' != MyReadonly() ? MyReadonly() . ' ' : '') .

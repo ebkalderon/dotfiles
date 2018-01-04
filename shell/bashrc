@@ -25,4 +25,3 @@ FILES=`find $DOTFILES/bash/ -type f | sort`
 for FILE in $FILES; do
     . $FILE
 done
-

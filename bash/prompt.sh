@@ -41,4 +41,3 @@ _prompt() {
 }
 
 PROMPT_COMMAND='_is_vte_term; PS1=$(_prompt)'
-
