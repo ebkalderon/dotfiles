@@ -2,15 +2,15 @@
 
 # Build up list of dotfiles to install
 declare -A FILES
+FILES["bash/bash_profile"]=".bash_profile"
+FILES["bash/bashrc"]=".bashrc"
+FILES["bash/inputrc"]=".inputrc"
+FILES["bash/profile"]=".profile"
 FILES["gdbinit"]=".gdbinit"
 FILES["gitconfig"]=".gitconfig"
 FILES["mpd"]=".mpd"
 FILES["ncmpcpp"]=".ncmpcpp"
 FILES["nvim"]=".config/nvim"
-FILES["shell/bash_profile"]=".bash_profile"
-FILES["shell/bashrc"]=".bashrc"
-FILES["shell/inputrc"]=".inputrc"
-FILES["shell/profile"]=".profile"
 FILES["tmux.conf"]=".tmux.conf"
 FILES["toprc"]=".toprc"
 
@@ -38,7 +38,7 @@ for SRC in "${!FILES[@]}"; do
 done
 
 # Update .bashrc with correct dotfiles location if not set
-sed -i "s,DOTFILES=.*,DOTFILES=\"$DIR\",g" "$DIR/shell/bashrc"
+sed -i "s,DOTFILES=.*,DOTFILES=\"$DIR\",g" "$DIR/bash/bashrc"
 
 # Create needed empty folders
 mkdir -p ~/.local/share/nvim/{backup,undo}
