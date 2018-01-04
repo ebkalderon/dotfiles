@@ -6,4 +6,3 @@
 
 # Enable colorized `bash_completion` for files and folders (bash 4.3+)
 set colored-stats on
-
