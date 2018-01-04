@@ -19,7 +19,7 @@ fi
 
 # Locate bash dotfiles
 export DOTFILES="/home/ekalderon/.dotfiles"
-FILES=`find $DOTFILES/scripts/ -type f | sort`
+FILES=$(find $DOTFILES/scripts/ -type f | sort)
 
 # Load all files found
 for FILE in $FILES; do
