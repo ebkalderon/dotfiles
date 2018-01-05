@@ -1,12 +1,14 @@
 #!/bin/bash
 
-function install() {
+DESCRIPTION="applying dotfiles..."
+
+function _install() {
     declare -A LINKS
 
     # Build up a list of symlinks to make
-    for FILE in $DOTFILES/packages/configs/*; do
-        if [[ $FILE == *config ]]; then
-            for SUBFILE in $DOTFILES/packages/configs/config/*; do
+    for FILE in $PACKAGE_FILES/*; do
+        if [[ $(basename $FILE) == config ]]; then
+            for SUBFILE in $PACKAGE_FILES/config/*; do
                 LINKS["$SUBFILE"]=".config/$(basename $SUBFILE)"
             done
         else
@@ -17,7 +19,7 @@ function install() {
     # Create the symlinks in the appropriate places
     for SRC in ${!LINKS[@]}; do
         DST="$HOME/${LINKS[$SRC]}"
-        #echo "$SRC -> $DST"
+        echo -n "applying $DST... "
 
         # If old symlink exits, delete it
         [[ -L $DST ]] && rm $DST
@@ -31,12 +33,14 @@ function install() {
         if [ $? -ne 0 ]; then
            ln -s $SRC $DST
         fi
+
+        ok
     done
 
     # Update .bashrc with correct dotfiles location if not set
-    sed -i "s,DOTFILES=.*,DOTFILES=\"$DOTFILES\",g" "$DOTFILES/packages/configs/bashrc"
+    sed -i "s,DOTFILES=.*,DOTFILES=\"$DOTFILES\",g" "$PACKAGE_FILES/bashrc"
 }
 
-function uninstall() {
-    echo blah
+function _uninstall() {
+    return
 }

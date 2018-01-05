@@ -1,5 +1,5 @@
 #
-# bash/functions.sh
+# autoload/functions.sh
 #
 
 # Hides .desktop file

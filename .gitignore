@@ -1,17 +1,2 @@
 # Private tokens
 autoload/wechall.sh
-
-# mpd
-packages/configs/mpd/database
-packages/configs/mpd/log
-packages/configs/mpd/pid
-packages/configs/mpd/socket
-packages/configs/mpd/state
-
-# ncmpcpp
-packages/configs/ncmpcpp/error.log
-
-# Neovim
-packages/configs/config/nvim/.init.vim-rplugin~
-packages/configs/config/nvim/.netrwhist
-packages/configs/config/nvim/plugged

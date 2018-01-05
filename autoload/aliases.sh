@@ -1,5 +1,5 @@
 #
-# bash/aliases.sh
+# autoload/aliases.sh
 #
 
 # Color support

@@ -1,5 +1,5 @@
 #
-# bash/prompt.sh
+# autoload/prompt.sh
 #
 
 # Executes VTE-specific functions, if available

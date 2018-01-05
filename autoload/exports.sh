@@ -1,5 +1,5 @@
 #
-# bash/exports.sh
+# autoload/exports.sh
 #
 
 # Defaults

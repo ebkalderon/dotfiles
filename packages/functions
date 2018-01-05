@@ -1,0 +1,27 @@
+#!/bin/sh
+
+#
+# packages/functions
+#
+# Common helper functions used by all dotfiles packages
+#
+
+function ok() {
+    echo -e "[ok] "$1
+}
+
+function warning() {
+    echo -e "[warning] "$1
+}
+
+function error() {
+    echo -e "[error] "$1
+}
+
+function success() {
+    echo -e "[success] "$1
+}
+
+function failure() {
+    echo -e "[failure] "$1
+}
