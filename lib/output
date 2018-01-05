@@ -1,9 +1,9 @@
 #!/bin/sh
 
 #
-# packages/functions
+# lib/output
 #
-# Common helper functions used by all dotfiles packages
+# Useful logging output functions
 #
 
 function ok() {

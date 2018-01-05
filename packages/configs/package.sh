@@ -21,18 +21,14 @@ function _install() {
         DST="$HOME/${LINKS[$SRC]}"
         echo -n "applying $DST... "
 
-        # If old symlink exits, delete it
-        [[ -L $DST ]] && rm $DST
-
         # If file/folder exists, back it up
-        [[ -f $DST ]] && mv $DST ~/.dotfiles_old/
-        [[ -d $DST ]] && cp -rf $DST ~/.dotfiles_old/
+        [[ -L $DST ]] && mv $DST $BACKUPS
+        [[ -f $DST ]] && mv $DST $BACKUPS
+        [[ -d $DST ]] && cp -rf $DST $BACKUPS
 
         # Create new symlink
-        ln -sr $SRC $DST 2> /dev/null
-        if [ $? -ne 0 ]; then
-           ln -s $SRC $DST
-        fi
+        ln -s $SRC $DST
+        [ $? -ne 0 ] && error && continue
 
         ok
     done

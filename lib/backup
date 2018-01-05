@@ -1,0 +1,7 @@
+#!/bin/sh
+
+#
+# lib/backup
+#
+# Backing up files, managing symlinks, and restoring from earlier backups
+#
