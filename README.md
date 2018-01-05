@@ -25,7 +25,7 @@ case you don't like my setup.
 ```
 $ git clone https://github.com/ebkalderon/dotfiles ~/.dotfiles
 $ cd ~/.dotfiles
-$ ./bootstrap.sh
+$ ./install.sh
 ```
 
 ## Updating

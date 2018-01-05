@@ -1,0 +1,24 @@
+[profiles/2b7c4080-0ddd-46c5-8f23-563fd3ba789d]
+foreground-color='#F8F8F2'
+visible-name='Default'
+dim-color-set=false
+palette=['#757571715E5E', '#F92672', '#A6E22E', '#F4BF75', '#66D9EF', '#AE81FF', '#A1EFE4', '#F8F8F2', '#75715E', '#F92672', '#A6E22E', '#F4BF75', '#66D9EF', '#AE81FF', '#A1EFE4', '#F9F8F5']
+badge-color-set=false
+default-size-columns=98
+show-scrollbar=false
+cursor-colors-set=false
+highlight-colors-set=false
+use-theme-colors=false
+bold-color-set=false
+background-color='#27272A2A2C2C'
+background-transparency-percent=2
+
+[/]
+prompt-on-close=true
+sidebar-on-right=false
+terminal-title-style='normal'
+window-state=128
+theme-variant='dark'
+enable-wide-handle=false
+terminal-title-show-when-single=false
+window-style='normal'

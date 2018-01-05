@@ -35,7 +35,7 @@ man() {
 # Downloads latest dotfiles from GitHub
 updaterc() {
     # Pull dotfiles from git, overwriting the $DOTFILES variable in .bashrc
-    git -C $DOTFILES checkout origin/master shell/bashrc > /dev/null
+    git -C $DOTFILES checkout origin/master packages/configs/bashrc > /dev/null
     git -C $DOTFILES stash &> /dev/null
     git -C $DOTFILES pull
 
@@ -46,6 +46,6 @@ updaterc() {
     fi
 
     # Restore correct $DOTFILES variable in .bashrc and re-apply shell settings
-    $DOTFILES/bootstrap.sh
+    $DOTFILES/install.sh
     source ~/.bashrc
 }
