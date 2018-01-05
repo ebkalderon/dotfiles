@@ -1,1 +1,5 @@
-
+#
+# .gitignore
+#
+# Exclude certain package files from being pulled into Git
+#

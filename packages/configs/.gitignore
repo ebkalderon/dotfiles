@@ -1,3 +1,9 @@
+#
+# .gitignore
+#
+# Exclude certain package files from being pulled into Git
+#
+
 # mpd
 files/mpd/database
 files/mpd/log
