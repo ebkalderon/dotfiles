@@ -40,12 +40,12 @@ updaterc() {
     git -C $DOTFILES pull
 
     # Restore any local uncommitted changes
-    if git -C $DOTFILES stash show -u &> /dev/null; then
+    if git -C ${DOTFILES} stash show -u &> /dev/null; then
         echo "Preserved uncommitted changes."
-        git -C $DOTFILES stash pop > /dev/null
+        git -C ${DOTFILES} stash pop > /dev/null
     fi
 
     # Restore correct $DOTFILES variable in .bashrc and re-apply shell settings
-    $DOTFILES/install.sh
+    ${DOTFILES}/install.sh
     source ~/.bashrc
 }

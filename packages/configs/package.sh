@@ -7,7 +7,7 @@ function _install() {
 
     # Build up a list of symlinks to make
     for FILE in $PACKAGE_FILES/*; do
-        if [[ $(basename $FILE) == config ]]; then
+        if [[ "$(basename $FILE)" = "config" ]]; then
             for SUBFILE in $PACKAGE_FILES/config/*; do
                 LINKS["$SUBFILE"]=".config/$(basename $SUBFILE)"
             done
@@ -28,7 +28,7 @@ function _install() {
 
         # Create new symlink
         ln -s $SRC $DST
-        [ $? -ne 0 ] && error && continue
+        [[ $? -ne 0 ]] && error && continue
 
         ok
     done
