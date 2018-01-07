@@ -27,20 +27,22 @@ _branch_svn() {
 _prompt() {
   local git_branch="$(_branch_git)"
   if [[ -n ${git_branch} ]]; then
-    echo -e "${txtblu}\\u${txtrst}@${txtgrn}\\h ${txtred}\\W" \
-            "${txtpur}${git_branch} ${txtylw}\\\$ ${txtrst}"
+    echo -e "\\[${COLOR_BLUE}\\]\\u\\[${STYLE_RESET}\\]@\\[${COLOR_GREEN}\\]\\h" \
+            "\\[${COLOR_RED}\\]\\W \\[${COLOR_MAGENTA}\\]${git_branch}" \
+            "\\[${COLOR_YELLOW}\\]\\\$ \\[${STYLE_RESET}\\]"
     return
   fi
 
   local svn_branch="$(_branch_svn)"
-  if [[ -n ${git_branch} ]]; then
-    echo -e "${txtblu}\\u${txtrst}@${txtgrn}\\h ${txtred}\\W" \
-            "${txtpur}${git_branch} ${txtylw}\\\$ ${txtrst}"
+  if [[ -n ${svn_branch} ]]; then
+    echo -e "\\[${COLOR_BLUE}\\]\\u\\[${STYLE_RESET}\\]@\\[${COLOR_GREEN}\\]\\h" \
+            "\\[${COLOR_RED}\\]\\W \\[${COLOR_MAGENTA}\\]${svn_branch}" \
+            "\\[${COLOR_YELLOW}\\]\\\$ \\[${STYLE_RESET}\\]"
     return
   fi
 
-  echo -e "${txtblu}\\u${txtrst}@${txtgrn}\\h ${txtred}\\W" \
-          "${txtylw}\\\$ ${txtrst}"
+  echo -e "\\[${COLOR_BLUE}\\]\\u\\[${STYLE_RESET}\\]@\\[${COLOR_GREEN}\\]\\h" \
+          "\\[${COLOR_RED}\\]\\W \\[${COLOR_YELLOW}\\]\\\$ \\[${STYLE_RESET}\\]"
 }
 
 PROMPT_COMMAND='_is_vte_term; PS1=$(_prompt)'

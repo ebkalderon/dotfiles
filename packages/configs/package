@@ -1,13 +1,19 @@
 #!/bin/bash
 
-DESCRIPTION='applying dotfiles...'
+#
+# packages/configs/package
+#
+# Symlinks the included dotfiles to their appropriate locations.
+#
+
+DESCRIPTION='Applying dotfiles...'
 
 _install() {
   declare -A links
 
   # Build up a list of symlinks to make
   for file in ${PACKAGE_FILES}/*; do
-    if [[ "${file##*/}" = config ]]; then
+    if [[ "${file##*/}" == 'config' ]]; then
       for subfile in ${PACKAGE_FILES}/config/*; do
         links[${subfile}]=".config/${subfile##*/}"
       done
@@ -19,7 +25,7 @@ _install() {
   # Create the symlinks in the appropriate places
   for src in "${!links[@]}"; do
     local dest="${HOME}/${links[$src]}"
-    echo -n "applying ${dest}... "
+    echo -n "linking ${dest}... "
 
     # If file/folder exists, back it up
     if [[ -f ${dest} ]] || [[ -L ${dest} ]]; then
@@ -39,8 +45,6 @@ _install() {
 
   # Update .bashrc with correct dotfiles location if not set
   sed -i "s,DOTFILES=.*,DOTFILES=\"${DOTFILES}\",g" "${PACKAGE_FILES}/bashrc"
-
-  return 0
 }
 
 _uninstall() {

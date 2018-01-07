@@ -9,10 +9,10 @@ _TODO: Intro and design description_
   - files/         Local files belonging to the package
     - ...
   - .gitignore     Files to ignore for items in `files/`
-  - package.sh     Package install/uninstall script
+  - package     Package install/uninstall script
 ```
 
-## Example _package.sh_ script
+## Example _package_ script
 
 ```bash
 #!/bin/bash

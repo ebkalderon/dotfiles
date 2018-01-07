@@ -6,8 +6,7 @@
 # Command-line interface for managing dotfiles
 #
 
-DOTFILES="${DOTFILES:=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)}"
-
+readonly DOTFILES="${DOTFILES:=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)}"
 readonly VERSION='0.1.0'
 
 # Load the dotfiles helper functions library
@@ -19,7 +18,7 @@ show_help() {
   echo 'dotfiles - Command-line interface for managing dotfiles'
   echo
   echo 'Usage:'
-  echo '  dotfiles reload   Reloads environment configuration from disk.'
+  echo '  dotfiles reload   Reloads current configuration from disk.'
   echo '  dotfiles update   Fetches the latest dotfiles from the Internet.'
   echo
   echo 'Options:'
@@ -41,6 +40,8 @@ dotfiles_reload() {
 dotfiles_update() {
   packages_pre_update
 
+  # Stash any local uncommitted changes and pull upstream updates
+  header 'Pulling upstream updates...'
   git -C "${DOTFILES}" stash --quiet
   git -C "${DOTFILES}" pull
 
@@ -50,10 +51,13 @@ dotfiles_update() {
     git -C "${DOTFILES}" stash pop --quiet
   fi
 
-  "${DOTFILES}"/install.sh
-
   packages_post_update
-  return $?
+
+  packages_install
+  local err="$?"
+  header 'Update complete.'
+
+  return "${err}"
 }
 
 # Parse long options

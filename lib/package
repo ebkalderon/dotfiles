@@ -1,0 +1,63 @@
+#!/bin/bash
+
+#
+# lib/package
+#
+# Functions for handling packages.
+#
+
+readonly BACKUP_DIR="${HOME}/.dotfiles_old/$(date +'%Y.%m.%d.%H.%M.%S')"
+readonly PACKAGES="$(find "${DOTFILES}/packages/" -name 'package' -type f | sort)"
+
+packages_install() {
+  for package in ${PACKAGES}; do
+    _load_package "${package}"
+
+    header "${DESCRIPTION}"
+    mkdir -p "${BACKUPS}"
+    _install
+  done
+}
+
+packages_uninstall() {
+  for package in ${PACKAGES}; do
+    _load_package "${package}"
+
+    header "${DESCRIPTION}"
+    _uninstall
+  done
+}
+
+packages_pre_update() {
+  header 'Triggering pre-updates...'
+
+  for package in ${PACKAGES}; do
+    _load_package "${package}"
+    _pre_update
+  done
+}
+
+packages_post_update() {
+  header 'Triggering post-updates...'
+
+  for package in ${PACKAGES}; do
+    _load_package "${package}"
+    _post_update
+  done
+}
+
+_load_package() {
+  local package="$1"
+
+  # Unset all package-defined functions, just in case
+  unset -f _install _uninstall _pre_update _post_update
+
+  # Set default values for available variables
+  DESCRIPTION="processing \"${PACKAGE_NAME}\"..."
+  PACKAGE_NAME="$(basename "$(dirname "${package}")")"
+  PACKAGE_FILES="$(dirname "${package}")/files"
+  BACKUPS="${BACKUP_DIR}/${PACKAGE_NAME}"
+
+  # Load the contents of the package
+  source ${package}
+}
