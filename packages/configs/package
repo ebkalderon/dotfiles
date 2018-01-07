@@ -52,8 +52,8 @@ _uninstall() {
 }
 
 _pre_update() {
-  # Reset the DOTFILES variable in .bashrc with the default value to avoid
-  # potential merge conflicts
+  # Temporarily reset the DOTFILES variable in .bashrc with the default value to
+  # avoid potential merge conflicts
   git -C "${DOTFILES}" checkout packages/configs/files/bashrc --quiet
   return $?
 }

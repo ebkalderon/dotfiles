@@ -52,12 +52,9 @@ dotfiles_update() {
   fi
 
   packages_post_update
-
-  packages_install
-  local err="$?"
   header 'Update complete.'
 
-  return "${err}"
+  return 0
 }
 
 # Parse long options
@@ -112,7 +109,12 @@ case ${subcommand} in
     exit $?
     ;;
   *)
-    echo 'error: no command or flags specified'
+    if [[ -z ${subcommand} ]]; then
+      echo 'error: no command or flags specified'
+    else
+      echo "error: invalid subcommand: ${subcommand}"
+    fi
+
     echo 'Try "dotfiles --help" for more information.'
     exit 1
     ;;
