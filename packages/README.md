@@ -20,13 +20,23 @@ _TODO: Intro and design description_
 DESCRIPTION="adjusting trim length of plumbuses..."
 
 # Installs the package
-function _install() {
-    # ...
+_install() {
+  # ...
 }
 
 # Uninstalls the package
-function _uninstall() {
-    # ...
+_uninstall() {
+  # ...
+}
+
+# Executes before `dotfiles update` is run
+_pre_update() {
+  # ...
+}
+
+# Executes after `dotfiles update` is run
+_post_update() {
+  # ...
 }
 ```
 

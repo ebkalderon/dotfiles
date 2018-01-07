@@ -1,24 +1,36 @@
 #!/bin/bash
 
-DESCRIPTION="applying dconf settings..."
-SUFFIX=".dconf"
+DESCRIPTION='applying dconf settings...'
 
-function _install() {
-    FILES=$(ls -d $PACKAGE_FILES/*$SUFFIX)
-    for FILE in $FILES; do
-        SCHEMA=$(echo "/$(basename $FILE)/" | sed "s/${SUFFIX}//g; s/\./\//g")
-        echo -n "loading settings for $SCHEMA... "
+readonly SUFFIX='.dconf'
 
-        dconf dump $SCHEMA > "$BACKUPS/$(basename $FILE)"
-        [[ $? -ne 0 ]] && error && continue
+_install() {
+  local files=$(ls -d "${PACKAGE_FILES}"/*${SUFFIX})
 
-        dconf load $SCHEMA < "$FILE"
-        [[ $? -ne 0 ]] && error && continue
+  for file in ${files}; do
+    # Get the basename of the file, trim the extension suffix.
+    local name="${file##*/}"
+    name="${name%.dconf}"
+    # Replace all dots with forward slashes, and add leading/trailing slashes.
+    local schema="/${name//./\/}/"
+    echo -n "loading settings for ${schema}... "
 
-        ok
-    done
+    if ! dconf dump "${schema}" > "${BACKUPS}/${file##*/}"; then
+      error
+      continue
+    fi
+
+    if ! dconf load "${schema}" < "${file}"; then
+      error
+      continue
+    fi
+
+    ok
+  done
+
+  return 0
 }
 
-function _uninstall() {
-    return
+_uninstall() {
+  return 0
 }

@@ -6,22 +6,22 @@
 # Useful logging output functions
 #
 
-function ok() {
-    echo -e "[ok] "$1
+ok() {
+  echo -e "[ok] "$1
 }
 
-function warning() {
-    echo -e "[warning] "$1
+warning() {
+  echo -e "[warning] "$1
 }
 
-function error() {
-    echo -e "[error] "$1
+error() {
+  echo -e "[error] "$1
 }
 
-function success() {
-    echo -e "[success] "$1
+success() {
+  echo -e "[success] "$1
 }
 
-function failure() {
-    echo -e "[failure] "$1
+failure() {
+  echo -e "[failure] "$1
 }

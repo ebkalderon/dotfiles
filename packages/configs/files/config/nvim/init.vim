@@ -26,7 +26,7 @@ set undofile
 set tabstop=4
 set shiftwidth=4
 set expandtab
-autocmd FileType html,css,scss setlocal shiftwidth=2 tabstop=2
+autocmd FileType css,html,scss,sh setlocal shiftwidth=2 tabstop=2
 
 " Color options
 set t_Co=256

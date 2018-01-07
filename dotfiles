@@ -6,109 +6,110 @@
 # Command-line interface for managing dotfiles
 #
 
-DOTFILES="${DOTFILES:=$HOME/.dotfiles}"
-VERSION=0.1.0
+DOTFILES="${DOTFILES:=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)}"
+
+readonly VERSION='0.1.0'
 
 # Load the dotfiles helper functions library
-for LIB in ${DOTFILES}/lib/*; do
-    source ${LIB}
+for lib in ${DOTFILES}/lib/*; do
+  source ${lib}
 done
 
-function show_help() {
-    echo -e "dotfiles - Command-line interface for managing dotfiles\n"
-    echo "Usage:"
-    echo "  dotfiles reload   Reloads environment configuration from disk."
-    echo "  dotfiles update   Fetches the latest dotfiles from the Internet."
-    echo -e "\nOptions:"
-    echo "  -h --help     Show this screen."
-    echo "  -v --version  Show version."
-    return 0
+show_help() {
+  echo 'dotfiles - Command-line interface for managing dotfiles'
+  echo
+  echo 'Usage:'
+  echo '  dotfiles reload   Reloads environment configuration from disk.'
+  echo '  dotfiles update   Fetches the latest dotfiles from the Internet.'
+  echo
+  echo 'Options:'
+  echo '  -h --help     Show this screen.'
+  echo '  -v --version  Show version.'
+  return 0
 }
 
-function show_version() {
-    echo "dotfiles ${VERSION}"
-    return 0
+show_version() {
+  echo "dotfiles ${VERSION}"
+  return 0
 }
 
-function dotfiles_reload() {
-    source ~/.bashrc
-    return $?
+dotfiles_reload() {
+  source ~/.bashrc
+  return $?
 }
 
-function dotfiles_update() {
-    # Pull dotfiles from git, overwriting the DOTFILES variable in .bashrc
-    # git -C ${DOTFILES} checkout origin/master bash/bashrc > /dev/null
-    git -C ${DOTFILES} checkout packages/configs/files/bashrc --quiet
-    git -C ${DOTFILES} stash --quiet
-    git -C ${DOTFILES} pull
+dotfiles_update() {
+  packages_pre_update
 
-    # Restore any local uncommitted changes
-    if git -C ${DOTFILES} stash show -u &> /dev/null; then
-        echo "Preserved uncommitted changes."
-        git -C ${DOTFILES} stash pop --quiet
-    fi
+  git -C "${DOTFILES}" stash --quiet
+  git -C "${DOTFILES}" pull
 
-    # Restore correct $DOTFILES variable in .bashrc and re-apply shell settings
-    ${DOTFILES}/install.sh
-    dotfiles_reload
+  # Restore any local uncommitted changes
+  if git -C "${DOTFILES}" stash show -u &> /dev/null; then
+    echo 'Preserved uncommitted changes.'
+    git -C "${DOTFILES}" stash pop --quiet
+  fi
 
-    return $?
+  "${DOTFILES}"/install.sh
+
+  packages_post_update
+  return $?
 }
 
 # Parse long options
-for ARG in "$@"; do
-    shift
-    case ${ARG} in
-        "--help" | "help")
-            set -- "$@" "-h"
-            ;;
-        "--version" | "version")
-            set -- "$@" "-v"
-            ;;
-        --*)
-            echo "error: invalid option: ${ARG}" 1>&2
-            exit 1
-            ;;
-        *)
-            set -- "$@" "${ARG}"
-            ;;
-    esac
+for arg in "$@"; do
+  shift
+  case ${arg} in
+    --help | help)
+      set -- "$@" '-h'
+      ;;
+    --version | version)
+      set -- "$@" '-v'
+      ;;
+    --*)
+      echo "error: invalid option: ${arg}" 1>&2
+      exit 1
+      ;;
+    *)
+      set -- "$@" "${arg}"
+      ;;
+  esac
 done
 
 # Parse short options
 OPTIND=1
-while getopts ":hv" OPT; do
-    case ${OPT} in
-        h)
-            show_help
-            exit 0
-            ;;
-        v)
-            show_version
-            exit 0
-            ;;
-        \?)
-            echo "error: invalid option: -${OPTARG}" 1>&2
-            exit 1
-            ;;
-    esac
+while getopts ':hv' opt; do
+  case ${opt} in
+    h)
+      show_help
+      exit 0
+      ;;
+    v)
+      show_version
+      exit 0
+      ;;
+    \?)
+      echo "error: invalid option: -${OPTARG}" 1>&2
+      exit 1
+      ;;
+  esac
 done
-shift $(expr ${OPTIND} - 1)
+shift "$((OPTIND - 1))"
 
 # Parse subcommands
-SUBCOMMAND="$1"; shift
-case "${SUBCOMMAND}" in
-    reload)
-        dotfiles_reload
-        exit $?
-        ;;
-    update)
-        dotfiles_update
-        exit $?
-        ;;
-    *)
-        echo "error: no command or flags specified"
-        echo "Try \"dotfiles --help\" for more information."
-        exit 1
-        ;;
+subcommand="$1"; shift
+case ${subcommand} in
+  reload)
+    dotfiles_reload
+    exit $?
+    ;;
+  update)
+    dotfiles_update
+    exit $?
+    ;;
+  *)
+    echo 'error: no command or flags specified'
+    echo 'Try "dotfiles --help" for more information.'
+    exit 1
+    ;;
 esac

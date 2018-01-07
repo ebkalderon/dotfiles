@@ -10,18 +10,25 @@
 shopt -s checkwinsize
 
 # Enable bash autocompletion
-if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
-    . /etc/bash_completion
+if [[ -f /etc/bash_completion ]] && ! shopt -oq posix; then
+  source /etc/bash_completion
 fi
 
 # Use VTE features if available, like keeping the same CWD when opening new tabs
-[[ -f /etc/profile.d/vte.sh ]] && . /etc/profile.d/vte.sh
+if [[ -f /etc/profile.d/vte.sh ]]; then
+  source /etc/profile.d/vte.sh
+fi
 
-# Locate bash dotfiles
+# Define our top-level dotfiles location
 export DOTFILES="/home/ekalderon/.dotfiles"
-FILES=$(find $DOTFILES/autoload/ -type f | sort)
 
-# Load all files found
-for FILE in $FILES; do
-    . $FILE
+# List all scripts inside the "autoload" directory 
+files=$(find "${DOTFILES}/autoload/" -type f | sort)
+
+# Load all of them
+for file in ${files}; do
+  source ${file}
 done
+
+# Clear up after we're done
+unset files
