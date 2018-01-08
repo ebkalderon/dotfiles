@@ -35,7 +35,7 @@ show_help() {
   echo
   echo 'Options:'
   echo '  -h --help     Show this screen.'
-  echo '  -v --version  Show version.'
+  echo '  -V --version  Show version.'
 
   return 0
 }
@@ -100,7 +100,7 @@ for arg in "$@"; do
       set -- "$@" '-h'
       ;;
     --version | version)
-      set -- "$@" '-v'
+      set -- "$@" '-V'
       ;;
     --*)
       echo "error: invalid option: ${arg}" 1>&2
@@ -114,13 +114,13 @@ done
 
 # Parse short options
 OPTIND=1
-while getopts ':hv' opt; do
+while getopts ':hV' opt; do
   case ${opt} in
     h)
       show_help
       exit 0
       ;;
-    v)
+    V)
       show_version
       exit 0
       ;;

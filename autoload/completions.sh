@@ -3,14 +3,12 @@
 #
 
 _dotfiles() {
-  local cur prev words cword split
-  _init_completion -s || return
+  local cur prev words cword cmd
+  _init_completion || return
 
-  if [[ ${prev} == @(-h | --help | -v | --version) ]]; then
-    return 0
-  fi
+  COMPREPLY=()
+  cmd="${words[1]}"
 
-  local cmd="${words[1]}"
   case "${cmd}" in
     install | remove)
       COMPREPLY=( $(compgen -W '--package --verbose' -- "${cur}") )
@@ -29,10 +27,8 @@ _dotfiles() {
       ;;
   esac
 
-  ${split} && return 0
-
   if [[ ${cword} == 1 ]]; then
-    local opts='install list reload remove update -h --help -v --version'
+    local opts='install list reload remove update -h --help -V --version'
     COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
     return 0
   fi
