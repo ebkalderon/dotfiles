@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 #
 # dotfiles
@@ -9,6 +9,14 @@
 readonly DOTFILES="${DOTFILES:=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)}"
 readonly VERSION='0.1.0'
 
+# List all subcommands and their descriptions
+declare -A subcommands
+subcommands['install']='Installs dotfiles packages.'
+subcommands['list']='Lists all the included packages.'
+subcommands['reload']='Reloads shell configuration from disk.'
+subcommands['remove']='Removes dotfiles packages.'
+subcommands['update']='Fetches the latest dotfiles from GitHub.'
+
 # Load the dotfiles helper functions library
 for lib in ${DOTFILES}/lib/*; do
   source ${lib}
@@ -18,18 +26,45 @@ show_help() {
   echo 'dotfiles - Command-line interface for managing dotfiles'
   echo
   echo 'Usage:'
-  echo '  dotfiles reload   Reloads current configuration from disk.'
-  echo '  dotfiles update   Fetches the latest dotfiles from the Internet.'
+  
+  for name in "${!subcommands[@]}"; do
+    local desc="${subcommands[${name}]}"
+    printf '  dotfiles %-9s %s\n' "${name}" "${desc}"
+  done | sort -k 2
+
   echo
   echo 'Options:'
   echo '  -h --help     Show this screen.'
   echo '  -v --version  Show version.'
+
   return 0
 }
 
 show_version() {
   echo "dotfiles ${VERSION}"
   return 0
+}
+
+dotfiles_install() {
+  header 'Installing dotfiles...'
+  packages_install
+  local err="$?"
+
+  header 'Dotfiles installation complete.'
+  echo '=> Existing dotfiles were backed up in ~/.dotfiles_old/'
+
+  return ${err}
+}
+
+dotfiles_remove() {
+  header 'Uninstalling dotfiles...'
+  packages_uninstall
+  local err="$?"
+
+  header 'Dotfiles uninstallation complete.'
+  echo '=> Backup dotfiles were restored from ~/.dotfiles_old/'
+
+  return ${err}
 }
 
 dotfiles_reload() {
@@ -100,8 +135,16 @@ shift "$((OPTIND - 1))"
 # Parse subcommands
 subcommand="$1"; shift
 case ${subcommand} in
+  install)
+    dotfiles_install
+    exit $?
+    ;;
   reload)
     dotfiles_reload
+    exit $?
+    ;;
+  remove)
+    dotfiles_remove
     exit $?
     ;;
   update)
@@ -111,11 +154,10 @@ case ${subcommand} in
   *)
     if [[ -z ${subcommand} ]]; then
       echo 'error: no command or flags specified'
+      echo 'Try "dotfiles --help" for more information.'
     else
       echo "error: invalid subcommand: ${subcommand}"
     fi
-
-    echo 'Try "dotfiles --help" for more information.'
     exit 1
     ;;
 esac

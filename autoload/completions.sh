@@ -3,14 +3,37 @@
 #
 
 _dotfiles() {
-  local cur prev opts
-  COMPREPLY=()
-  cur="${COMP_WORDS[COMP_CWORD]}"
-  prev="${COMP_WORDS[COMP_CWORD - 1]}"
-  opts="-h -v --help --version"
+  local cur prev words cword split
+  _init_completion -s || return
 
-  if [[ ${cur} = -* ]]; then
-    COMPREPLY=( $(compgen -W "${opts}" -- ${cur}) )
+  if [[ ${prev} == @(-h | --help | -v | --version) ]]; then
+    return 0
+  fi
+
+  local cmd="${words[1]}"
+  case "${cmd}" in
+    install | remove)
+      COMPREPLY=( $(compgen -W '--package --verbose' -- "${cur}") )
+      return 0
+      ;;
+    list)
+      return 0
+      ;;
+    reload)
+      COMPREPLY=( $(compgen -W '--verbose' -- "${cur}") )
+      return 0
+      ;;
+    update)
+      COMPREPLY=( $(compgen -W '--discard-local --verbose' -- "${cur}") )
+      return 0
+      ;;
+  esac
+
+  ${split} && return 0
+
+  if [[ ${cword} == 1 ]]; then
+    local opts='install list reload remove update -h --help -v --version'
+    COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
     return 0
   fi
 }
