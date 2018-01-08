@@ -25,7 +25,7 @@ case you don't like my setup.
 ```
 $ git clone https://github.com/ebkalderon/dotfiles ~/.dotfiles
 $ cd ~/.dotfiles
-$ ./install.sh
+$ ./dotfiles install
 ```
 
 ## Updating
@@ -33,7 +33,7 @@ $ ./install.sh
 To grab the latest version while preserving uncommitted local changes, run:
 
 ```
-$ updaterc
+$ dotfiles update
 ```
 
 ## License
