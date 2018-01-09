@@ -25,22 +25,7 @@ install() {
   # Create the symlinks in the appropriate places
   for src in "${!links[@]}"; do
     local dest="${HOME}/${links[$src]}"
-    echo -n "linking ${dest}... "
-
-    # If file/folder exists, back it up
-    if [[ -f ${dest} ]] || [[ -L ${dest} ]]; then
-      mv "${dest}" "${BACKUPS}"
-    elif [[ -d ${dest} ]]; then
-      cp -rf "${dest}" "${BACKUPS}/"
-    fi
-
-    # Create new symlink
-    if ! ln -s "${src}" "${dest}"; then
-      error
-      continue
-    fi
-
-    ok
+    backup_and_link "${src}" "${dest}"
   done
 
   # Update .bashrc with correct dotfiles location if not set

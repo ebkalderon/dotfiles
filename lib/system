@@ -9,9 +9,9 @@
 execute() {
   local args="$@"
 
-  if [[ ${VERBOSE} -eq 1 ]]; then
+  if [[ ${VERBOSE} == 1 ]]; then
     echo
-    echo "${STYLE_BOLD}VERBOSE:${STYLE_RESET} ${args}"
+    debug "${args}"
     ${args}
     return $?
   fi

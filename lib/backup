@@ -5,3 +5,74 @@
 #
 # Backing up files, managing symlinks, and restoring from earlier backups
 #
+
+backup_and_copy() {
+  local src="$1"
+  local dest="$2"
+
+  echo -n "copying ${dest}... "
+
+  # If file/folder exists, back it up
+  if [[ -f ${dest} ]] || [[ -L ${dest} ]]; then
+    mv "${dest}" "${BACKUPS}/"
+  elif [[ -d ${dest} ]]; then
+    cp -rf "${dest}" "${BACKUPS}/"
+  fi
+
+  # Copy file to destination
+  if ! cp -rf "${src}" "${dest}"; then
+    error
+    return 1
+  fi
+
+  ok
+  return 0
+}
+
+backup_and_link() {
+  local src="$1"
+  local dest="$2"
+
+  echo -n "linking ${dest}... "
+
+  # If file/folder exists, back it up
+  if [[ -f ${dest} ]] || [[ -L ${dest} ]]; then
+    mv "${dest}" "${BACKUPS}/"
+  elif [[ -d ${dest} ]]; then
+    cp -rf "${dest}" "${BACKUPS}/"
+  fi
+
+  # Create new symlink
+  if ! ln -s "${src}" "${dest}"; then
+    error
+    return 1
+  fi
+
+  ok
+  return 0
+}
+
+restore() {
+  local name dest date src
+  name="$1"
+  dest="$2"
+  date="$3"
+
+  echo -n "restoring ${name}... "
+
+  if [[ -n ${date} ]]; then
+    src="${HOME}/.dotfiles_old/${date}/${name}"
+  else
+    # Select the oldest backup directory that contains this file
+    src=$(find "${HOME}/.dotfiles_old/" -name "${name}" | head -1)
+  fi
+
+  # Copy the backed up file
+  if ! cp -rf "${src}" "${dest}"; then
+    error
+    return 1
+  fi
+
+  ok
+  return 0
+}

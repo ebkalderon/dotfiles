@@ -29,21 +29,27 @@ header() {
 }
 
 ok() {
-  echo -e "${COLOR_GREEN}[ok] ${STYLE_RESET}$1"
+  echo -e "${COLOR_GREEN}[ok]${STYLE_RESET} $1"
 }
 
 warning() {
-  echo -e "${COLOR_YELLOW}[warning] ${STYLE_RESET}$1"
+  echo -e "${COLOR_YELLOW}[warning]${STYLE_RESET} $1"
 }
 
 error() {
-  echo -e "${COLOR_RED}[error] ${STYLE_RESET}$1"
+  echo -e "${COLOR_RED}[error]${STYLE_RESET} $1"
 }
 
 success() {
-  echo -e "${COLOR_GREEN}[success] ${STYLE_RESET}$1"
+  echo -e "${COLOR_GREEN}[success]${STYLE_RESET} $1"
 }
 
 failure() {
-  echo -e "${COLOR_RED}[failure] ${STYLE_RESET}$1"
+  echo -e "${COLOR_RED}[failure]${STYLE_RESET} $1"
+}
+
+debug() {
+  if [[ ${VERBOSE} == 1 ]]; then
+    echo -e "${STYLE_BOLD}VERBOSE:${STYLE_RESET} $1"
+  fi
 }
