@@ -63,6 +63,11 @@ dotfiles_list() {
   return 0
 }
 
+dotfiles_reload() {
+  source ~/.bashrc
+  return $?
+}
+
 dotfiles_remove() {
   header 'Uninstalling dotfiles...'
   packages_uninstall
@@ -72,11 +77,6 @@ dotfiles_remove() {
   echo '=> Backup dotfiles were restored from ~/.dotfiles_old/'
 
   return ${err}
-}
-
-dotfiles_reload() {
-  source ~/.bashrc
-  return $?
 }
 
 dotfiles_update() {
