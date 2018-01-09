@@ -1,0 +1,13 @@
+[editor]
+display-right-margin=true
+display-overview-map=true
+scheme='solarized-light'
+display-line-numbers=true
+insert-spaces=true
+background-pattern='none'
+wrap-last-split-mode='word'
+auto-indent=true
+
+[ui]
+show-tabs-mode='auto'
+side-panel-visible=false

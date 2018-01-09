@@ -8,8 +8,6 @@ DESCRIPTION='Configures pacman, installs AUR client, installs programs.'
 INSTALL_MSG='Installing programs...'
 UNINSTALL_MSG='Uninstalling programs...'
 
-PROGRAMS='fortune-mod git neovim python-neovim python2-neovim tmux'
-
 install() {
   echo -n 'checking if platform is Arch Linux... '
   local pacman_bin="$(which pacman)"
@@ -28,12 +26,18 @@ install() {
     return 1
   fi
 
-  echo -n 'checking for system updates... '
-  execute sudo ${pacman_bin} -Syu --noconfirm --noprogressbar
+  echo -n 'refreshing pacman mirrors... '
+  execute sudo ${pacman_bin} -Sy
 
-  for program in ${PROGRAMS}; do
+  echo -n 'building and installing trizen for AUR support...'
+  pushd ${PACKAGE_FILES}/trizen/ &> /dev/null
+  execute makepkg --syncdeps --clean
+  execute sudo ${pacman_bin} -U --noconfirm trizen-*.pkg.tar.xz
+  popd &> /dev/null
+
+  for program in $(cat "${PACKAGE_FILES}"/*.list); do
     echo -n "installing ${program}... "
-    execute sudo pacman -S --noconfirm --noprogressbar "${program}"
+    execute sudo pacman -S --noconfirm "${program}"
   done
 }
 

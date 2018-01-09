@@ -9,6 +9,9 @@
 readonly DOTFILES="${DOTFILES:=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)}"
 readonly VERSION='0.1.0'
 
+# Determines whether we are in verbose mode
+VERBOSE=0
+
 # List all subcommands and their descriptions
 declare -A subcommands
 subcommands['install']='Installs dotfiles packages.'
@@ -104,6 +107,9 @@ dotfiles_update() {
   return 0
 }
 
+# Ensure we exit the script when user hits CTRL+C (SIGINT)
+trap 'exit' INT
+
 # Parse long options
 for arg in "$@"; do
   shift
@@ -113,6 +119,9 @@ for arg in "$@"; do
       ;;
     --version | version)
       set -- "$@" '-V'
+      ;;
+    --verbose)
+      set -- "$@" '-v'
       ;;
     --*)
       echo "error: invalid option: ${arg}" 1>&2
@@ -126,7 +135,7 @@ done
 
 # Parse short options
 OPTIND=1
-while getopts ':hV' opt; do
+while getopts ':hVv' opt; do
   case ${opt} in
     h)
       show_help
@@ -135,6 +144,9 @@ while getopts ':hV' opt; do
     V)
       show_version
       exit 0
+      ;;
+    v)
+      VERBOSE=1
       ;;
     \?)
       echo "error: invalid option: -${OPTARG}" 1>&2
@@ -148,6 +160,17 @@ shift "$((OPTIND - 1))"
 subcommand="$1"; shift
 case ${subcommand} in
   install)
+    while getopts ':v' opt; do
+      case ${opt} in
+        v)
+          VERBOSE=1
+          ;;
+        \?)
+          echo "error: invalid option: -${OPTARG}" 1>&2
+          exit 1
+          ;;
+      esac
+    done
     dotfiles_install
     exit $?
     ;;

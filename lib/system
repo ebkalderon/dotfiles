@@ -9,6 +9,14 @@
 execute() {
   local args="$@"
 
+  if [[ ${VERBOSE} -eq 1 ]]; then
+    echo
+    echo "${STYLE_BOLD}VERBOSE:${STYLE_RESET} ${args}"
+    
+    ${args}
+    return $?
+  fi
+
   ${args} &> /dev/null
   local err="$?"
 

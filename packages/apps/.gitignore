@@ -1,0 +1,9 @@
+#
+# .gitignore
+#
+# Exclude certain package files from being pulled into Git
+#
+
+# Leftover files from the trizen build process
+files/trizen/*.tar.gz
+files/trizen/*.pkg.tar.xz
