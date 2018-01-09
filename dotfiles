@@ -91,7 +91,7 @@ dotfiles_update() {
   git -C "${DOTFILES}" pull
 
   # Restore any local uncommitted changes
-  if git -C "${DOTFILES}" stash show -u &> /dev/null; then
+  if execute git -C "${DOTFILES}" stash show -u; then
     echo 'Preserved uncommitted changes.'
     git -C "${DOTFILES}" stash pop --quiet
   fi
@@ -198,6 +198,17 @@ case ${subcommand} in
     exit $?
     ;;
   update)
+    while getopts ':v' opt; do
+      case ${opt} in
+        v)
+          VERBOSE=1
+          ;;
+        \?)
+          echo "error: invalid option: -${OPTARG}" 1>&2
+          exit 1
+          ;;
+      esac
+    done
     dotfiles_update
     exit $?
     ;;

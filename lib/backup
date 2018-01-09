@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 #
 # lib/backup
@@ -13,14 +13,12 @@ backup_and_copy() {
   echo -n "copying ${dest}... "
 
   # If file/folder exists, back it up
-  if [[ -f ${dest} ]] || [[ -L ${dest} ]]; then
-    mv "${dest}" "${BACKUPS}/"
-  elif [[ -d ${dest} ]]; then
-    cp -rf "${dest}" "${BACKUPS}/"
+  if [[ -e ${dest} ]]; then
+    cp -prf "${dest}" "${BACKUPS}/"
   fi
 
   # Copy file to destination
-  if ! cp -rf "${src}" "${dest}"; then
+  if ! sudo cp -rpf "${src}" "${dest}"; then
     error
     return 1
   fi
@@ -39,7 +37,7 @@ backup_and_link() {
   if [[ -f ${dest} ]] || [[ -L ${dest} ]]; then
     mv "${dest}" "${BACKUPS}/"
   elif [[ -d ${dest} ]]; then
-    cp -rf "${dest}" "${BACKUPS}/"
+    cp -rpf "${dest}" "${BACKUPS}/"
   fi
 
   # Create new symlink
@@ -68,7 +66,7 @@ restore() {
   fi
 
   # Copy the backed up file
-  if ! cp -rf "${src}" "${dest}"; then
+  if ! cp -rpf "${src}" "${dest}" &> /dev/null; then
     error
     return 1
   fi

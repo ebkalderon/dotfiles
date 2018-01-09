@@ -19,11 +19,7 @@ install() {
     return 1
   fi
 
-  echo -n 'copying pacman.conf... '
-  cp /etc/pacman.conf ${BACKUPS}
-  if execute sudo cp "${PACKAGE_FILES}/pacman.conf" /etc/pacman.conf; then
-    sudo chmod 644 /etc/pacman.conf
-  else
+  if ! backup_and_copy "${PACKAGE_FILES}/pacman.conf" /etc/pacman.conf; then
     return 1
   fi
 
@@ -48,12 +44,8 @@ install() {
 }
 
 uninstall() {
-  local oldest_conf="$(find ~/.dotfiles_old/ -name pacman.conf | head -1)"
 
-  echo -n 'restoring old pacman.conf... '
-  if execute sudo cp "${oldest_conf}" /etc/pacman.conf; then
-    sudo chmod 644 /etc/pacman.conf
-  else
+  if ! restore "pacman.conf" /etc/pacman.conf; then
     return 1
   fi
 
