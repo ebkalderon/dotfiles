@@ -17,6 +17,9 @@ _dotfiles() {
     list)
       return 0
       ;;
+    new)
+      return 0
+      ;;
     reload)
       COMPREPLY=( $(compgen -W '--verbose' -- "${cur}") )
       return 0

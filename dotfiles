@@ -14,11 +14,12 @@ VERBOSE=0
 
 # List all subcommands and their descriptions
 declare -A subcommands
-subcommands['install']='Installs dotfiles packages.'
-subcommands['list']='Lists all available packages.'
-subcommands['reload']='Reloads shell configuration from disk.'
-subcommands['remove']='Removes dotfiles packages.'
-subcommands['update']='Fetches the latest dotfiles from GitHub.'
+subcommands['install [ -v|--verbose]']='Install dotfiles packages.'
+subcommands['list']='List all available packages.'
+subcommands['new NAME [-v|--verbose]']='Create a new package NAME in the current dir.'
+subcommands['reload']='Reload shell configuration from disk.'
+subcommands['remove [-v|--verbose]']='Remove dotfiles packages.'
+subcommands['update [-v|--verbose]']='Fetche the latest dotfiles from GitHub.'
 
 # Load the dotfiles helper functions library
 for lib in ${DOTFILES}/lib/*; do
@@ -32,7 +33,7 @@ show_help() {
 
   for name in "${!subcommands[@]}"; do
     local desc="${subcommands[${name}]}"
-    printf '  dotfiles %-9s %s\n' "${name}" "${desc}"
+    printf '  dotfiles %-24s %s\n' "${name}" "${desc}"
   done | sort -k 2
 
   echo
@@ -63,6 +64,40 @@ dotfiles_install() {
 dotfiles_list() {
   echo 'Available packages:'
   packages_list
+  return 0
+}
+
+dotfiles_new() {
+  local name="$1"
+
+  if [[ -z ${name} ]]; then
+    echo "error: no name specified" 1>&2
+    echo "usage: dotfiles new <name>" 1>&2
+    return 1
+  fi
+
+  local pkg_dir="${PWD}/${name}"
+  debug "pkg_dir=${pkg_dir}"
+
+  mkdir -p "${pkg_dir}/files"
+  touch "${pkg_dir}/files/.gitkeep"
+
+  printf "#!/bin/bash\n\n" \
+         "DESCRIPTION=\"Does something.\"\n" \
+         "INSTALL_MSG=\"Installing package...\n" \
+         "UNINSTALL_MSG=\"Uninstalling package...\n\n" \
+         "install() {\n" \
+         "  return\n" \
+         "}\n\n" \
+         "uninstall() {\n" \
+         "  return \n" \
+         "}\n" > "${pkg_dir}/package"
+
+  printf "#\n" \
+         "# .gitignore\n#\n" \
+         "#\n# Exclude certain package files from being pulled into Git\n" \
+         "#\n" > "${pkg_dir}/.gitignore"
+
   return 0
 }
 
@@ -176,6 +211,10 @@ case ${subcommand} in
     ;;
   list)
     dotfiles_list
+    exit $?
+    ;;
+  new)
+    dotfiles_new $1
     exit $?
     ;;
   reload)
