@@ -29,14 +29,14 @@ included `dotfiles` command, you can pick and choose which packages to install.
 2. [Dconf Settings](./packages/dconf/)
    * [gedit](./packages/dconf/files/org.gnome.gedit.preferences.dconf)
    * [Tilix](./packages/dconf/files/com.gexperts.Tilix.dconf)
-3. [Programs](./packages/programs/)
-   1. Core utilities
+3. [Applications](./packages/apps/)
+   1. [Core utilities](./packages/apps/files/core.list)
       * git
       * htop
       * mpd
       * ncmpcpp
       * neovim
-   2. Desktop applications
+   2. [Desktop applications](./packages/apps/files/desktop.list)
       * Firefox
       * LibreOffice
 
