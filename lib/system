@@ -1,0 +1,22 @@
+#!/bin/bash
+
+#
+# lib/system
+#
+# Functions for executing external processes and checking for errors.
+#
+
+execute() {
+  local args="$@"
+
+  ${args} &> /dev/null
+  local err="$?"
+
+  if [[ ${err} != 0 ]]; then
+    error
+  else
+    ok
+  fi
+
+  return ${err}
+}

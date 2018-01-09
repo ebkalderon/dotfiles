@@ -11,6 +11,16 @@ UNINSTALL_MSG='Restoring dconf settings...'
 SUFFIX='.dconf'
 
 install() {
+  echo -n 'checking for existence of dconf... '
+  local dconf_bin="$(which dconf)"
+  if [[ -n ${dconf_bin} ]]; then
+    success
+  else
+    failure
+    echo 'skipping installation...'
+    return 1
+  fi
+
   local files=$(ls -d "${PACKAGE_FILES}"/*${SUFFIX})
 
   for file in ${files}; do

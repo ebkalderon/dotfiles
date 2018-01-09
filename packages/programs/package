@@ -17,27 +17,23 @@ install() {
     success
   else
     failure
+    echo 'skipping installation...'
     return 1
   fi
 
   echo -n 'copying pacman.conf... '
-  if ! sudo cp "${PACKAGE_FILES}/pacman.conf" '/etc/pacman.conf'; then
-    error
-    return 1
-  else
+  if execute sudo cp "${PACKAGE_FILES}/pacman.conf" '/etc/pacman.conf'; then
     sudo chmod 644 /etc/pacman.conf
-    ok
+  else
+    return 1
   fi
 
-  echo -n 'installing updates... '
-  if ! sudo ${pacman_bin} -Syu --noconfirm --noprogressbar &> /dev/null; then
-    error
-  else
-    ok
-  fi
+  echo -n 'checking for system updates... '
+  execute sudo ${pacman_bin} -Syu --noconfirm --noprogressbar
 
   for program in ${PROGRAMS}; do
-    _pacman_install "${program}"
+    echo -n "installing ${program}... "
+    execute sudo pacman -S --noconfirm --noprogressbar "${program}"
   done
 }
 
@@ -46,25 +42,7 @@ uninstall() {
 }
 
 post_update() {
-  echo -n 'updating pacman... '
-  if ! sudo pacman -Syu --noconfirm; then
-    error
-    return 1
-  fi
-
-  ok
-  return 0
-}
-
-_pacman_install() {
-  local package="$1"
-
-  echo -n "installing ${package}... "
-  if ! sudo pacman -S --noconfirm --noprogressbar "${package}" &> /dev/null; then
-    error
-    return 1
-  fi
-
-  ok
-  return 0
+  echo -n 'checking for system updates... '
+  execute sudo pacman -Syu --noconfirm
+  return $?
 }
