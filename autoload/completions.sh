@@ -9,7 +9,7 @@ _dotfiles() {
   COMPREPLY=()
   cmd="${words[1]}"
 
-  case "${cmd}" in
+  case {cmd} in
     install | remove)
       COMPREPLY=( $(compgen -W '--package --verbose' -- "${cur}") )
       return 0

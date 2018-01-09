@@ -1,5 +1,5 @@
 #
-# ncmpcpp/config
+# ~/.ncmpcpp/config
 #
 
 mpd_music_dir = "/home/ekalderon/Music"
