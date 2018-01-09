@@ -7,32 +7,53 @@
 #
 
 readonly BACKUP_DIR="${HOME}/.dotfiles_old/$(date +'%Y.%m.%d.%H.%M.%S')"
+readonly DATABASE="${DOTFILES}/packages/installed"
 readonly PACKAGES="$(find "${DOTFILES}/packages/" -name 'package' -type f | sort)"
 
 packages_list() {
   for package in ${PACKAGES}; do
     _load_package "${package}"
-
     printf '  %-9s %s\n' "${PACKAGE_NAME}" "${DESCRIPTION}"
   done
 }
 
 packages_install() {
+  touch "${DATABASE}"
+
   for package in ${PACKAGES}; do
     _load_package "${package}"
 
+    # Create a package-specific backup directory and install the package
     header "${INSTALL_MSG}"
     mkdir -p "${BACKUPS}"
     install
+
+    # If package name isn't present in the list of installed packages, add it
+    if ! grep -Ex --quiet "${PACKAGE_NAME}" "${DATABASE}"; then
+      echo "${PACKAGE_NAME}" >> "${DATABASE}"
+    fi
   done
 }
 
 packages_uninstall() {
+  touch "${DATABASE}"
+
   for package in ${PACKAGES}; do
     _load_package "${package}"
 
+    # If package is not currently installed, skip it
+    if ! grep -Ex --quiet "${PACKAGE_NAME}" "${DATABASE}"; then
+      header "Package '${PACKAGE_NAME}' not installed. Skipping..."
+      continue
+    fi
+
+    # Uninstall the package
     header "${UNINSTALL_MSG}"
     uninstall
+
+    # Remove it from the list of installed packages
+    grep -Exv "${PACKAGE_NAME}" "${DATABASE}" > "${DATABASE}.tmp"
+    mv "${DATABASE}.tmp" "${DATABASE}"
   done
 }
 

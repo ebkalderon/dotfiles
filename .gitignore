@@ -1,2 +1,5 @@
-# Private tokens
-autoload/wechall.sh
+# Ignore scripts with the prefix `sec.`
+autoload/sec.*.sh
+
+# List of currently installed packages
+packages/installed

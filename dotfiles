@@ -49,7 +49,7 @@ show_version() {
 }
 
 dotfiles_install() {
-  header 'Begin dotfiles installation.'
+  header "Begin installing dotfiles..."
   sudo -v || return 1
   packages_install
   local err="$?"
@@ -72,7 +72,7 @@ dotfiles_reload() {
 }
 
 dotfiles_remove() {
-  header 'Begin dotfiles deinstallation'
+  header 'Begin uninstalling dotfiles...'
   packages_uninstall
   local err="$?"
 

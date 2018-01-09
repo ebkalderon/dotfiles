@@ -68,7 +68,7 @@ uninstall() {
     done
   fi
 
-  echo -n 'uninstalling trizen...'
+  echo -n 'uninstalling trizen... '
   execute sudo pacman -R --noconfirm trizen
 }
 
