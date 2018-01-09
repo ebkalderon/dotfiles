@@ -82,21 +82,23 @@ dotfiles_new() {
   mkdir -p "${pkg_dir}/files"
   touch "${pkg_dir}/files/.gitkeep"
 
-  printf "#!/bin/bash\n\n" \
-         "DESCRIPTION=\"Does something.\"\n" \
-         "INSTALL_MSG=\"Installing package...\n" \
-         "UNINSTALL_MSG=\"Uninstalling package...\n\n" \
-         "install() {\n" \
-         "  return\n" \
-         "}\n\n" \
-         "uninstall() {\n" \
-         "  return \n" \
-         "}\n" > "${pkg_dir}/package"
+  local package="#!/bin/bash\n\n"
+  package+="DESCRIPTION='Does something cool.\"\n"
+  package+="INSTALL_MSG='Installing package...'\n"
+  package+="UNINSTALL_MSG='Uninstalling package...'\n\n"
+  package+="install() {\n"
+  package+="  return\n"
+  package+="}\n\n"
+  package+="uninstall() {\n"
+  package+="  return \n"
+  package+="}\n"
+  printf "${package}" > "${pkg_dir}/package"
 
-  printf "#\n" \
-         "# .gitignore\n#\n" \
-         "#\n# Exclude certain package files from being pulled into Git\n" \
-         "#\n" > "${pkg_dir}/.gitignore"
+  local gitignore="#\n"
+  gitignore+="# .gitignore\n#\n"
+  gitignore+="#\n# Exclude certain package files from being pulled into Git\n"
+  gitignore+="#\n"
+  printf "${gitignore}" > "${pkg_dir}/.gitignore"
 
   return 0
 }
