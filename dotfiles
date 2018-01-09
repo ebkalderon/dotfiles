@@ -3,7 +3,7 @@
 #
 # dotfiles
 #
-# Command-line interface for managing dotfiles
+# Command-line interface for managing dotfiles.
 #
 
 readonly DOTFILES="${DOTFILES:=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)}"
@@ -12,7 +12,7 @@ readonly VERSION='0.1.0'
 # List all subcommands and their descriptions
 declare -A subcommands
 subcommands['install']='Installs dotfiles packages.'
-subcommands['list']='Lists all the included packages.'
+subcommands['list']='Lists all available packages.'
 subcommands['reload']='Reloads shell configuration from disk.'
 subcommands['remove']='Removes dotfiles packages.'
 subcommands['update']='Fetches the latest dotfiles from GitHub.'
@@ -47,6 +47,7 @@ show_version() {
 
 dotfiles_install() {
   header 'Installing dotfiles...'
+  sudo -v || return 1
   packages_install
   local err="$?"
 
@@ -54,6 +55,12 @@ dotfiles_install() {
   echo '=> Existing dotfiles were backed up in ~/.dotfiles_old/'
 
   return ${err}
+}
+
+dotfiles_list() {
+  echo 'Available packages:'
+  packages_list
+  return 0
 }
 
 dotfiles_remove() {
@@ -85,6 +92,11 @@ dotfiles_update() {
     echo 'Preserved uncommitted changes.'
     git -C "${DOTFILES}" stash pop --quiet
   fi
+
+  # Install the new packages
+  header 'Reinstalling dotfiles...'
+  sudo -v || return 1
+  packages_install
 
   packages_post_update
   header 'Update complete.'
@@ -137,6 +149,10 @@ subcommand="$1"; shift
 case ${subcommand} in
   install)
     dotfiles_install
+    exit $?
+    ;;
+  list)
+    dotfiles_list
     exit $?
     ;;
   reload)

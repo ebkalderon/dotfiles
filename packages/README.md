@@ -17,25 +17,27 @@ _TODO: Intro and design description_
 ```bash
 #!/bin/bash
 
-DESCRIPTION="adjusting trim length of plumbuses..."
+DESCRIPTION='Package for maintaining plumbuses.'
+INSTALL_MSG='Adjusting direction of flumberboozle...'
+UNINSTALL_MSG='Restoring flumberboozle direction...'
 
 # Installs the package
-_install() {
+install() {
   # ...
 }
 
 # Uninstalls the package
-_uninstall() {
+uninstall() {
   # ...
 }
 
 # Executes before `dotfiles update` is run
-_pre_update() {
+pre_update() {
   # ...
 }
 
 # Executes after `dotfiles update` is run
-_post_update() {
+post_update() {
   # ...
 }
 ```

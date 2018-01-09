@@ -1,0 +1,70 @@
+#!/bin/bash
+
+#
+# packages/programs/package
+#
+
+DESCRIPTION='Configures pacman, installs AUR client, installs programs.'
+INSTALL_MSG='Installing programs...'
+UNINSTALL_MSG='Uninstalling programs...'
+
+PROGRAMS='fortune-mod git neovim python-neovim python2-neovim tmux'
+
+install() {
+  echo -n 'checking if platform is Arch Linux... '
+  local pacman_bin="$(which pacman)"
+  if [[ -n ${pacman_bin} ]]; then
+    success
+  else
+    failure
+    return 1
+  fi
+
+  echo -n 'copying pacman.conf... '
+  if ! sudo cp "${PACKAGE_FILES}/pacman.conf" '/etc/pacman.conf'; then
+    error
+    return 1
+  else
+    sudo chmod 644 /etc/pacman.conf
+    ok
+  fi
+
+  echo -n 'installing updates... '
+  if ! sudo ${pacman_bin} -Syu --noconfirm --noprogressbar &> /dev/null; then
+    error
+  else
+    ok
+  fi
+
+  for program in ${PROGRAMS}; do
+    _pacman_install "${program}"
+  done
+}
+
+uninstall() {
+  return
+}
+
+post_update() {
+  echo -n 'updating pacman... '
+  if ! sudo pacman -Syu --noconfirm; then
+    error
+    return 1
+  fi
+
+  ok
+  return 0
+}
+
+_pacman_install() {
+  local package="$1"
+
+  echo -n "installing ${package}... "
+  if ! sudo pacman -S --noconfirm --noprogressbar "${package}" &> /dev/null; then
+    error
+    return 1
+  fi
+
+  ok
+  return 0
+}

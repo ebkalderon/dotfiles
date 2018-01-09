@@ -1,10 +1,16 @@
 #!/bin/bash
 
-DESCRIPTION='Applying dconf settings...'
+#
+# packages/dconf/package
+#
+
+DESCRIPTION='Manages dconf settings for applications that use it, e.g. Tilix.'
+INSTALL_MSG='Applying dconf settings...'
+UNINSTALL_MSG='Restoring dconf settings...'
 
 SUFFIX='.dconf'
 
-_install() {
+install() {
   local files=$(ls -d "${PACKAGE_FILES}"/*${SUFFIX})
 
   for file in ${files}; do
@@ -29,14 +35,6 @@ _install() {
   done
 }
 
-_uninstall() {
-  return
-}
-
-_pre_update() {
-  return
-}
-
-_post_update() {
+uninstall() {
   return
 }

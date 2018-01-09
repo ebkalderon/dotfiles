@@ -3,12 +3,12 @@
 #
 # packages/configs/package
 #
-# Symlinks the included dotfiles to their appropriate locations.
-#
 
-DESCRIPTION='Applying dotfiles...'
+DESCRIPTION='Symlinks the included dotfiles to their appropriate locations.'
+INSTALL_MSG='Applying dotfiles...'
+UNINSTALL_MSG='Restoring dotfiles...'
 
-_install() {
+install() {
   declare -A links
 
   # Build up a list of symlinks to make
@@ -47,18 +47,18 @@ _install() {
   sed -i "s,DOTFILES=.*,DOTFILES=\"${DOTFILES}\",g" "${PACKAGE_FILES}/bashrc"
 }
 
-_uninstall() {
-  return 0
+uninstall() {
+  return
 }
 
-_pre_update() {
+pre_update() {
   # Temporarily reset the DOTFILES variable in .bashrc with the default value to
   # avoid potential merge conflicts
   # git -C "${DOTFILES}" checkout packages/configs/files/bashrc --quiet
   return $?
 }
 
-_post_update() {
+post_update() {
   source ~/.bashrc
   return $?
 }

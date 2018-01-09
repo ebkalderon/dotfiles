@@ -37,7 +37,7 @@ warning() {
 }
 
 error() {
-  echo -e "${COLOR_RED} [error] ${STYLE_RESET}$1"
+  echo -e "${COLOR_RED}[error] ${STYLE_RESET}$1"
 }
 
 success() {
