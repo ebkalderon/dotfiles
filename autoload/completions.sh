@@ -31,7 +31,7 @@ _dotfiles() {
   esac
 
   if [[ ${cword} == 1 ]]; then
-    local opts='install list reload remove update -h --help -V --version'
+    local opts='install list new reload remove update -h --help -V --version'
     COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
     return 0
   fi
