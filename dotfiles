@@ -49,7 +49,7 @@ show_version() {
 }
 
 dotfiles_install() {
-  header 'Installing dotfiles...'
+  header 'Begin dotfiles installation.'
   sudo -v || return 1
   packages_install
   local err="$?"
@@ -72,11 +72,11 @@ dotfiles_reload() {
 }
 
 dotfiles_remove() {
-  header 'Uninstalling dotfiles...'
+  header 'Begin dotfiles deinstallation'
   packages_uninstall
   local err="$?"
 
-  header 'Dotfiles uninstallation complete.'
+  header 'Dotfiles deinstallation complete.'
   echo '=> Backup dotfiles were restored from ~/.dotfiles_old/'
 
   return ${err}
@@ -183,6 +183,17 @@ case ${subcommand} in
     exit $?
     ;;
   remove)
+    while getopts ':v' opt; do
+      case ${opt} in
+        v)
+          VERBOSE=1
+          ;;
+        \?)
+          echo "error: invalid option: -${OPTARG}" 1>&2
+          exit 1
+          ;;
+      esac
+    done
     dotfiles_remove
     exit $?
     ;;

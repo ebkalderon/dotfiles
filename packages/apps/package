@@ -5,8 +5,8 @@
 #
 
 DESCRIPTION='Configures pacman, installs AUR client, installs programs.'
-INSTALL_MSG='Installing programs...'
-UNINSTALL_MSG='Uninstalling programs...'
+INSTALL_MSG='Installing applications...'
+UNINSTALL_MSG='Restoring applications...'
 
 install() {
   echo -n 'checking if platform is Arch Linux... '
@@ -20,7 +20,8 @@ install() {
   fi
 
   echo -n 'copying pacman.conf... '
-  if execute sudo cp "${PACKAGE_FILES}/pacman.conf" '/etc/pacman.conf'; then
+  cp /etc/pacman.conf ${BACKUPS}
+  if execute sudo cp "${PACKAGE_FILES}/pacman.conf" /etc/pacman.conf; then
     sudo chmod 644 /etc/pacman.conf
   else
     return 1
@@ -29,20 +30,46 @@ install() {
   echo -n 'refreshing pacman mirrors... '
   execute sudo ${pacman_bin} -Sy
 
-  echo -n 'building and installing trizen for AUR support...'
+  echo -n 'building and installing trizen for AUR support... '
   pushd ${PACKAGE_FILES}/trizen/ &> /dev/null
-  execute makepkg --syncdeps --clean
-  execute sudo ${pacman_bin} -U --noconfirm trizen-*.pkg.tar.xz
+  execute makepkg --syncdeps --clean --force && \
+    sudo ${pacman_bin} -U --noconfirm trizen-*.pkg.tar.xz &> /dev/null
   popd &> /dev/null
 
   for program in $(cat "${PACKAGE_FILES}"/*.list); do
     echo -n "installing ${program}... "
+
+    if ! ${pacman_bin} -Qq ${program} &> /dev/null; then
+      echo "${program}" >> "${BACKUPS}/programs_added"
+    fi
+
     execute sudo pacman -S --noconfirm "${program}"
   done
 }
 
 uninstall() {
-  return
+  local oldest_conf="$(find ~/.dotfiles_old/ -name pacman.conf | head -1)"
+
+  echo -n 'restoring old pacman.conf... '
+  if execute sudo cp "${oldest_conf}" /etc/pacman.conf; then
+    sudo chmod 644 /etc/pacman.conf
+  else
+    return 1
+  fi
+
+  local programs_added="$(find ~/.dotfiles_old/ -name programs_added)"
+
+  if [[ -n ${programs_added} ]]; then
+    local programs="$(cat ${programs_added} | sort -u)"
+
+    for program in ${programs}; do
+      echo -n "uninstalling ${program}... "
+      execute sudo pacman -R --noconfirm "${program}"
+    done
+  fi
+
+  echo -n 'uninstalling trizen...'
+  execute sudo pacman -R --noconfirm trizen
 }
 
 post_update() {
