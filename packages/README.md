@@ -44,9 +44,10 @@ post_update() {
 
 ## Available variables
 
-Name            | Description                          | Default Value
-----------------|--------------------------------------|----------------------------------
-`BACKUPS`       | Absolute path to `.dotfiles_old`.    | `$HOME/.dotfiles_old/<date>/<name>/`
-`DOTFILES`      | Absolute path to `.dotfiles`.        | `$HOME/.dotfiles`
-`PACKAGE_NAME`  | Name of the package being installed. | `<name>`
-`PACKAGE_FILES` | Directory with files to (un)install. | `$DOTFILES/packages/<name>/files`
+Name              | Description                          | Default Value
+------------------|--------------------------------------|------------------------------------
+`BACKUPS`         | Absolute path to `.dotfiles_old`.    | `${HOME}/.dotfiles_old`
+`DOTFILES`        | Absolute path to `.dotfiles`.        | `${HOME}/.dotfiles`
+`PACKAGE_BACKUPS` | Directory to store backup files.     | `${BACKUPS}/<timestamp>/<name>`
+`PACKAGE_NAME`    | Name of the package being installed. | `<name>`
+`PACKAGE_FILES`   | Directory with files to (un)install. | `${DOTFILES}/packages/<name>/files`

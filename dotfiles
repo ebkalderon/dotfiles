@@ -19,7 +19,7 @@ subcommands['list']='List all available packages.'
 subcommands['new NAME [-v|--verbose]']='Create a new package NAME in the current dir.'
 subcommands['reload']='Reload shell configuration from disk.'
 subcommands['remove [-v|--verbose]']='Remove dotfiles packages.'
-subcommands['update [-v|--verbose]']='Fetche the latest dotfiles from GitHub.'
+subcommands['update [-v|--verbose]']='Fetch the latest dotfiles from GitHub.'
 
 # Load the dotfiles helper functions library
 for lib in ${DOTFILES}/lib/*; do
@@ -108,6 +108,7 @@ dotfiles_reload() {
 
 dotfiles_remove() {
   header 'Begin uninstalling dotfiles...'
+  sudo -v || return 1
   packages_uninstall
   local err="$?"
 

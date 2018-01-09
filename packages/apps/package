@@ -19,9 +19,7 @@ install() {
     return 1
   fi
 
-  if ! backup_and_copy "${PACKAGE_FILES}/pacman.conf" /etc/pacman.conf; then
-    return 1
-  fi
+  backup_and_copy "${PACKAGE_FILES}/pacman.conf" /etc/pacman.conf || return 1
 
   echo -n 'refreshing pacman mirrors... '
   execute sudo ${pacman_bin} -Sy
@@ -36,7 +34,7 @@ install() {
     echo -n "installing ${program}... "
 
     if ! ${pacman_bin} -Qq ${program} &> /dev/null; then
-      echo "${program}" >> "${BACKUPS}/programs_added"
+      echo "${program}" >> "${PACKAGE_BACKUPS}/programs_added"
     fi
 
     execute sudo pacman -S --noconfirm "${program}"
@@ -45,9 +43,7 @@ install() {
 
 uninstall() {
 
-  if ! restore "pacman.conf" /etc/pacman.conf; then
-    return 1
-  fi
+  restore "pacman.conf" /etc/pacman.conf || return 1
 
   local programs_added="$(find ~/.dotfiles_old/ -name programs_added)"
 

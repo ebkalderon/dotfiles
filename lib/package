@@ -25,7 +25,7 @@ packages_install() {
 
     # Create a package-specific backup directory and install the package
     header "${INSTALL_MSG}"
-    mkdir -p "${BACKUPS}"
+    mkdir -p "${PACKAGE_BACKUPS}"
     install
 
     # If package name isn't present in the list of installed packages, add it
@@ -86,7 +86,7 @@ _load_package() {
   # Set default values for available variables
   PACKAGE_FILES="$(dirname "${package}")/files"
   PACKAGE_NAME="$(basename "$(dirname "${package}")")"
-  BACKUPS="${BACKUP_DIR}/${PACKAGE_NAME}"
+  PACKAGE_BACKUPS="${BACKUP_DIR}/${PACKAGE_NAME}"
   DESCRIPTION="No description available for ${PACKAGE_NAME}."
   INSTALL_MSG="Installing \"${PACKAGE_NAME}\" package..."
   UNINSTALL_MSG="Uninstalling \"${PACKAGE_NAME}\" package..."

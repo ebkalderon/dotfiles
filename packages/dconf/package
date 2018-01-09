@@ -22,7 +22,6 @@ install() {
   fi
 
   local files=$(ls -d "${PACKAGE_FILES}"/*${SUFFIX})
-
   for file in ${files}; do
     # Get the basename of the file, trim the extension suffix.
     local name="${file##*/}"
@@ -31,16 +30,8 @@ install() {
     local schema="/${name//./\/}/"
     echo -n "loading settings for ${schema}... "
 
-    if ! dconf dump "${schema}" > "${BACKUPS}/${file##*/}"; then
-      error
-      continue
-    fi
-
-    if ! dconf load "${schema}" < "${file}"; then
-      error
-      continue
-    fi
-
+    dconf dump "${schema}" > "${PACKAGE_BACKUPS}/${file##*/}" || { error && continue; }
+    dconf load "${schema}" < "${file}" || { error && continue; }
     ok
   done
 }

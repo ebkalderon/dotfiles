@@ -14,16 +14,13 @@ backup_and_copy() {
 
   # If file/folder exists, back it up
   if [[ -e ${dest} ]]; then
-    cp -prf "${dest}" "${BACKUPS}/"
+    cp -prf "${dest}" "${PACKAGE_BACKUPS}/"
   fi
 
   # Copy file to destination
-  if ! sudo cp -rpf "${src}" "${dest}"; then
-    error
-    return 1
-  fi
-
+  sudo cp -rpf "${src}" "${dest}" || { error && return 1; }
   ok
+
   return 0
 }
 
@@ -35,18 +32,15 @@ backup_and_link() {
 
   # If file/folder exists, back it up
   if [[ -f ${dest} ]] || [[ -L ${dest} ]]; then
-    mv "${dest}" "${BACKUPS}/"
+    mv "${dest}" "${PACKAGE_BACKUPS}/"
   elif [[ -d ${dest} ]]; then
-    cp -rpf "${dest}" "${BACKUPS}/"
+    cp -rpf "${dest}" "${PACKAGE_BACKUPS}/"
   fi
 
   # Create new symlink
-  if ! ln -s "${src}" "${dest}"; then
-    error
-    return 1
-  fi
-
+  ln -s "${src}" "${dest}" || { error && return 1; }
   ok
+
   return 0
 }
 
@@ -66,11 +60,8 @@ restore() {
   fi
 
   # Copy the backed up file
-  if ! cp -rpf "${src}" "${dest}" &> /dev/null; then
-    error
-    return 1
-  fi
-
+  cp -rpf "${src}" "${dest}" &> /dev/null || { error && return 1; }
   ok
+
   return 0
 }
