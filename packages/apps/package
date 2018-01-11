@@ -25,15 +25,15 @@ install() {
   execute sudo ${pacman_bin} -Sy
 
   echo -n 'building and installing trizen for AUR support... '
-  pushd ${PACKAGE_FILES}/trizen/ &> /dev/null
+  execute_silent pushd ${PACKAGE_FILES}/trizen/
   execute makepkg --syncdeps --clean --force && \
-    sudo ${pacman_bin} -U --noconfirm trizen-*.pkg.tar.xz &> /dev/null
-  popd &> /dev/null
+    execute_silent sudo ${pacman_bin} -U --noconfirm trizen-*.pkg.tar.xz
+  execute_silent popd
 
   for program in $(cat "${PACKAGE_FILES}"/*.list); do
     echo -n "installing ${program}... "
 
-    if ! ${pacman_bin} -Qq ${program} &> /dev/null; then
+    if ! execute_silent ${pacman_bin} -Qq ${program}; then
       echo "${program}" >> "${PACKAGE_BACKUPS}/programs_added"
     fi
 
@@ -62,6 +62,6 @@ uninstall() {
 
 post_update() {
   echo -n 'checking for system updates... '
-  execute sudo pacman -Syu --noconfirm
+  execute trizen -Syu --noconfirm
   return $?
 }

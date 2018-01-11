@@ -129,7 +129,7 @@ dotfiles_update() {
   git -C "${DOTFILES}" pull
 
   # Restore any local uncommitted changes
-  if execute git -C "${DOTFILES}" stash show -u; then
+  if execute_silent git -C "${DOTFILES}" stash show -u; then
     echo 'Preserved uncommitted changes.'
     git -C "${DOTFILES}" stash pop --quiet
   fi

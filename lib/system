@@ -6,23 +6,30 @@
 # Functions for executing external processes and checking for errors.
 #
 
-execute() {
+execute_silent() {
   local args="$@"
 
   if [[ ${VERBOSE} == 1 ]]; then
     echo
     debug "${args}"
     ${args}
-    return $?
+  else
+    ${args} &> /dev/null
   fi
 
-  ${args} &> /dev/null
+  return $?
+}
+
+execute() {
+  execute_silent "$@"
   local err="$?"
 
-  if [[ ${err} != 0 ]]; then
-    error
-  else
-    ok
+  if [[ ${VERBOSE} != 1 ]]; then
+    if [[ ${err} != 0 ]]; then
+      error
+    else
+      ok
+    fi
   fi
 
   return ${err}
