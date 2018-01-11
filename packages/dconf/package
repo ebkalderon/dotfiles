@@ -12,7 +12,7 @@ SUFFIX='.dconf'
 
 install() {
   echo -n 'checking for existence of dconf... '
-  local dconf_bin="$(which dconf)"
+  local dconf_bin="$(command -v dconf)"
   if [[ -n ${dconf_bin} ]]; then
     success
   else

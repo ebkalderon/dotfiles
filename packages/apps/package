@@ -10,7 +10,7 @@ UNINSTALL_MSG='Restoring applications...'
 
 install() {
   echo -n 'checking if platform is Arch Linux... '
-  if execute_silent which pacman; then
+  if [[ ${PLATFORM} == 'ARCH' ]]; then
     success
   else
     failure
