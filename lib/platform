@@ -1,0 +1,87 @@
+#!/bin/bash
+
+#
+# lib/platform
+#
+# Detection of underlying platform and abstracting over system package managers.
+#
+
+platform_detect() {
+  if [[ -f /etc/arch-release ]]; then
+    local packager='sudo pacman'
+    command -v pacaur &> /dev/null && packager='pacaur'
+    command -v trizen &> /dev/null && packager='trizen'
+
+    PLATFORM_NAME='ARCH'
+    PLATFORM_INSTALL="${packager} -S --noconfirm --needed"
+    PLATFORM_REMOVE="${packager} -R --noconfirm"
+    PLATFORM_UPDATE="${packager} -Sy"
+    PLATFORM_UPGRADE="${packager} -Su --noconfirm"
+  elif [[ -f /etc/redhat-release ]] || [[ -f /etc/system-release-cpe ]]; then
+    PLATFORM_NAME='REDHAT'
+    PLATFORM_INSTALL='sudo yum install -y'
+    PLATFORM_REMOVE='sudo yum remove -y'
+    PLATFORM_UPDATE='sudo yum clean metadata'
+    PLATFORM_UPGRADE='sudo yum update -y'
+  elif [[ $(uname) == 'FreeBSD' ]]; then
+    PLATFORM_NAME='FREEBSD'
+    PLATFORM_INSTALL='sudo pkg install -y'
+    PLATFORM_REMOVE='sudo pkg delete -y'
+    PLATFORM_UPDATE='sudo pkg update'
+    PLATFORM_UPGRADE='sudo pkg upgrade -y'
+  elif [[ -f /System/Library/CoreServices/SystemVersion.plist ]]; then
+    PLATFORM_NAME='MACOS'
+    PLATFORM_INSTALL='sudo brew install'
+    PLATFORM_REMOVE='sudo brew uninstall'
+    PLATFORM_UPDATE='sudo brew update'
+    PLATFORM_UPGRADE='sudo brew upgrade'
+  fi
+
+  debug 'Detected platform info:'
+  debug "PLATFORM_NAME=${PLATFORM_NAME}"
+  debug "PLATFORM_INSTALL=${PLATFORM_INSTALL}"
+  debug "PLATFORM_REMOVE=${PLATFORM_REMOVE}"
+  debug "PLATFORM_UPDATE=${PLATFORM_UPDATE}"
+  debug "PLATFORM_UPGRADE=${PLATFORM_UPGRADE}"
+}
+
+platform_install() {
+  local package="$1"
+
+  echo -n "installing ${package}... "
+  execute ${PLATFORM_INSTALL} ${package}
+
+  return $?
+}
+
+platform_remove() {
+  local package="$1"
+
+  echo -n "uninstalling ${package}... "
+  execute ${PLATFORM_REMOVE} ${package}
+
+  return $?
+}
+
+platform_update() {
+  echo -n 'updating package mirrors... '
+  execute ${PLATFORM_UPDATE}
+
+  return $?
+}
+
+platform_upgrade() {
+  local package="$1"
+
+  if [[ -n ${package} ]]; then
+    echo -n "upgrading ${package}... "
+  else
+    echo -n 'installing system updates... '
+  fi
+
+  execute ${PLATFORM_UPGRADE} ${package}
+
+  return $?
+}
+
+platform_detect

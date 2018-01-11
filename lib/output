@@ -23,6 +23,12 @@ readonly STYLE_BLINK="$(tput blink)"
 readonly STYLE_REVERSE="$(tput smso)"
 readonly STYLE_UNDERLINE="$(tput smul)"
 
+debug() {
+  if [[ ${VERBOSE} == 1 ]]; then
+    echo -e "${STYLE_BOLD}VERBOSE:${STYLE_RESET} $1"
+  fi
+}
+
 header() {
   local text="$1"
   echo -e "${COLOR_BLUE}${STYLE_BOLD}:: ${COLOR_WHITE}${text}${STYLE_RESET}"
@@ -46,10 +52,4 @@ success() {
 
 failure() {
   echo -e "${COLOR_RED}[failure]${STYLE_RESET} $1"
-}
-
-debug() {
-  if [[ ${VERBOSE} == 1 ]]; then
-    echo -e "${STYLE_BOLD}VERBOSE:${STYLE_RESET} $1"
-  fi
 }

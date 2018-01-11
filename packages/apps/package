@@ -10,8 +10,7 @@ UNINSTALL_MSG='Restoring applications...'
 
 install() {
   echo -n 'checking if platform is Arch Linux... '
-  local pacman_bin="$(which pacman)"
-  if [[ -n ${pacman_bin} ]]; then
+  if execute_silent which pacman; then
     success
   else
     failure
@@ -20,30 +19,26 @@ install() {
   fi
 
   backup_and_copy "${PACKAGE_FILES}/pacman.conf" /etc/pacman.conf || return 1
-
-  echo -n 'refreshing pacman mirrors... '
-  execute sudo ${pacman_bin} -Sy
+  platform_update
 
   echo -n 'building and installing trizen for AUR support... '
   execute_silent pushd ${PACKAGE_FILES}/trizen/
   execute makepkg --syncdeps --clean --force && \
-    execute_silent sudo ${pacman_bin} -U --noconfirm trizen-*.pkg.tar.xz
+    execute_silent sudo pacman -U --noconfirm trizen-*.pkg.tar.xz && \
+    platform_detect
   execute_silent popd
 
   for program in $(cat "${PACKAGE_FILES}"/*.list); do
-    echo -n "installing ${program}... "
-
-    if ! execute_silent ${pacman_bin} -Qq ${program}; then
+    if ! execute_silent pacman -Qq ${program}; then
       echo "${program}" >> "${PACKAGE_BACKUPS}/programs_added"
     fi
 
-    execute sudo pacman -S --noconfirm "${program}"
+    platform_install "${program}"
   done
 }
 
 uninstall() {
-
-  restore "pacman.conf" /etc/pacman.conf || return 1
+  restore pacman.conf /etc/pacman.conf || return 1
 
   local programs_added="$(find ~/.dotfiles_old/ -name programs_added)"
 
@@ -51,17 +46,15 @@ uninstall() {
     local programs="$(cat ${programs_added} | sort -u)"
 
     for program in ${programs}; do
-      echo -n "uninstalling ${program}... "
-      execute sudo pacman -R --noconfirm "${program}"
+      platform_remove "${program}"
     done
   fi
 
-  echo -n 'uninstalling trizen... '
-  execute sudo pacman -R --noconfirm trizen
+  platform_remove trizen
+  platform_detect
 }
 
 post_update() {
-  echo -n 'checking for system updates... '
-  execute trizen -Syu --noconfirm
-  return $?
+  platform_update
+  platform_upgrade
 }

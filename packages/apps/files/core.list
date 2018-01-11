@@ -1,5 +1,11 @@
+base-devel
+clang
+cmake
 fortune-mod
 git
+multilib-devel
 neovim
+nmap
 python-neovim
 python2-neovim
+tmux
