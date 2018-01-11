@@ -31,14 +31,10 @@ included `dotfiles` command, you can pick and choose which packages to install.
    * [Tilix](./packages/dconf/files/com.gexperts.Tilix.dconf)
 3. [Applications](./packages/apps/)
    1. [Core utilities](./packages/apps/files/core.list)
-      * git
-      * htop
-      * mpd
-      * ncmpcpp
-      * neovim
    2. [Desktop applications](./packages/apps/files/desktop.list)
-      * Firefox
-      * LibreOffice
+   3. [DIY electronics tools](./packages/apps/files/electronics.list)
+   4. [Graphics programming tools](./packages/apps/files/graphics.list)
+   5. [Visual theme](./packages/apps/files/theme.list)
 
 ## Installation
 
