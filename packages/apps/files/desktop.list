@@ -2,6 +2,7 @@ chrome-gnome-shell
 firefox
 keepassxc
 eog
+evince
 file-roller
 geary
 gedit
@@ -9,6 +10,7 @@ gitg
 gnome-calendar
 gnome-clocks
 gnome-desktop
+gnome-disks
 gnome-logs
 gnome-shell
 gnome-shell-extensions
