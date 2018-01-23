@@ -79,7 +79,7 @@ set hidden
 let g:languageClient_autoStart = 1
 let g:LanguageClient_serverCommands = {
     \ 'python': ['pyls'],
-    \ 'rust': ['rustup', 'run', 'nightly', 'rls'],
+    \ 'rust': ['rustup', 'run', 'stable', 'rls'],
     \ }
 
 nnoremap <silent> K :call LanguageClient_textDocument_hover()<CR>

@@ -8,4 +8,5 @@ neovim
 nmap
 python-neovim
 python2-neovim
+shellcheck
 tmux
