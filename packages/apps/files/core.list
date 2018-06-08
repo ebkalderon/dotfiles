@@ -7,6 +7,7 @@ multilib-devel
 neovim
 nodejs-nativefier
 nmap
+pacman-contrib
 python-neovim
 python2-neovim
 rustup
