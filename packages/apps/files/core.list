@@ -5,8 +5,10 @@ fortune-mod
 git
 multilib-devel
 neovim
+nodejs-nativefier
 nmap
 python-neovim
 python2-neovim
+rustup
 shellcheck
 tmux

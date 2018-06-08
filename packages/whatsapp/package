@@ -1,0 +1,37 @@
+#!/bin/bash
+
+DESCRIPTION='Generates a WhatsApp web app client for Linux.'
+INSTALL_MSG='Installing WhatsApp client...'
+UNINSTALL_MSG='Uninstalling WhatsApp client...'
+
+install() {
+  if [[ ${PLATFORM_NAME} == 'ARCH' ]]; then
+    platform_install nodejs-nativefier
+  elif [[ ${PLATFORM_NAME} == 'UBUNTU' ]]; then
+    platform_install nodejs npm
+    echo -n 'installing nativefier globally from npm... '
+    execute_silent npm install -g nativefier
+  fi
+
+  echo -n 'generating and deploying WhatsApp client... '
+  execute_silent pushd ${PACKAGE_FILES}/
+  execute ./generate-whatsapp.sh && \
+    cp whats-app-linux-x64/whatsapp.desktop ~/.local/share/applications/
+  execute_silent popd
+}
+
+uninstall() {
+  echo -n 'deleting WhatsApp client... '
+
+  if [[ -d "${PACKAGE_FILES}/whats-app-linux-x64" ]]; then
+    echo -n 'deleting WhatsApp client... '
+    execute_silent pushd ${PACKAGE_FILES}/
+    execute rm -r whats-app-linux-x64
+    execute_silent popd
+  fi
+
+  if [[ -f ~/local/share/applications/whatsapp.desktop ]]; then
+    echo -n 'deleting WhatsApp client... '
+    execute rm ~/.local/share/applications/whatsapp.desktop
+  fi
+}

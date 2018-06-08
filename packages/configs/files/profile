@@ -4,5 +4,5 @@
 
 # System-wide exports for all sessions, both graphical and command-line
 
-export PATH="${PATH}:${HOME}/.cargo/bin:${HOME}/.gem/ruby/2.4.0/bin"
+export PATH="${PATH}:${HOME}/.cargo/bin:${HOME}/.gem/ruby/2.5.0/bin"
 export QT_QPA_PLATFORMTHEME=gtk2

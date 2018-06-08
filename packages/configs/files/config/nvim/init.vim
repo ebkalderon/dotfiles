@@ -26,10 +26,9 @@ set undofile
 set tabstop=4
 set shiftwidth=4
 set expandtab
-autocmd FileType css,html,scss,sh setlocal shiftwidth=2 tabstop=2
+autocmd FileType css,html,scss,sh,yaml setlocal shiftwidth=2 tabstop=2
 
 " Color options
-set t_Co=256
 let g:molokai_original = 1
 let g:rehash256 = 1
 colorscheme molokai
@@ -42,6 +41,7 @@ hi NonText ctermbg=NONE
 " Install plugins
 call plug#begin()
 
+Plug 'alvan/vim-closetag'
 Plug 'artur-shaik/vim-javacomplete2', { 'for': 'java' }
 Plug 'autozimu/LanguageClient-neovim', { 'tag': 'binary-*-x86_64-unknown-linux-musl' }
 Plug 'cespare/vim-toml', { 'for': 'toml' }
@@ -79,7 +79,7 @@ set hidden
 let g:languageClient_autoStart = 1
 let g:LanguageClient_serverCommands = {
     \ 'python': ['pyls'],
-    \ 'rust': ['rustup', 'run', 'stable', 'rls'],
+    \ 'rust': ['rustup', 'run', 'nightly', 'rls'],
     \ }
 
 nnoremap <silent> K :call LanguageClient_textDocument_hover()<CR>

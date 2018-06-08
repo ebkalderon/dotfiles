@@ -35,6 +35,12 @@ platform_detect() {
     PLATFORM_REMOVE='sudo brew uninstall'
     PLATFORM_UPDATE='sudo brew update'
     PLATFORM_UPGRADE='sudo brew upgrade'
+  elif which lsb_release &> /dev/null && [[ "$(lsb_release -a)" == *'Ubuntu'* ]]; then
+    PLATFORM_NAME='UBUNTU'
+    PLATFORM_INSTALL='sudo apt install -y'
+    PLATFORM_REMOVE='sudo apt uninstall -y'
+    PLATFORM_UPDATE='sudo apt update'
+    PLATFORM_UPGRADE='sudo apt upgrade -y'
   fi
 
   debug 'Detected platform info:'

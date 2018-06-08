@@ -10,7 +10,7 @@ gitg
 gnome-calendar
 gnome-clocks
 gnome-desktop
-gnome-disks
+gnome-disk-utility
 gnome-logs
 gnome-shell
 gnome-shell-extensions
@@ -21,11 +21,9 @@ gvfs-goa
 gvfs-google
 libreoffice-extension-languagetool
 libreoffice-fresh
-remmina
 simple-scan
-skypeforlinux-bin
-tilix-bin
-transmission-gtk
+tilix
+transmission-csd
 vmware-workstation
 xclip
 xsel

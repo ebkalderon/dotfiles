@@ -17,6 +17,10 @@ install() {
       for subfile in ${PACKAGE_FILES}/config/*; do
         links[${subfile}]=".config/${subfile##*/}"
       done
+    elif [[ "${file##*/}" == 'local' ]]; then
+      for subfile in ${PACKAGE_FILES}/local/share/applications/*; do
+        links[${subfile}]=".local/share/applications/${subfile##*/}"
+      done
     else
       links[${file}]=".${file##*/}"
     fi
