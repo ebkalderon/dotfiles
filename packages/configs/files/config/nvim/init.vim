@@ -10,6 +10,8 @@ set hlsearch
 set laststatus=2
 set noshowmode
 set number
+set clipboard^=unnamed
+set mouse=a
 
 if &filetype == "rust"
     set colorcolumn=100
