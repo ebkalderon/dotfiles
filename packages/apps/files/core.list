@@ -3,11 +3,13 @@ clang
 cmake
 fortune-mod
 git
+gnupg
 multilib-devel
 neovim
 nodejs-nativefier
 nmap
 pacman-contrib
+pinentry
 python-neovim
 python2-neovim
 rustup

@@ -21,6 +21,7 @@ included `dotfiles` command, you can pick and choose which packages to install.
    * [bash](./packages/configs/files/bashrc)
    * [gdb](./packages/configs/files/gdbinit)
    * [git](./packages/configs/files/gitconfig)
+   * [gnupg](./packages/configs/files/gnupg/)
    * [mpd](./packages/configs/files/mpd/)
    * [ncmpcpp](./packages/configs/files/ncmpcpp/)
    * [neovim](./packages/configs/files/config/nvim/)
