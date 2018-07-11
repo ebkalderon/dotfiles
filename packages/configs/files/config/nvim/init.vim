@@ -2,6 +2,10 @@
 " nvim/init.vim
 "
 
+" Enable UTF8 file encoding
+set encoding=utf-8
+scriptencoding utf-8
+
 " General options
 set cursorline
 set fillchars+=vert:\│
@@ -10,14 +14,12 @@ set hlsearch
 set laststatus=2
 set noshowmode
 set number
-set clipboard^=unnamed
-set mouse=a
 
-if &filetype == "rust"
-    set colorcolumn=100
-else
-    set colorcolumn=80
-endif
+" Enable copying between tmux instances
+set clipboard^=unnamed
+
+" Enable mouse scrolling in vim instead of tmux history buffer
+set mouse=a
 
 " Backup options
 set backup
@@ -25,12 +27,19 @@ set backupdir=~/.local/share/nvim/backup
 set undofile
 
 " Indentation options
-set tabstop=4
-set shiftwidth=4
 set expandtab
-autocmd FileType css,html,scss,sh,yaml setlocal shiftwidth=2 tabstop=2
+set shiftwidth=4
+set tabstop=4
+set colorcolumn=80
+set textwidth=80
+augroup AutoIndentation
+    autocmd!
+    autocmd FileType css,html,scss,sh,yaml setlocal shiftwidth=2 tabstop=2
+    autocmd FileType rust setlocal colorcolumn=99
+augroup end
 
 " Color options
+set t_Co=256
 let g:molokai_original = 1
 let g:rehash256 = 1
 colorscheme molokai
@@ -43,22 +52,26 @@ hi NonText ctermbg=NONE
 " Install plugins
 call plug#begin()
 
-Plug 'alvan/vim-closetag'
+Plug 'alvan/vim-closetag', { 'for': ['html', 'phtml', 'xhtml'] }
 Plug 'artur-shaik/vim-javacomplete2', { 'for': 'java' }
-Plug 'autozimu/LanguageClient-neovim', { 'tag': 'binary-*-x86_64-unknown-linux-musl' }
+Plug 'autozimu/LanguageClient-neovim', { 'branch': 'next', 'do': 'bash install.sh' }
 Plug 'cespare/vim-toml', { 'for': 'toml' }
-Plug 'fishbullet/deoplete-ruby'
+Plug 'fishbullet/deoplete-ruby', { 'for': 'ruby' }
 Plug 'itchyny/lightline.vim'
+Plug 'leafgarland/typescript-vim', { 'for': 'typescript' }
+Plug 'LnL7/vim-nix', { 'for': 'nix' }
 Plug 'neomake/neomake'
-Plug 'rust-lang/rust.vim'
+Plug 'rust-lang/rust.vim', { 'for': 'rust' }
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'Shougo/echodoc.vim'
 Plug 'Shougo/neoinclude.vim'
+Plug 'thyrgle/vim-dyon', { 'for': 'dyon' }
 Plug 'tikhomirov/vim-glsl', { 'for': 'glsl' }
 Plug 'timonv/vim-cargo', { 'for': 'rust' }
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-commentary'
-Plug 'zchee/deoplete-clang'
+Plug 'vim-scripts/dbext.vim', { 'for': 'sql' }
+Plug 'zchee/deoplete-clang', { 'for': ['c', 'cpp'] }
 
 call plug#end()
 
@@ -82,7 +95,7 @@ let g:languageClient_autoStart = 1
 let g:LanguageClient_serverCommands = {
     \ 'python': ['pyls'],
     \ 'rust': ['rustup', 'run', 'nightly', 'rls'],
-    \ }
+\ }
 
 nnoremap <silent> K :call LanguageClient_textDocument_hover()<CR>
 nnoremap <silent> gd :call LanguageClient_textDocument_definition()<CR>
@@ -119,23 +132,23 @@ let g:lightline = {
     \ 'subseparator': {
     \     'left': '', 'right': ''
     \ }
-    \ }
+\ }
 
 function! MyFilename()
-    return ('' != MyReadonly() ? MyReadonly() . ' ' : '') .
-        \ ('' != expand('%:t') ? expand('%:t') : '[No Name]') .
-        \ ('' != MyModified() ? ' ' . MyModified() : '')
+    return ('' !=# MyReadonly() ? MyReadonly() . ' ' : '') .
+        \ ('' !=# expand('%:t') ? expand('%:t') : '[No Name]') .
+        \ ('' !=# MyModified() ? ' ' . MyModified() : '')
 endfunction
 
 function! MyModified()
-    if &filetype == "help"
-        return ""
+    if &filetype ==# 'help'
+        return ''
     elseif &modified
-        return "+"
+        return '+'
     elseif &modifiable
-        return ""
+        return ''
     else
-        return ""
+        return ''
     endif
 endfunction
 
@@ -145,9 +158,9 @@ endfunction
 
 " Integrate Fugitive into Lightline
 function! MyFugitive()
-    if exists("*fugitive#head")
-        let _ = fugitive#head()
-        return strlen(_) ? ' '._ : ''
+    if exists('*fugitive#head')
+        let s:head = fugitive#head()
+        return strlen(s:head) ? ' '.s:head : ''
     endif
     return ''
 endfunction
