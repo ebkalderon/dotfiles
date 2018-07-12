@@ -11,3 +11,6 @@
 
 [commit]
     gpgsign = true
+
+[includeIf "gitdir:~/Documents/work/"]
+    path = ~/Documents/work/.gitconfig
