@@ -39,6 +39,16 @@ install() {
   # Update .bashrc with correct dotfiles location if not set
   sed -i.bak "s,DOTFILES=.*,DOTFILES=\"${DOTFILES}\",g" "${PACKAGE_FILES}/bashrc" \
     && rm "${PACKAGE_FILES}/bashrc.bak"
+
+  # Install Neovim plugins
+  echo -n 'installing Neovim plugins... '
+  if which nvim &> /dev/null; then
+    execute nvim +PlugInstall +q +q
+  else
+    failure
+    echo 'Neovim is not installed'
+    return 1
+  fi
 }
 
 uninstall() {
