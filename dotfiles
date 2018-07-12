@@ -6,7 +6,7 @@
 # Command-line interface for managing dotfiles.
 #
 
-readonly DOTFILES="${DOTFILES:=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)}"
+readonly DOTFILES="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 readonly VERSION='0.1.0'
 
 # Determines whether we are in verbose mode
@@ -22,8 +22,8 @@ subcommands['remove [-v|--verbose]']='Remove dotfiles packages.'
 subcommands['update [-v|--verbose]']='Fetch the latest dotfiles from GitHub.'
 
 # Load the dotfiles helper functions library
-for lib in ${DOTFILES}/lib/*; do
-  source ${lib}
+for lib in "${DOTFILES}"/lib/*; do
+  source "${lib}"
 done
 
 show_help() {

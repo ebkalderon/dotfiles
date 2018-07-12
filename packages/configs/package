@@ -38,7 +38,7 @@ install() {
 
   # Update .bashrc with correct dotfiles location if not set
   sed -i.bak "s,DOTFILES=.*,DOTFILES=\"${DOTFILES}\",g" "${PACKAGE_FILES}/bashrc" \
-    && mv "${PACKAGE_FILES}/bashrc.bak" "${PACKAGE_FILES}/bashrc"
+    && rm "${PACKAGE_FILES}/bashrc.bak"
 }
 
 uninstall() {
