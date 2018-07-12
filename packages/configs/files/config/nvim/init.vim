@@ -52,6 +52,10 @@ hi NonText ctermbg=NONE
 " Install plugins
 call plug#begin()
 
+if !isdirectory('/usr/share/fzf')
+    Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all --no-update-rc' }
+endif
+
 Plug 'alvan/vim-closetag', { 'for': ['html', 'phtml', 'xhtml'] }
 Plug 'artur-shaik/vim-javacomplete2', { 'for': 'java' }
 Plug 'autozimu/LanguageClient-neovim', { 'branch': 'next', 'do': 'bash install.sh' }
