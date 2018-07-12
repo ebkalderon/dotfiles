@@ -4,6 +4,9 @@
 # Exclude certain package files from being pulled into Git
 #
 
+# bash
+files/bashrc.bak
+
 # mpd
 files/mpd/database
 files/mpd/log
