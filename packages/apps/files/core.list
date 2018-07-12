@@ -2,6 +2,7 @@ base-devel
 clang
 cmake
 fortune-mod
+fzf
 git
 gnupg
 multilib-devel
