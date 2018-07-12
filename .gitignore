@@ -1,5 +1,8 @@
 # Ignore scripts with the prefix `sec.`
 autoload/sec.*.sh
 
+# Ignore any instance of the iTerm2 shell integration.
+autoload/iterm2_shell_integration.bash
+
 # List of currently installed packages
 packages/installed
