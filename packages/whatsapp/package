@@ -9,7 +9,7 @@ install() {
   if [[ ${PLATFORM_NAME} == 'MACOS' ]]; then
     failure
     echo 'skipping installation...'
-    exit 0
+    return
   else
     success
   fi
