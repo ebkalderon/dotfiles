@@ -8,7 +8,7 @@ install() {
   echo -n 'checking if platform is Linux... '
   if [[ ${PLATFORM_NAME} == 'MACOS' ]]; then
     failure
-    echo 'running on macOS, skipping installation...'
+    echo 'skipping installation...'
     exit 0
   else
     success
