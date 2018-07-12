@@ -57,6 +57,7 @@ Plug 'artur-shaik/vim-javacomplete2', { 'for': 'java' }
 Plug 'autozimu/LanguageClient-neovim', { 'branch': 'next', 'do': 'bash install.sh' }
 Plug 'cespare/vim-toml', { 'for': 'toml' }
 Plug 'fishbullet/deoplete-ruby', { 'for': 'ruby' }
+Plug 'junegunn/fzf.vim'
 Plug 'itchyny/lightline.vim'
 Plug 'leafgarland/typescript-vim', { 'for': 'typescript' }
 Plug 'LnL7/vim-nix', { 'for': 'nix' }
@@ -75,8 +76,34 @@ Plug 'zchee/deoplete-clang', { 'for': ['c', 'cpp'] }
 
 call plug#end()
 
+" FZF configuration
+augroup AutoFzf
+    autocmd! FileType fzf
+    autocmd  FileType fzf set laststatus=0 noshowmode noruler
+      \| autocmd BufLeave <buffer> set laststatus=2 showmode ruler
+augroup end
+
+let g:fzf_colors = {
+    \ 'fg': ['fg', 'Normal'],
+    \ 'bg': ['bg', 'Normal'],
+    \ 'hl': ['fg', 'Comment'],
+    \ 'fg+': ['fg', 'CursorLine', 'CursorColumn', 'Normal'],
+    \ 'bg+': ['bg', 'CursorLine', 'CursorColumn'],
+    \ 'hl+': ['fg', 'Statement'],
+    \ 'info': ['fg', 'PreProc'],
+    \ 'border': ['fg', 'Ignore'],
+    \ 'prompt': ['fg', 'Conditional'],
+    \ 'pointer': ['fg', 'Exception'],
+    \ 'marker': ['fg', 'Keyword'],
+    \ 'spinner': ['fg', 'Label'],
+    \ 'header': ['fg', 'Comment']
+\ }
+
 " Javacomplete2 configuration
-autocmd FileType java setlocal omnifunc=javacomplete#Complete
+augroup AutoJavacomplete2
+    autocmd!
+    autocmd FileType java setlocal omnifunc=javacomplete#Complete
+augroup end
 
 " Deoplete configuration (needs `clang`)
 let g:deoplete#enable_at_startup = 1
@@ -165,10 +192,9 @@ function! MyFugitive()
     return ''
 endfunction
 
-" Integrate Syntastic into Lightline
-autocmd User NeomakeFinished | call lightline#update()
-
+" Integrate Neomake into Lightline
 augroup AutoNeomake
     autocmd!
+    autocmd User NeomakeFinished | call lightline#update()
     autocmd BufWritePost *.* Neomake
 augroup end
