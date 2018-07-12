@@ -6,11 +6,15 @@ palette=['#757571715E5E', '#F92672', '#A6E22E', '#F4BF75', '#66D9EF', '#AE81FF',
 badge-color-set=false
 default-size-columns=98
 show-scrollbar=false
+use-system-font=true
 cursor-colors-set=false
 highlight-colors-set=false
-use-theme-colors=false
+cell-height-scale=1.0
 bold-color-set=false
-background-color='#27272A2A2C2C'
+font='Source Code Pro for Powerline 11'
+use-theme-colors=false
+draw-margin=80
+background-color='#212121212121'
 background-transparency-percent=2
 
 [/]
@@ -20,5 +24,6 @@ terminal-title-style='normal'
 window-state=128
 theme-variant='dark'
 enable-wide-handle=false
+window-save-state=false
 terminal-title-show-when-single=false
 window-style='normal'
