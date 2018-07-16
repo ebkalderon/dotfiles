@@ -109,6 +109,7 @@ _load_package() {
   # Load the contents of the package
   source ${package}
 
+  # Wrap each function such that package-specific contstants are read-only
   for fn in install uninstall pre_update post_update; do
     eval "_${fn}() {
       local -r PACKAGE_BACKUPS=\"${PACKAGE_BACKUPS}\"
