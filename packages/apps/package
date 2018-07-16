@@ -7,17 +7,9 @@
 DESCRIPTION='Configures pacman, installs AUR client, installs programs.'
 INSTALL_MSG='Installing applications...'
 UNINSTALL_MSG='Restoring applications...'
+PLATFORMS='ARCH'
 
 install() {
-  echo -n 'checking if platform is Arch Linux... '
-  if [[ ${PLATFORM_NAME} == 'ARCH' ]]; then
-    success
-  else
-    failure
-    echo 'skipping installation...'
-    return 1
-  fi
-
   backup_and_copy "${PACKAGE_FILES}/pacman.conf" /etc/pacman.conf || return 1
   platform_update
 

@@ -3,17 +3,9 @@
 DESCRIPTION='Generates a WhatsApp web app client for Linux.'
 INSTALL_MSG='Installing WhatsApp client...'
 UNINSTALL_MSG='Uninstalling WhatsApp client...'
+PLATFORMS='!MACOS'
 
 install() {
-  echo -n 'checking if platform is Linux... '
-  if [[ ${PLATFORM_NAME} == 'MACOS' ]]; then
-    failure
-    echo 'skipping installation...'
-    return
-  else
-    success
-  fi
-
   if [[ ${PLATFORM_NAME} == 'ARCH' ]]; then
     platform_install nodejs-nativefier
   elif [[ ${PLATFORM_NAME} == 'UBUNTU' ]]; then

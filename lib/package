@@ -23,10 +23,24 @@ packages_install() {
   for package in ${PACKAGES}; do
     _load_package "${package}"
 
+    # Check if package supports this platform
+    debug "Package '${PACKAGE_NAME}' supports platforms '${PLATFORMS}'"
+    if [[ "${PLATFORMS}" != 'ANY' ]]; then
+      if echo "${PLATFORMS}" | grep -q "\b${PLATFORM_NAME}\b"; then
+        if echo "${PLATFORMS}" | grep -q "\b!${PLATFORM_NAME}\b"; then
+          header "Package '${PACKAGE_NAME}' does not support '${PLATFORM_NAME}'. Skipping..."
+          continue
+        fi
+      else
+        header "Package '${PACKAGE_NAME}' does not support '${PLATFORM_NAME}'. Skipping..."
+        continue
+      fi
+    fi
+
     # Create a package-specific backup directory and install the package
     header "${INSTALL_MSG}"
     mkdir -p "${PACKAGE_BACKUPS}"
-    install
+    _install || continue
 
     # If package name isn't present in the list of installed packages, add it
     if ! grep -Ex --quiet "${PACKAGE_NAME}" "${DATABASE}"; then
@@ -49,7 +63,7 @@ packages_uninstall() {
 
     # Uninstall the package
     header "${UNINSTALL_MSG}"
-    uninstall
+    _uninstall
 
     # Remove it from the list of installed packages
     grep -Exv "${PACKAGE_NAME}" "${DATABASE}" > "${DATABASE}.tmp"
@@ -62,7 +76,7 @@ packages_pre_update() {
 
   for package in ${PACKAGES}; do
     _load_package "${package}"
-    pre_update
+    _pre_update
   done
 }
 
@@ -71,7 +85,7 @@ packages_post_update() {
 
   for package in ${PACKAGES}; do
     _load_package "${package}"
-    post_update
+    _post_update
   done
 }
 
@@ -90,7 +104,17 @@ _load_package() {
   DESCRIPTION="No description available for ${PACKAGE_NAME}."
   INSTALL_MSG="Installing \"${PACKAGE_NAME}\" package..."
   UNINSTALL_MSG="Uninstalling \"${PACKAGE_NAME}\" package..."
+  PLATFORMS='ANY'
 
   # Load the contents of the package
   source ${package}
+
+  for fn in install uninstall pre_update post_update; do
+    eval "_${fn}() {
+      local -r PACKAGE_BACKUPS=\"${PACKAGE_BACKUPS}\"
+      local -r PACKAGE_NAME=\"${PACKAGE_NAME}\"
+      local -r PACKAGE_FILES=\"${PACKAGE_FILES}\"
+      ${fn}
+    }"
+  done
 }

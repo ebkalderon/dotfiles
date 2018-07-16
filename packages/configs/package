@@ -7,6 +7,7 @@
 DESCRIPTION='Symlinks the included dotfiles to their appropriate locations.'
 INSTALL_MSG='Applying dotfiles...'
 UNINSTALL_MSG='Restoring dotfiles...'
+PLATFORM='ANY'
 
 install() {
   declare -A links

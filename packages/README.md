@@ -12,7 +12,7 @@ _TODO: Intro and design description_
   - package     Package install/uninstall script
 ```
 
-## Example _package_ script
+## Example `package` script
 
 ```bash
 #!/bin/bash
@@ -20,6 +20,7 @@ _TODO: Intro and design description_
 DESCRIPTION='Package for maintaining plumbuses.'
 INSTALL_MSG='Adjusting direction of flumberboozle...'
 UNINSTALL_MSG='Restoring flumberboozle direction...'
+PLATFORMS='ARCH UBUNTU !MACOS'
 
 # Installs the package
 install() {
@@ -42,7 +43,26 @@ post_update() {
 }
 ```
 
-## Available variables
+## Format of `PLATFORMS` string
+
+This variable is a space-delimited string of keywords, each representing a
+supported platform. Platform names can be prefixed with a `!` to exclude them
+and mark them explicitly as unsupported. If left unspecified in the package
+script, the default value of `PLATFORMS` is assumed to be `'ANY'`.
+
+Keyword   | Meaning
+----------|------------------------------------------------
+`ANY`     | Supports all platforms.
+`ARCH`    | Supports Arch Linux and derivatives.
+`DEBIAN`  | Supports Debian and derivatives.
+`FREEBSD` | Supports FreeBSD and derivatives.
+`MACOS`   | Supports macOS version 10.0 or later.
+`REDHAT`  | Supports RHEL, CentOS, Fedora, and derivatives.
+`UBUNTU`  | Supports Ubuntu and derivatives.
+
+## Available constants
+
+These constants are made available to each package script when run.
 
 Name              | Description                          | Default Value
 ------------------|--------------------------------------|------------------------------------

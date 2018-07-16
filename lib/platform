@@ -7,7 +7,7 @@
 #
 
 platform_detect() {
-  if [[ -f /etc/arch-release ]]; then
+  if [ -f /etc/arch-release ]; then
     local packager='sudo pacman'
     command -v pacaur &> /dev/null && packager='pacaur'
     command -v trizen &> /dev/null && packager='trizen'
@@ -17,24 +17,30 @@ platform_detect() {
     PLATFORM_REMOVE="${packager} -R --noconfirm"
     PLATFORM_UPDATE="${packager} -Sy"
     PLATFORM_UPGRADE="${packager} -Su --noconfirm"
-  elif [[ -f /etc/redhat-release ]] || [[ -f /etc/system-release-cpe ]]; then
-    PLATFORM_NAME='REDHAT'
-    PLATFORM_INSTALL='sudo yum install -y'
-    PLATFORM_REMOVE='sudo yum remove -y'
-    PLATFORM_UPDATE='sudo yum clean metadata'
-    PLATFORM_UPGRADE='sudo yum update -y'
+  elif [ -f /etc/debian_version ]; then
+    PLATFORM_NAME='DEBIAN'
+    PLATFORM_INSTALL='sudo apt install -y'
+    PLATFORM_REMOVE='sudo apt uninstall -y'
+    PLATFORM_UPDATE='sudo apt update'
+    PLATFORM_UPGRADE='sudo apt upgrade -y'
   elif [[ $(uname) == 'FreeBSD' ]]; then
     PLATFORM_NAME='FREEBSD'
     PLATFORM_INSTALL='sudo pkg install -y'
     PLATFORM_REMOVE='sudo pkg delete -y'
     PLATFORM_UPDATE='sudo pkg update'
     PLATFORM_UPGRADE='sudo pkg upgrade -y'
-  elif [[ -f /System/Library/CoreServices/SystemVersion.plist ]]; then
+  elif [ -f /System/Library/CoreServices/SystemVersion.plist ]; then
     PLATFORM_NAME='MACOS'
     PLATFORM_INSTALL='sudo brew install'
     PLATFORM_REMOVE='sudo brew uninstall'
     PLATFORM_UPDATE='sudo brew update'
     PLATFORM_UPGRADE='sudo brew upgrade'
+  elif [ -f /etc/redhat-release ] || [ -f /etc/system-release-cpe ]; then
+    PLATFORM_NAME='REDHAT'
+    PLATFORM_INSTALL='sudo yum install -y'
+    PLATFORM_REMOVE='sudo yum remove -y'
+    PLATFORM_UPDATE='sudo yum clean metadata'
+    PLATFORM_UPGRADE='sudo yum update -y'
   elif which lsb_release &> /dev/null && [[ "$(lsb_release -a)" == *'Ubuntu'* ]]; then
     PLATFORM_NAME='UBUNTU'
     PLATFORM_INSTALL='sudo apt install -y'
