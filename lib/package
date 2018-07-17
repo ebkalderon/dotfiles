@@ -108,7 +108,7 @@ _load_package() {
   PACKAGE_FILES="$(dirname "${package}")/files"
   PACKAGE_NAME="$(basename "$(dirname "${package}")")"
   PACKAGE_BACKUPS="${BACKUP_DIR}/${PACKAGE_NAME}"
-  DESCRIPTION="No description available for ${PACKAGE_NAME}."
+  DESCRIPTION="No description available."
   INSTALL_MSG="Installing \"${PACKAGE_NAME}\" package..."
   UNINSTALL_MSG="Uninstalling \"${PACKAGE_NAME}\" package..."
   PLATFORMS='ANY'
