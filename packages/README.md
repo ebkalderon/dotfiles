@@ -20,7 +20,7 @@ _TODO: Intro and design description_
 DESCRIPTION='Package for maintaining plumbuses.'
 INSTALL_MSG='Adjusting direction of flumberboozle...'
 UNINSTALL_MSG='Restoring flumberboozle direction...'
-PLATFORMS='ARCH UBUNTU !MACOS'
+PLATFORMS='ANY !MACOS'
 
 # Installs the package
 install() {
