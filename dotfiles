@@ -128,6 +128,7 @@ dotfiles_update() {
   # Stash any local uncommitted changes and pull upstream updates
   header 'Pulling upstream updates...'
   git -C "${DOTFILES}" stash --quiet
+  trap "git -C \"${DOTFILES}\" stash pop --quiet; exit" INT TERM
   git -C "${DOTFILES}" pull
 
   # Restore any local uncommitted changes
