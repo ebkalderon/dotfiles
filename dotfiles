@@ -123,19 +123,23 @@ dotfiles_remove() {
 }
 
 dotfiles_update() {
+  restore_local_changes() {
+    if execute_silent git -C "${DOTFILES}" stash show -u; then
+      echo 'Preserved uncommitted changes.'
+      git -C "${DOTFILES}" stash pop --quiet
+    fi
+  }
+
   packages_pre_update
 
   # Stash any local uncommitted changes and pull upstream updates
   header 'Pulling upstream updates...'
   git -C "${DOTFILES}" stash --quiet
-  trap "git -C \"${DOTFILES}\" stash pop --quiet; exit" INT TERM
+  trap "restore_local_changes; exit" INT
   git -C "${DOTFILES}" pull
 
   # Restore any local uncommitted changes
-  if execute_silent git -C "${DOTFILES}" stash show -u; then
-    echo 'Preserved uncommitted changes.'
-    git -C "${DOTFILES}" stash pop --quiet
-  fi
+  restore_local_changes
 
   # Install the new packages
   header 'Reinstalling dotfiles...'
