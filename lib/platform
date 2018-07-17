@@ -31,10 +31,10 @@ platform_detect() {
     PLATFORM_UPGRADE='sudo pkg upgrade -y'
   elif [ -f /System/Library/CoreServices/SystemVersion.plist ]; then
     PLATFORM_NAME='MACOS'
-    PLATFORM_INSTALL='sudo brew install'
-    PLATFORM_REMOVE='sudo brew uninstall'
-    PLATFORM_UPDATE='sudo brew update'
-    PLATFORM_UPGRADE='sudo brew upgrade'
+    PLATFORM_INSTALL='brew install'
+    PLATFORM_REMOVE='brew uninstall'
+    PLATFORM_UPDATE='brew update'
+    PLATFORM_UPGRADE='brew upgrade'
   elif [ -f /etc/redhat-release ] || [ -f /etc/system-release-cpe ]; then
     PLATFORM_NAME='REDHAT'
     PLATFORM_INSTALL='sudo yum install -y'
