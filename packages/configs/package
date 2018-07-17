@@ -43,7 +43,7 @@ install() {
 
   # Install Neovim plugins
   echo -n 'installing Neovim plugins... '
-  if which nvim &> /dev/null; then
+  if command -v nvim &> /dev/null; then
     execute nvim +PlugInstall +q +q
   else
     failure
