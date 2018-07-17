@@ -14,7 +14,7 @@ install() {
   platform_update
 
   echo -n 'building and installing trizen for AUR support... '
-  execute_silent pushd ${PACKAGE_FILES}/trizen/
+  execute_silent pushd "${PACKAGE_FILES}/trizen/"
   execute makepkg --syncdeps --clean --force && \
     execute_silent sudo pacman -U --noconfirm trizen-*.pkg.tar.xz && \
     platform_detect

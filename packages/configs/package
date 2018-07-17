@@ -13,17 +13,17 @@ install() {
   declare -A links
 
   # Build up a list of symlinks to make
-  for file in ${PACKAGE_FILES}/*; do
+  for file in "${PACKAGE_FILES}"/*; do
     if [[ "${file##*/}" == 'config' ]]; then
-      for subfile in ${PACKAGE_FILES}/config/*; do
+      for subfile in "${PACKAGE_FILES}"/config/*; do
         links[${subfile}]=".config/${subfile##*/}"
       done
     elif [[ "${file##*/}" == 'local' ]]; then
-      for subfile in ${PACKAGE_FILES}/local/share/applications/*; do
+      for subfile in "${PACKAGE_FILES}"/local/share/applications/*; do
         links[${subfile}]=".local/share/applications/${subfile##*/}"
       done
     elif [[ "${file##*/}" == 'gnupg' ]]; then
-      for subfile in ${PACKAGE_FILES}/gnupg/*; do
+      for subfile in "${PACKAGE_FILES}"/gnupg/*; do
         links[${subfile}]=".gnupg/${subfile##*/}"
       done
     else
