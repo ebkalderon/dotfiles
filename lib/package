@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 #
 # lib/package
@@ -89,11 +89,25 @@ packages_post_update() {
   done
 }
 
+packages_reload() {
+  touch "${DATABASE}"
+
+  for package in ${PACKAGES}; do
+    _load_package "${package}"
+
+    # If package is currently installed, reload it
+    if grep -Ex --quiet "${PACKAGE_NAME}" "${DATABASE}"; then
+      debug "Reloading '${PACKAGE_NAME}'..."
+      _reload
+    fi
+  done
+}
+
 _load_package() {
   local package="$1"
 
   # Unset all package-defined functions, just in case
-  for fn in install uninstall pre_update post_update; do
+  for fn in install uninstall pre_update post_update reload; do
     eval "${fn}() { return; }"
   done
 
@@ -107,10 +121,10 @@ _load_package() {
   PLATFORMS='ANY'
 
   # Load the contents of the package
-  source ${package}
+  source "${package}"
 
   # Wrap each function such that package-specific contstants are read-only
-  for fn in install uninstall pre_update post_update; do
+  for fn in install uninstall pre_update post_update reload; do
     eval "_${fn}() {
       local -r PACKAGE_BACKUPS=\"${PACKAGE_BACKUPS}\"
       local -r PACKAGE_NAME=\"${PACKAGE_NAME}\"

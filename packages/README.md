@@ -41,6 +41,11 @@ pre_update() {
 post_update() {
   # ...
 }
+
+# Executed when `dotfiles reload` is run
+reload() {
+  # ...
+}
 ```
 
 ## Format of `PLATFORMS` string

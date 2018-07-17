@@ -17,7 +17,7 @@ declare -A subcommands
 subcommands['install [ -v|--verbose]']='Install dotfiles packages.'
 subcommands['list']='List all available packages.'
 subcommands['new NAME [-v|--verbose]']='Create a new package NAME in the current dir.'
-subcommands['reload']='Reload shell configuration from disk.'
+subcommands['reload [-v|--verbose]']='Reload dotfiles configuration from disk.'
 subcommands['remove [-v|--verbose]']='Remove dotfiles packages.'
 subcommands['update [-v|--verbose]']='Fetch the latest dotfiles from GitHub.'
 
@@ -82,7 +82,7 @@ dotfiles_new() {
   mkdir -p "${pkg_dir}/files"
   touch "${pkg_dir}/files/.gitkeep"
 
-  local package="#!/bin/bash\n\n"
+  local package="#!/usr/bin/env bash\n\n"
   package+="DESCRIPTION='Does something cool.'\n"
   package+="INSTALL_MSG='Installing package...'\n"
   package+="UNINSTALL_MSG='Uninstalling package...'\n"
@@ -105,8 +105,7 @@ dotfiles_new() {
 }
 
 dotfiles_reload() {
-  # Skip interactive shell check and evaluate the .bashrc
-  eval "$(tail -n +10 < ~/.bashrc)"
+  packages_reload
   return $?
 }
 
@@ -228,6 +227,17 @@ case ${subcommand} in
     exit $?
     ;;
   reload)
+    while getopts ':v' opt; do
+      case ${opt} in
+        v)
+          VERBOSE=1
+          ;;
+        \?)
+          echo "error: invalid option: -${OPTARG}" 1>&2
+          exit 1
+          ;;
+      esac
+    done
     dotfiles_reload
     exit $?
     ;;

@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 #
 # packages/configs/package
@@ -54,8 +54,4 @@ install() {
 
 uninstall() {
   return
-}
-
-post_update() {
-  source ~/.bashrc
 }

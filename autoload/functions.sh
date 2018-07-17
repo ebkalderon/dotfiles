@@ -19,6 +19,15 @@ deskshow() {
     || echo 'NoDisplay=false' >> $1
 }
 
+# Support .bashrc reloading
+dotfiles() {
+  if echo "$@" | grep -q 'reload'; then
+    source ~/.bashrc
+  fi
+
+  "${DOTFILES}/dotfiles" $@
+}
+
 # Colorized man pages
 man() {
   env \
