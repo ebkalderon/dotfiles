@@ -96,7 +96,7 @@ imap <c-x><c-f> <plug>(fzf-complete-path)
 imap <c-x><c-j> <plug>(fzf-complete-file)
 imap <c-x><c-l> <plug>(fzf-complete-line)
 
-nnoremap <silent> <c-p> :Files .<CR>
+nnoremap <silent> <c-p> :FZF .<CR>
 
 let g:fzf_colors = {
     \ 'fg': ['fg', 'Normal'],

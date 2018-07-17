@@ -105,6 +105,7 @@ dotfiles_new() {
 }
 
 dotfiles_reload() {
+  # Skip interactive shell check and evaluate the .bashrc
   eval "$(tail -n +10 < ~/.bashrc)"
   return $?
 }
