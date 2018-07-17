@@ -7,7 +7,7 @@
 DESCRIPTION='Generates a WhatsApp web app client for Linux.'
 INSTALL_MSG='Installing WhatsApp client...'
 UNINSTALL_MSG='Uninstalling WhatsApp client...'
-PLATFORMS='!MACOS'
+PLATFORMS='ARCH UBUNTU !MACOS'
 
 install() {
   if [[ ${PLATFORM_NAME} == 'ARCH' ]]; then

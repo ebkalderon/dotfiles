@@ -25,16 +25,9 @@ packages_install() {
 
     # Check if package supports this platform
     debug "Package '${PACKAGE_NAME}' supports platforms '${PLATFORMS}'"
-    if [[ "${PLATFORMS}" != 'ANY' ]]; then
-      if echo "${PLATFORMS}" | grep -q "\b${PLATFORM_NAME}\b"; then
-        if echo "${PLATFORMS}" | grep -q "\b!${PLATFORM_NAME}\b"; then
-          header "Package '${PACKAGE_NAME}' does not support '${PLATFORM_NAME}'. Skipping..."
-          continue
-        fi
-      else
-        header "Package '${PACKAGE_NAME}' does not support '${PLATFORM_NAME}'. Skipping..."
-        continue
-      fi
+    if ! platform_check_string "${PLATFORMS}"; then
+      header "Package '${PACKAGE_NAME}' does not support '${PLATFORM_NAME}'. Skipping..."
+      continue
     fi
 
     # Create a package-specific backup directory and install the package

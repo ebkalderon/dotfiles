@@ -57,6 +57,25 @@ platform_detect() {
   debug "PLATFORM_UPGRADE=${PLATFORM_UPGRADE}"
 }
 
+platform_check_string() {
+  local platforms="$@"
+
+  if [[ "${platforms}" != 'ANY' ]]; then
+    if echo "${platforms}" | grep -qE "(^|\s)\!${PLATFORM_NAME}\b"; then
+      debug "'PLATFORMS' string explicitly excludes '${PLATFORM_NAME}'"
+      return 1
+    elif ! echo "${platforms}" | grep -q "\b${PLATFORM_NAME}\b"; then
+      if [[ "${platforms}" != *'ANY'* ]]; then
+        debug "'PLATFORMS' string does not include '${PLATFORM_NAME}'"
+        return 2
+      fi
+    fi
+    debug "'PLATFORMS' string includes 'ANY' and does not exclude '${PLATFORM_NAME}'"
+  else
+    debug "'PLATFORMS' string is 'ANY'"
+  fi
+}
+
 platform_install() {
   local package="$1"
 

@@ -7,7 +7,7 @@
 DESCRIPTION='Manages dconf settings for applications that use it, e.g. Tilix.'
 INSTALL_MSG='Applying dconf settings...'
 UNINSTALL_MSG='Restoring dconf settings...'
-PLATFORMS='!MACOS'
+PLATFORMS='ANY !MACOS'
 
 SUFFIX='.dconf'
 
