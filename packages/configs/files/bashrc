@@ -12,6 +12,8 @@ shopt -s checkwinsize
 # Enable bash autocompletion
 if [[ -f /etc/bash_completion ]] && ! shopt -oq posix; then
   source /etc/bash_completion
+elif [[ -f /usr/local/share/bash-completion/bash_completion ]]; then
+  source /usr/local/share/bash-completion/bash_completion
 fi
 
 # Use VTE features if available, like keeping the same CWD when opening new tabs
