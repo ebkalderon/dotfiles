@@ -18,10 +18,6 @@ install() {
       for subfile in "${PACKAGE_FILES}"/config/*; do
         links[${subfile}]=".config/${subfile##*/}"
       done
-    elif [[ "${file##*/}" == 'local' ]]; then
-      for subfile in "${PACKAGE_FILES}"/local/share/applications/*; do
-        links[${subfile}]=".local/share/applications/${subfile##*/}"
-      done
     elif [[ "${file##*/}" == 'gnupg' ]]; then
       for subfile in "${PACKAGE_FILES}"/gnupg/*; do
         links[${subfile}]=".gnupg/${subfile##*/}"
