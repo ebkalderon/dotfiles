@@ -10,7 +10,7 @@ backup_and_copy() {
   local src="$1"
   local dest="$2"
 
-  echo -n "copying ${dest}... "
+  running "copying ${dest}..."
 
   # If file/folder exists, back it up
   if [[ -e ${dest} ]]; then
@@ -18,17 +18,20 @@ backup_and_copy() {
   fi
 
   # Copy file to destination
-  sudo cp -rpf "${src}" "${dest}" || { error && return 1; }
-  ok
-
-  return 0
+  if sudo cp -rpf "${src}" "${dest}"; then
+    ok
+    return 0
+  else
+    error
+    return 1
+  fi
 }
 
 backup_and_link() {
   local src="$1"
   local dest="$2"
 
-  echo -n "linking ${dest}... "
+  running "linking ${dest}..."
 
   # If file/folder exists, back it up
   if [[ -f ${dest} ]] || [[ -L ${dest} ]]; then
@@ -38,10 +41,13 @@ backup_and_link() {
   fi
 
   # Create new symlink
-  ln -s "${src}" "${dest}" || { error && return 1; }
-  ok
-
-  return 0
+  if ln -s "${src}" "${dest}"; then
+    ok
+    return 0
+  else
+    error
+    return 1
+  fi
 }
 
 restore() {
@@ -50,18 +56,21 @@ restore() {
   dest="$2"
   date="$3"
 
-  echo -n "restoring ${name}... "
+  running "restoring ${name}..."
 
   if [[ -n ${date} ]]; then
     src="${HOME}/.dotfiles_old/${date}/${name}"
   else
     # Select the oldest backup directory that contains this file
-    src=$(find "${HOME}/.dotfiles_old/" -name "${name}" | head -1)
+    src="$(find "${HOME}/.dotfiles_old/" -name "${name}" | head -1)"
   fi
 
   # Copy the backed up file
-  cp -rpf "${src}" "${dest}" &> /dev/null || { error && return 1; }
-  ok
-
-  return 0
+  if cp -rpf "${src}" "${dest}" &> /dev/null; then
+    ok
+    return 0
+  else
+    error
+    return 1
+  fi
 }

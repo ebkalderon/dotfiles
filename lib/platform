@@ -79,8 +79,8 @@ platform_check_string() {
 platform_install() {
   local package="$1"
 
-  echo -n "installing ${package}... "
-  execute ${PLATFORM_INSTALL} ${package}
+  running "installing ${package}..."
+  execute ${PLATFORM_INSTALL} ${package};
 
   return $?
 }
@@ -88,30 +88,28 @@ platform_install() {
 platform_remove() {
   local package="$1"
 
-  echo -n "uninstalling ${package}... "
+  running "uninstalling ${package}..."
   execute ${PLATFORM_REMOVE} ${package}
 
   return $?
 }
 
 platform_update() {
-  echo -n 'updating package mirrors... '
+  running 'updating package mirrors...'
   execute ${PLATFORM_UPDATE}
-
   return $?
 }
 
 platform_upgrade() {
   local package="$1"
 
-  if [[ -n ${package} ]]; then
-    echo -n "upgrading ${package}... "
+  if [ -n "${package}" ]; then
+    running "upgrading ${package}..."
   else
-    echo -n 'installing system updates... '
+    running 'installing system updates...'
   fi
 
   execute ${PLATFORM_UPGRADE} ${package}
-
   return $?
 }
 

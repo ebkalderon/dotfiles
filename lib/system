@@ -10,8 +10,7 @@ execute_silent() {
   local args="$@"
 
   if [[ ${VERBOSE} == 1 ]]; then
-    echo
-    debug "${args}"
+    debug "\n${args}\n"
     ${args}
   else
     ${args} &> /dev/null

@@ -12,13 +12,12 @@ PLATFORMS='ANY !MACOS'
 SUFFIX='.dconf'
 
 install() {
-  echo -n 'checking for existence of dconf... '
-  local dconf_bin="$(command -v dconf)"
-  if [[ -n ${dconf_bin} ]]; then
+  running 'checking for existence of dconf...'
+  if command -v dconf &> /dev/null; then
     success
   else
     failure
-    echo 'skipping installation...'
+    running 'skipping installation...'
     return 1
   fi
 
@@ -27,10 +26,11 @@ install() {
     # Get the basename of the file, trim the extension suffix.
     local name="${file##*/}"
     name="${name%${SUFFIX}}"
+
     # Replace all dots with forward slashes, and add leading/trailing slashes.
     local schema="/${name//./\/}/"
-    echo -n "loading settings for ${schema}... "
 
+    running "loading settings for ${schema}..."
     dconf dump "${schema}" > "${PACKAGE_BACKUPS}/${file##*/}" || { error && continue; }
     dconf load "${schema}" < "${file}" || { error && continue; }
     ok
@@ -47,10 +47,11 @@ reload() {
     # Get the basename of the file, trim the extension suffix.
     local name="${file##*/}"
     name="${name%${SUFFIX}}"
+
     # Replace all dots with forward slashes, and add leading/trailing slashes.
     local schema="/${name//./\/}/"
-    echo -n "loading settings for ${schema}... "
 
+    running "loading settings for ${schema}... "
     dconf load "${schema}" < "${file}" || { error && continue; }
     ok
   done

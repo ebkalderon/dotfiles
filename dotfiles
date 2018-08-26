@@ -6,6 +6,27 @@
 # Command-line interface for managing dotfiles.
 #
 
+function backtrace() {
+  local err=$?
+  set +o xtrace
+  local code="${1:-1}"
+  echo "Error in ${BASH_SOURCE[1]}:${BASH_LINENO[0]}. '${BASH_COMMAND}' exited with status ${err}"
+  # Print out the stack trace described by $function_stac
+  if [ ${#FUNCNAME[@]} -gt 2 ]; then
+    echo 'Call tree:'
+    for ((i=1; i<${#FUNCNAME[@]}-1; i++)); do
+      echo " $i: ${BASH_SOURCE[$i+1]}:${BASH_LINENO[$i]} ${FUNCNAME[$i]}(...)"
+    done
+  fi
+  echo "Exiting with status ${code}"
+  exit ${code}
+}
+
+# Enable backtrace output
+trap 'backtrace' ERR
+set -eEuo pipefail
+
+# Set commonly used constants
 readonly DOTFILES="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 readonly VERSION='0.1.0'
 
@@ -205,7 +226,7 @@ done
 shift "$((OPTIND - 1))"
 
 # Parse subcommands
-subcommand="$1"; shift
+subcommand="${1:-}"; shift || true
 case ${subcommand} in
   install)
     while getopts ':v' opt; do
@@ -276,7 +297,7 @@ case ${subcommand} in
     exit $?
     ;;
   *)
-    if [[ -z ${subcommand} ]]; then
+    if [ -z "${subcommand}" ]; then
       echo 'error: no command or flags specified'
       echo 'Try "dotfiles --help" for more information.'
     else

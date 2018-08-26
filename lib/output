@@ -23,9 +23,11 @@ readonly STYLE_BLINK="$(tput blink)"
 readonly STYLE_REVERSE="$(tput smso)"
 readonly STYLE_UNDERLINE="$(tput smul)"
 
+readonly CURSOR_PREV_LINE="$(tput cuu1 && echo -e '\r')"
+
 debug() {
   if [[ ${VERBOSE} == 1 ]]; then
-    echo -e "${STYLE_BOLD}VERBOSE:${STYLE_RESET} $1"
+    echo -e "${STYLE_BOLD}VERBOSE:${STYLE_RESET} ${1:-}"
   fi
 }
 
@@ -34,22 +36,57 @@ header() {
   echo -e "${COLOR_BLUE}${STYLE_BOLD}:: ${COLOR_WHITE}${text}${STYLE_RESET}"
 }
 
+running() {
+  local text="${1:-}"
+  if [ -n "${text}" ]; then
+    echo -e "       ${text}"
+  else
+    return 1
+  fi
+}
+
 ok() {
-  echo -e "${COLOR_GREEN}[ok]${STYLE_RESET} $1"
+  running
+  local text="${1:-}"
+  if [ -n "${text}" ]; then
+    echo -e "${STYLE_BOLD}${COLOR_GREEN}  [ok]${STYLE_RESET} ${text}"
+  else
+    echo -e "${CURSOR_PREV_LINE}${STYLE_BOLD}${COLOR_GREEN}  [ok]${STYLE_RESET}"
+  fi
 }
 
 warning() {
-  echo -e "${COLOR_YELLOW}[warning]${STYLE_RESET} $1"
+  local text="${1:-}"
+  if [ -n "${text}" ]; then
+    echo -e "${STYLE_BOLD}${COLOR_YELLOW}[warn]${STYLE_RESET} ${text}"
+  else
+    echo -e "${CURSOR_PREV_LINE}${STYLE_BOLD}${COLOR_YELLOW}[warn]${STYLE_RESET}"
+  fi
 }
 
 error() {
-  echo -e "${COLOR_RED}[error]${STYLE_RESET} $1"
+  local text="${1:-}"
+  if [ -n "${text}" ]; then
+    echo -e "${STYLE_BOLD}${COLOR_RED} [err]${STYLE_RESET} ${text}"
+  else
+    echo -e "${CURSOR_PREV_LINE}${STYLE_BOLD}${COLOR_RED} [err]${STYLE_RESET}"
+  fi
 }
 
 success() {
-  echo -e "${COLOR_GREEN}[success]${STYLE_RESET} $1"
+  local text="${1:-}"
+  if [ -n "${text}" ]; then
+    echo -e "${STYLE_BOLD}${COLOR_GREEN}   [✓]${STYLE_RESET} ${text}"
+  else
+    echo -e "${CURSOR_PREV_LINE}${STYLE_BOLD}${COLOR_GREEN}   [✓]${STYLE_RESET}"
+  fi
 }
 
 failure() {
-  echo -e "${COLOR_RED}[failure]${STYLE_RESET} $1"
+  local text="${1:-}"
+  if [ -n "${text}" ]; then
+    echo -e "${STYLE_BOLD}${COLOR_RED}   [✗]${STYLE_RESET} ${text}"
+  else
+    echo -e "${CURSOR_PREV_LINE}${STYLE_BOLD}${COLOR_RED}   [✗]${STYLE_RESET}"
+  fi
 }
