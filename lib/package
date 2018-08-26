@@ -70,13 +70,11 @@ packages_pre_update() {
   for package in ${PACKAGES}; do
     _load_package "${package}"
 
-    # If package is not currently installed, skip it
-    if ! grep -Ex --quiet "${PACKAGE_NAME}" "${DATABASE}"; then
-      header "Package '${PACKAGE_NAME}' not installed. Skipping..."
-      continue
+    # If package is currently installed, trigger pre-update hook
+    if grep -Ex --quiet "${PACKAGE_NAME}" "${DATABASE}"; then
+      debug "Running pre-update hook for '${PACKAGE_NAME}'..."
+      _pre_update
     fi
-
-    _pre_update
   done
 }
 
@@ -86,13 +84,11 @@ packages_post_update() {
   for package in ${PACKAGES}; do
     _load_package "${package}"
 
-    # If package is not currently installed, skip it
-    if ! grep -Ex --quiet "${PACKAGE_NAME}" "${DATABASE}"; then
-      header "Package '${PACKAGE_NAME}' not installed. Skipping..."
-      continue
+    # If package is currently installed, trigger pre-update hook
+    if grep -Ex --quiet "${PACKAGE_NAME}" "${DATABASE}"; then
+      debug "Running post-update hook for '${PACKAGE_NAME}'..."
+      _post_update
     fi
-
-    _post_update
   done
 }
 
