@@ -24,7 +24,7 @@ function backtrace() {
 
 # Enable backtrace output
 trap 'backtrace' ERR
-set -eEuo pipefail
+set -Eeuo pipefail
 
 # Set commonly used constants
 readonly DOTFILES="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
