@@ -159,12 +159,12 @@ dotfiles_update() {
   # Stash any local uncommitted changes and pull upstream updates
   header 'Pulling upstream updates...'
   git -C "${DOTFILES}" stash --quiet
-  trap "restore_local_changes; exit 1" INT
+  trap 'debug "Interrupted"; restore_local_changes; exit 1' INT
   git -C "${DOTFILES}" pull
 
   # Restore any local uncommitted changes
   restore_local_changes
-  trap 'exit 1' INT
+  trap 'debug "Interrupted"; exit 1' INT
 
   # Install the new packages
   header 'Reinstalling dotfiles...'
@@ -178,7 +178,7 @@ dotfiles_update() {
 }
 
 # Ensure we exit the script when user hits CTRL+C (SIGINT)
-trap 'exit 1' INT
+trap 'debug "Interrupted"; exit 1' INT
 
 # Parse long options
 for arg in "$@"; do
