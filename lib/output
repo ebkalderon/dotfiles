@@ -23,7 +23,7 @@ readonly STYLE_BLINK="$(tput blink)"
 readonly STYLE_REVERSE="$(tput smso)"
 readonly STYLE_UNDERLINE="$(tput smul)"
 
-readonly CURSOR_PREV_LINE="$(tput cuu1 && echo -e '\r')"
+readonly CURSOR_PREV_LINE="$(tput cuu1 && tput cr)"
 
 debug() {
   if [[ ${VERBOSE} == 1 ]]; then
@@ -37,16 +37,11 @@ header() {
 }
 
 running() {
-  local text="${1:-}"
-  if [ -n "${text}" ]; then
-    echo -e "       ${text}"
-  else
-    return 1
-  fi
+  local text="$1"
+  echo -e "       ${text}"
 }
 
 ok() {
-  running
   local text="${1:-}"
   if [ -n "${text}" ]; then
     echo -e "${STYLE_BOLD}${COLOR_GREEN}  [ok]${STYLE_RESET} ${text}"
