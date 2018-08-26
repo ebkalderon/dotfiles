@@ -101,7 +101,7 @@ platform_update() {
 }
 
 platform_upgrade() {
-  local package="$1"
+  local package="${1:-}"
 
   if [ -n "${package}" ]; then
     running "upgrading ${package}..."
