@@ -52,7 +52,7 @@ hi NonText ctermbg=NONE
 " Install plugins
 call plug#begin()
 
-if !isdirectory('/usr/share/fzf')
+if !executable('fzf')
     Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all --no-update-rc' }
 endif
 
