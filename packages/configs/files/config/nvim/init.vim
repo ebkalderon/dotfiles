@@ -76,6 +76,7 @@ Plug 'timonv/vim-cargo', { 'for': 'rust' }
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-commentary'
 Plug 'vim-scripts/dbext.vim', { 'for': 'sql' }
+Plug 'vmchale/dhall-vim', { 'for': 'dhall' }
 Plug 'zchee/deoplete-clang', { 'for': ['c', 'cpp'] }
 
 call plug#end()
