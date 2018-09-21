@@ -3,14 +3,9 @@
 #
 
 # Load bash integration for FZF
-if [[ -d /usr/share/fzf ]]; then
-  source /usr/share/fzf/key-bindings.bash
-  source /usr/share/fzf/completion.bash
-elif [[ -d ~/.nix-profile/share/fzf ]]; then
-  source ~/.nix-profile/share/fzf/key-bindings.bash
-  source ~/.nix-profile/share/fzf/completion.bash
-elif [[ -f ~/.fzf.bash ]]; then
-  source ~/.fzf.bash
+if command -v fzf-share &> /dev/null; then
+  source "$(fzf-share)/key-bindings.bash"
+  source "$(fzf-share)/completion.bash"
 fi
 
 # Select `rg` if available, fall back on `find` otherwise
