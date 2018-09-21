@@ -10,7 +10,7 @@ fi
 
 # Select `rg` if available, fall back on `find` otherwise
 if command -v rg &> /dev/null; then
-  FZF_DEFAULT_COMMAND='rg --files . --no-ignore --glob "!.git/*" "*/\.*"'
+  FZF_DEFAULT_COMMAND='rg --files --no-ignore-vcs --hidden'
 else
   FZF_DEFAULT_COMMAND='find . -path "*/\.*" -prune -o -type f -print -o -type l -print |
     sed s/^..//'
