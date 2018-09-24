@@ -17,4 +17,5 @@ else
 fi
 
 # Use `git ls-tree` if running in Git repository, use `rg` or `find` otherwise
-export FZF_DEFAULT_COMMAND="(git ls-tree -r --name-only HEAD || ${FZF_DEFAULT_COMMAND}) 2> /dev/null"
+export FZF_DEFAULT_COMMAND="(git ls-tree -r --name-only --exclude-standard
+  --cached --others HEAD || ${FZF_DEFAULT_COMMAND}) 2> /dev/null"
