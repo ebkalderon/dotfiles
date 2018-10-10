@@ -7,9 +7,10 @@ _dotfiles() {
   _init_completion || return
 
   COMPREPLY=()
+  cur="${COMP_WORDS[COMP_CWORD]}"
   cmd="${words[1]}"
 
-  case {cmd} in
+  case ${cmd} in
     install | remove)
       COMPREPLY=( $(compgen -W '--package --verbose' -- "${cur}") )
       return 0
@@ -37,4 +38,4 @@ _dotfiles() {
   fi
 }
 
-complete -F _dotfiles dotfiles
+complete -o nospace -F _dotfiles dotfiles
