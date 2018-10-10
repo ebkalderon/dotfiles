@@ -52,7 +52,9 @@ hi NonText ctermbg=NONE
 " Install plugins
 call plug#begin()
 
-if !executable('fzf')
+if executable('fzf')
+    Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --bin' }
+else
     Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all --no-update-rc' }
 endif
 
@@ -61,8 +63,10 @@ Plug 'artur-shaik/vim-javacomplete2', { 'for': 'java' }
 Plug 'autozimu/LanguageClient-neovim', { 'branch': 'next', 'do': 'bash install.sh' }
 Plug 'cespare/vim-toml', { 'for': 'toml' }
 Plug 'fishbullet/deoplete-ruby', { 'for': 'ruby' }
-Plug 'junegunn/fzf.vim'
+Plug 'gluon-lang/vim-gluon', { 'for': 'gluon' }
 Plug 'itchyny/lightline.vim'
+Plug 'jreybert/vimagit'
+Plug 'junegunn/fzf.vim'
 Plug 'leafgarland/typescript-vim', { 'for': 'typescript' }
 Plug 'LnL7/vim-nix', { 'for': 'nix' }
 Plug 'neomake/neomake'
@@ -98,6 +102,12 @@ imap <c-x><c-j> <plug>(fzf-complete-file)
 imap <c-x><c-l> <plug>(fzf-complete-line)
 
 nnoremap <silent> <c-p> :FZF .<CR>
+
+let g:fzf_action = {
+    \ 'ctrl-t': 'tab split',
+    \ 'ctrl-x': 'split',
+    \ 'ctrl-v': 'vsplit'
+\ }
 
 let g:fzf_colors = {
     \ 'fg': ['fg', 'Normal'],
