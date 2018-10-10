@@ -35,7 +35,7 @@ set textwidth=80
 augroup AutoIndentation
     autocmd!
     autocmd FileType css,html,scss,sh,yaml setlocal shiftwidth=2 tabstop=2
-    autocmd FileType rust setlocal colorcolumn=99
+    autocmd FileType rust setlocal colorcolumn=99 textwidth=99
 augroup end
 
 " Color options
