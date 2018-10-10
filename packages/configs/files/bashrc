@@ -16,6 +16,11 @@ elif [[ -f /usr/local/share/bash-completion/bash_completion ]]; then
   source /usr/local/share/bash-completion/bash_completion
 fi
 
+# Enable per-user bash autocompletion if Nix is installed
+if [[ -d ~/.nix-profile/share/bash-completion/completions ]]; then
+  source ~/.nix-profile/share/bash-completion/completions/*
+fi
+
 # Use VTE features if available, like keeping the same CWD when opening new tabs
 if [[ -f /etc/profile.d/vte.sh ]]; then
   source /etc/profile.d/vte.sh
