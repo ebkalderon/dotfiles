@@ -8,7 +8,6 @@ scriptencoding utf-8
 
 " General options
 set cursorline
-set fillchars+=vert:\│
 set hidden
 set hlsearch
 set laststatus=2
@@ -47,8 +46,16 @@ colorscheme molokai
 syntax on
 
 " Allow transparent background
-hi Normal ctermbg=NONE
-hi NonText ctermbg=NONE
+hi Normal ctermbg=NONE guibg=NONE
+hi NonText ctermbg=NONE guibg=NONE
+hi VertSplit ctermbg=NONE guibg=NONE
+
+" Graphical styling
+set fillchars+=vert:\│
+augroup AutoTerminal
+    autocmd!
+    autocmd TermOpen * setlocal nonumber norelativenumber
+augroup end
 
 " Install plugins
 call plug#begin()
