@@ -71,6 +71,7 @@ Plug 'junegunn/fzf.vim'
 Plug 'leafgarland/typescript-vim', { 'for': 'typescript' }
 Plug 'LnL7/vim-nix', { 'for': 'nix' }
 Plug 'neomake/neomake'
+Plug 'ron-rs/ron.vim', { 'for': 'ron' }
 Plug 'rust-lang/rust.vim', { 'for': 'rust' }
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'Shougo/echodoc.vim'
