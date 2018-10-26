@@ -20,6 +20,9 @@ set clipboard^=unnamed
 " Enable mouse scrolling in vim instead of tmux history buffer
 set mouse=a
 
+" Allow leaving embedded terminal with <Esc>
+tnoremap <Esc> <C-\><C-n>
+
 " Backup options
 set backup
 set backupdir=~/.local/share/nvim/backup
