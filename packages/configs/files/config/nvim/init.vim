@@ -93,6 +93,7 @@ Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-commentary'
 Plug 'vim-scripts/dbext.vim', { 'for': 'sql' }
 Plug 'vmchale/dhall-vim', { 'for': 'dhall' }
+Plug 'wannesm/wmgraphviz.vim', { 'for': 'dot' }
 Plug 'zchee/deoplete-clang', { 'for': ['c', 'cpp'] }
 
 call plug#end()
@@ -136,6 +137,9 @@ let g:fzf_colors = {
     \ 'spinner': ['fg', 'Label'],
     \ 'header': ['fg', 'Comment']
 \ }
+
+" GraphViz configuration (needs `graphviz`)
+let g:WMGraphviz_output = "png"
 
 " Javacomplete2 configuration
 augroup AutoJavacomplete2
