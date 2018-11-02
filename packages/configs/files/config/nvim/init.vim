@@ -70,6 +70,7 @@ else
 endif
 
 Plug 'alvan/vim-closetag', { 'for': ['html', 'phtml', 'xhtml'] }
+Plug 'ap/vim-css-color', { 'for': ['css', 'sass', 'scss'] }
 Plug 'artur-shaik/vim-javacomplete2', { 'for': 'java' }
 Plug 'autozimu/LanguageClient-neovim', { 'branch': 'next', 'do': 'bash install.sh' }
 Plug 'cespare/vim-toml', { 'for': 'toml' }
