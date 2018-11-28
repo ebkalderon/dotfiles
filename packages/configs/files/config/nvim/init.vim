@@ -158,7 +158,7 @@ let g:deoplete#sources#clang#libclang_path = '/usr/lib64/libclang.so'
 " Language | Server installation
 " ---------|------------------------------------------------------------------
 " Python   | sudo pip install python-language-server
-" Rust     | rustup component add rls-preview rust-analysis rust-src --toolchain nightly
+" Rust     | rustup component add rls-preview rust-analysis rust-src
 set hidden
 
 let $RUST_BACKTRACE = 1
@@ -175,6 +175,9 @@ nnoremap <F5> :call LanguageClient_contextMenu()<CR>
 nnoremap <silent> K :call LanguageClient_textDocument_hover()<CR>
 nnoremap <silent> gd :call LanguageClient_textDocument_definition()<CR>
 nnoremap <silent> <F2> :call LanguageClient_textDocument_rename()<CR>
+
+" Rustfmt integration (via rust.vim)
+let g:rustfmt_autosave = 1
 
 " Lightline configuration (requires Powerline-patched font)
 let g:lightline = {
