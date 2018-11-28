@@ -23,6 +23,9 @@ set mouse=a
 " Allow leaving embedded terminal with <Esc>
 tnoremap <Esc> <C-\><C-n>
 
+" Allow for visual search and replace of text.
+vnoremap <C-r> "hy:%s/<C-r>h//gc<left><left><left>
+
 " Backup options
 set backup
 set backupdir=~/.local/share/nvim/backup
