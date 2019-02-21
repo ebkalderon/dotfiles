@@ -87,6 +87,7 @@ Plug 'LnL7/vim-nix', { 'for': 'nix' }
 Plug 'neomake/neomake'
 Plug 'ron-rs/ron.vim', { 'for': 'ron' }
 Plug 'rust-lang/rust.vim', { 'for': 'rust' }
+Plug 'severin-lemaignan/vim-minimap'
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'Shougo/echodoc.vim'
 Plug 'Shougo/neoinclude.vim'
