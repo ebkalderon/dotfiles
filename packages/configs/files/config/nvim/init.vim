@@ -161,8 +161,9 @@ let g:deoplete#sources#clang#libclang_path = '/usr/lib64/libclang.so'
 "
 " Language | Server installation
 " ---------|------------------------------------------------------------------
+" Gluon    | cargo install gluon_language-server
 " Python   | sudo pip install python-language-server
-" Rust     | rustup component add rls-preview rust-analysis rust-src
+" Rust     | rustup component add rls rust-analysis rust-src
 set hidden
 
 let $RUST_BACKTRACE = 1
@@ -171,6 +172,7 @@ let g:LanguageClient_loggingLevel = 'INFO'
 let g:LanguageClient_loggingFile = expand('~/.local/share/nvim/LanguageClient.log')
 let g:LanguageClient_serverStderr = expand('~/.local/share/nvim/LanguageServer.log')
 let g:LanguageClient_serverCommands = {
+    \ 'gluon': ['gluon_language-server'],
     \ 'python': ['pyls'],
     \ 'rust': ['rls'],
 \ }
