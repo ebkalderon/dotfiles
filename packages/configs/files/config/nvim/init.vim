@@ -144,7 +144,8 @@ nmap <silent> gd <Plug>(coc-definition)
 nmap <silent> gy <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
-nmap <silent><F2> <Plug>(coc-rename)
+nmap <silent> <F2> <Plug>(coc-rename)
+nnoremap <silent> <F5> :<C-u>CocList<CR>
 
 inoremap <silent><expr> <c-space> coc#refresh()
 
@@ -280,6 +281,8 @@ endfunction
 augroup AutoCoc
     autocmd!
     autocmd User CocDiagnosticChange call lightline#update()
+    autocmd FileType list set laststatus=0 noshowmode noruler
+      \| autocmd BufLeave <buffer> set laststatus=2 showmode ruler
 augroup end
 
 function! s:lightline_coc_diagnostic(kind, sign) abort
