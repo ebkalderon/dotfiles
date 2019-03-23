@@ -13,7 +13,6 @@ nmap
 pacman-contrib
 pinentry
 python-neovim
-python2-neovim
 python-language-server
 ripgrep
 rustup
