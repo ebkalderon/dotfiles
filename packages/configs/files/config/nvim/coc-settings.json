@@ -1,0 +1,14 @@
+{
+    "languageserver": {
+        "bash": {
+            "command": "bash-language-server",
+            "args": ["start"],
+            "filetypes": ["sh"],
+            "ignoredRootPaths": ["~"]
+        },
+        "gluon": {
+          "command": "gluon_language-server",
+          "filetypes": ["gluon"]
+        }
+    }
+}

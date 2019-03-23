@@ -81,6 +81,7 @@ Plug 'itchyny/lightline.vim'
 Plug 'jsfaint/coc-neoinclude'
 Plug 'jreybert/vimagit'
 Plug 'junegunn/fzf.vim'
+Plug 'leafgarland/typescript-vim', { 'for': 'typescript' }
 Plug 'LnL7/vim-nix', { 'for': 'nix' }
 Plug 'neoclide/coc.nvim', { 'tag': '*', 'do': { -> coc#util#install() } }
 Plug 'ron-rs/ron.vim', { 'for': 'ron' }
@@ -101,12 +102,13 @@ call plug#end()
 
 " coc.nvim configuration
 "
-" Language | Server installation
-" ---------|------------------------------------------------------------------
-" Gluon    | cargo install gluon_language-server
-" Java     | trizen -Syu jdtls
-" Python   | sudo pip install python-language-server
-" Rust     | rustup component add rls rust-analysis rust-src
+" Language | Server installation                             | Extension?
+" ---------|-------------------------------------------------|-----------
+" Bash     | sudo npm install -g bash-language-server        |
+" Gluon    | cargo install gluon_language-server             |
+" Java     | trizen -S jdtls                                 | coc-java
+" Python   | sudo pip install python-language-server         | coc-pyls
+" Rust     | rustup component add rls rust-analysis rust-src | coc-rls
 set hidden
 set updatetime=300
 let $RUST_BACKTRACE = 1
@@ -122,6 +124,8 @@ function! s:check_back_space() abort
     let col = col('.') - 1
     return !col || getline('.')[col - 1]  =~# '\s'
 endfunction
+
+inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
 
 " Highlight symbol under cursor on CursorHold
 autocmd CursorHold * silent call CocActionAsync('highlight')
