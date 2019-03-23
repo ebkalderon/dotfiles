@@ -6,9 +6,14 @@
             "filetypes": ["sh"],
             "ignoredRootPaths": ["~"]
         },
+        "dockerfile": {
+            "command": "docker-langserver",
+            "filetypes": ["dockerfile"],
+            "args": ["--stdio"]
+        },
         "gluon": {
-          "command": "gluon_language-server",
-          "filetypes": ["gluon"]
+            "command": "gluon_language-server",
+            "filetypes": ["gluon"]
         }
     }
 }
