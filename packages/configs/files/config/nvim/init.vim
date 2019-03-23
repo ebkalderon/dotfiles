@@ -188,7 +188,15 @@ let g:fzf_colors = {
 let g:WMGraphviz_output = "png"
 
 " Markdown configuration
-let g:markdown_fenced_languages = ['c', 'cpp', 'css', 'js=javascript', 'rust']
+let g:markdown_fenced_languages = [
+    \ 'c',
+    \ 'cpp',
+    \ 'css',
+    \ 'javascript',
+    \ 'js=javascript',
+    \ 'typescript',
+    \ 'rust',
+\ ]
 
 " Rustfmt integration (via rust.vim)
 let g:rustfmt_autosave = 1
