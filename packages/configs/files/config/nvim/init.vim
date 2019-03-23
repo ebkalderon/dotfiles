@@ -103,15 +103,31 @@ call plug#end()
 " coc.nvim configuration
 "
 " Language | Server installation                             | Extension?
-" ---------|-------------------------------------------------|-----------
+" ---------|-------------------------------------------------|-------------
 " Bash     | sudo npm install -g bash-language-server        |
+" CSS/SCSS |                                                 | coc-css
 " Gluon    | cargo install gluon_language-server             |
-" Java     | trizen -S jdtls                                 | coc-java
+" HTML     |                                                 | coc-html
+" Java     |                                                 | coc-java
+" JS/TS    |                                                 | coc-tsserver
+" JSON     |                                                 | coc-json
 " Python   | sudo pip install python-language-server         | coc-pyls
 " Rust     | rustup component add rls rust-analysis rust-src | coc-rls
+" YAML     |                                                 | coc-yaml
 set hidden
 set updatetime=300
 let $RUST_BACKTRACE = 1
+
+call coc#add_extension(
+    \ 'coc-css',
+    \ 'coc-html',
+    \ 'coc-java',
+    \ 'coc-json',
+    \ 'coc-pyls',
+    \ 'coc-rls',
+    \ 'coc-tsserver',
+    \ 'coc-yaml'
+\ )
 
 " Use tab for trigger completion with characters ahead and navigate.
 inoremap <silent><expr> <TAB>
