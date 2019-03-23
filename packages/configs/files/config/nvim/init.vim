@@ -74,21 +74,16 @@ endif
 
 Plug 'alvan/vim-closetag', { 'for': ['html', 'phtml', 'xhtml'] }
 Plug 'ap/vim-css-color', { 'for': ['css', 'sass', 'scss'] }
-Plug 'artur-shaik/vim-javacomplete2', { 'for': 'java' }
-Plug 'autozimu/LanguageClient-neovim', { 'branch': 'next', 'do': 'bash install.sh' }
 Plug 'cespare/vim-toml', { 'for': 'toml' }
 Plug 'fishbullet/deoplete-ruby', { 'for': 'ruby' }
 Plug 'gluon-lang/vim-gluon', { 'for': 'gluon' }
 Plug 'itchyny/lightline.vim'
 Plug 'jreybert/vimagit'
 Plug 'junegunn/fzf.vim'
-Plug 'leafgarland/typescript-vim', { 'for': 'typescript' }
 Plug 'LnL7/vim-nix', { 'for': 'nix' }
-Plug 'neomake/neomake'
+Plug 'neoclide/coc.nvim', { 'tag': '*', 'do': { -> coc#util#install() } }
 Plug 'ron-rs/ron.vim', { 'for': 'ron' }
 Plug 'rust-lang/rust.vim', { 'for': 'rust' }
-Plug 'severin-lemaignan/vim-minimap'
-Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'Shougo/echodoc.vim'
 Plug 'Shougo/neoinclude.vim'
 Plug 'thyrgle/vim-dyon', { 'for': 'dyon' }
@@ -99,9 +94,53 @@ Plug 'tpope/vim-commentary'
 Plug 'vim-scripts/dbext.vim', { 'for': 'sql' }
 Plug 'vmchale/dhall-vim', { 'for': 'dhall' }
 Plug 'wannesm/wmgraphviz.vim', { 'for': 'dot' }
-Plug 'zchee/deoplete-clang', { 'for': ['c', 'cpp'] }
 
 call plug#end()
+
+" coc.nvim configuration
+"
+" Language | Server installation
+" ---------|------------------------------------------------------------------
+" Gluon    | cargo install gluon_language-server
+" Java     | trizen -Syu jdtls
+" Python   | sudo pip install python-language-server
+" Rust     | rustup component add rls rust-analysis rust-src
+set hidden
+set updatetime=300
+let $RUST_BACKTRACE = 1
+
+" Use tab for trigger completion with characters ahead and navigate.
+inoremap <silent><expr> <TAB>
+      \ pumvisible() ? "\<C-n>" :
+      \ <SID>check_back_space() ? "\<TAB>" :
+      \ coc#refresh()
+inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+
+function! s:check_back_space() abort
+    let col = col('.') - 1
+    return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
+
+" Highlight symbol under cursor on CursorHold
+autocmd CursorHold * silent call CocActionAsync('highlight')
+
+nnoremap <silent> K :call <SID>show_documentation()<CR>
+
+function! s:show_documentation()
+    if &filetype == 'vim'
+      execute 'h '.expand('<cword>')
+    else
+      call CocAction('doHover')
+    endif
+endfunction
+
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
+nmap <silent><F2> <Plug>(coc-rename)
+
+inoremap <silent><expr> <c-space> coc#refresh()
 
 " FZF configuration
 augroup AutoFzf
@@ -146,43 +185,6 @@ let g:fzf_colors = {
 " GraphViz configuration (needs `graphviz`)
 let g:WMGraphviz_output = "png"
 
-" Javacomplete2 configuration
-augroup AutoJavacomplete2
-    autocmd!
-    autocmd FileType java setlocal omnifunc=javacomplete#Complete
-augroup end
-
-" Deoplete configuration (needs `clang`)
-let g:deoplete#enable_at_startup = 1
-let g:deoplete#sources#clang#clang_header = '/usr/lib64/clang'
-let g:deoplete#sources#clang#libclang_path = '/usr/lib64/libclang.so'
-
-" LanguageClient configuration
-"
-" Language | Server installation
-" ---------|------------------------------------------------------------------
-" Gluon    | cargo install gluon_language-server
-" Python   | sudo pip install python-language-server
-" Rust     | rustup component add rls rust-analysis rust-src
-set hidden
-
-let $RUST_BACKTRACE = 1
-let g:languageClient_autoStart = 1
-let g:LanguageClient_loggingLevel = 'INFO'
-let g:LanguageClient_loggingFile = expand('~/.local/share/nvim/LanguageClient.log')
-let g:LanguageClient_serverStderr = expand('~/.local/share/nvim/LanguageServer.log')
-let g:LanguageClient_serverCommands = {
-    \ 'gluon': ['gluon_language-server'],
-    \ 'python': ['pyls'],
-    \ 'rust': ['rls'],
-\ }
-
-nnoremap <F5> :call LanguageClient_contextMenu()<CR>
-nnoremap <silent> K :call LanguageClient_textDocument_hover()<CR>
-nnoremap <silent> gd :call LanguageClient_textDocument_definition()<CR>
-nnoremap <silent> gr :call LanguageClient_textDocument_references()<CR>
-nnoremap <silent> <F2> :call LanguageClient_textDocument_rename()<CR>
-
 " Rustfmt integration (via rust.vim)
 let g:rustfmt_autosave = 1
 
@@ -192,7 +194,7 @@ let g:lightline = {
     \ 'active': {
     \     'left': [['mode', 'paste'],
     \              ['fugitive', 'filename']],
-    \     'right': [['neomake', 'lineinfo'],
+    \     'right': [['coc_status', 'lineinfo'],
     \               ['percent'],
     \               ['fileformat', 'fileencoding', 'filetype']]
     \ },
@@ -206,10 +208,10 @@ let g:lightline = {
     \     'filename': 'MyFilename'
     \ },
     \ 'component_expand': {
-    \     'neomake': 'neomake#statusline#LoclistStatus'
+    \     'coc_status': 'coc#status'
     \ },
     \ 'component_type': {
-    \     'neomake': 'error'
+    \     'coc_status': 'error'
     \ },
     \ 'separator': {
     \     'left': '', 'right': ''
@@ -250,9 +252,8 @@ function! MyFugitive()
     return ''
 endfunction
 
-" Integrate Neomake into Lightline
-augroup AutoNeomake
+" Integrate coc.nvim into Lightline
+augroup AutoCoc
     autocmd!
-    autocmd User NeomakeFinished | call lightline#update()
-    autocmd BufWritePost *.* Neomake
+    autocmd User CocDiagnosticChange call lightline#update()
 augroup end
