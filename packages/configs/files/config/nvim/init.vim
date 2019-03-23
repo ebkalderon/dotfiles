@@ -78,6 +78,7 @@ Plug 'cespare/vim-toml', { 'for': 'toml' }
 Plug 'fishbullet/deoplete-ruby', { 'for': 'ruby' }
 Plug 'gluon-lang/vim-gluon', { 'for': 'gluon' }
 Plug 'itchyny/lightline.vim'
+Plug 'jsfaint/coc-neoinclude'
 Plug 'jreybert/vimagit'
 Plug 'junegunn/fzf.vim'
 Plug 'LnL7/vim-nix', { 'for': 'nix' }
@@ -91,6 +92,7 @@ Plug 'tikhomirov/vim-glsl', { 'for': 'glsl' }
 Plug 'timonv/vim-cargo', { 'for': 'rust' }
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-commentary'
+Plug 'tpope/vim-markdown', { 'for': 'markdown' }
 Plug 'vim-scripts/dbext.vim', { 'for': 'sql' }
 Plug 'vmchale/dhall-vim', { 'for': 'dhall' }
 Plug 'wannesm/wmgraphviz.vim', { 'for': 'dot' }
@@ -185,6 +187,9 @@ let g:fzf_colors = {
 " GraphViz configuration (needs `graphviz`)
 let g:WMGraphviz_output = "png"
 
+" Markdown configuration
+let g:markdown_fenced_languages = ['c', 'cpp', 'css', 'js=javascript', 'rust']
+
 " Rustfmt integration (via rust.vim)
 let g:rustfmt_autosave = 1
 
@@ -193,8 +198,9 @@ let g:lightline = {
     \ 'colorscheme': 'powerline',
     \ 'active': {
     \     'left': [['mode', 'paste'],
-    \              ['fugitive', 'filename']],
-    \     'right': [['coc_status', 'lineinfo'],
+    \              ['fugitive', 'filename'],
+    \              ['coc_error', 'coc_warning', 'coc_info', 'coc_hint']],
+    \     'right': [['lineinfo'],
     \               ['percent'],
     \               ['fileformat', 'fileencoding', 'filetype']]
     \ },
@@ -208,10 +214,16 @@ let g:lightline = {
     \     'filename': 'MyFilename'
     \ },
     \ 'component_expand': {
-    \     'coc_status': 'coc#status'
+    \     'coc_error': 'LightlineCocErrors',
+    \     'coc_warning': 'LightlineCocWarnings',
+    \     'coc_info': 'LightlineCocInfos',
+    \     'coc_hint': 'LightlineCocHints',
     \ },
     \ 'component_type': {
-    \     'coc_status': 'error'
+    \     'coc_error': 'error',
+    \     'coc_warning': 'warning',
+    \     'coc_info': 'tabsel',
+    \     'coc_hint': 'middle',
     \ },
     \ 'separator': {
     \     'left': '', 'right': ''
@@ -257,3 +269,32 @@ augroup AutoCoc
     autocmd!
     autocmd User CocDiagnosticChange call lightline#update()
 augroup end
+
+function! s:lightline_coc_diagnostic(kind, sign) abort
+  let info = get(b:, 'coc_diagnostic_info', 0)
+  if empty(info) || get(info, a:kind, 0) == 0
+    return ''
+  endif
+  try
+    let s = g:coc_user_config['diagnostic'][a:sign . 'Sign']
+  catch
+    let s = '•'
+  endtry
+  return printf('%s %d', s, info[a:kind])
+endfunction
+
+function! LightlineCocErrors() abort
+  return s:lightline_coc_diagnostic('error', 'error')
+endfunction
+
+function! LightlineCocWarnings() abort
+  return s:lightline_coc_diagnostic('warning', 'warning')
+endfunction
+
+function! LightlineCocInfos() abort
+  return s:lightline_coc_diagnostic('information', 'info')
+endfunction
+
+function! LightlineCocHints() abort
+  return s:lightline_coc_diagnostic('hints', 'hint')
+endfunction
