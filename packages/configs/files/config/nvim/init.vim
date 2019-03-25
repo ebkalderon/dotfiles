@@ -23,7 +23,7 @@ set mouse=a
 " Allow leaving embedded terminal with <Esc>
 tnoremap <Esc> <C-\><C-n>
 
-" Allow for visual search and replace of text.
+" Allow for visual search and replacement of text
 vnoremap <C-r> "hy:%s/<C-r>h//gc<left><left><left>
 
 " Backup options
@@ -182,7 +182,7 @@ imap <c-x><c-f> <plug>(fzf-complete-path)
 imap <c-x><c-j> <plug>(fzf-complete-file)
 imap <c-x><c-l> <plug>(fzf-complete-line)
 
-nnoremap <silent> <c-p> :FZF .<CR>
+nnoremap <silent> <c-p> :call fzf#vim#files('.', fzf#vim#with_preview('right'))<CR>
 
 let g:fzf_action = {
     \ 'ctrl-t': 'tab split',
@@ -241,7 +241,7 @@ let g:lightline = {
     \     'fugitive': 'MyFugitive',
     \     'readonly': 'MyReadonly',
     \     'modified': 'MyModified',
-    \     'filename': 'MyFilename'
+    \     'filename': 'MyFilename',
     \ },
     \ 'component_expand': {
     \     'coc_error': 'LightlineCocErrors',
