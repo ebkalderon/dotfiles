@@ -157,6 +157,9 @@ function! s:show_documentation()
     endif
 endfunction
 
+let g:coc_snippet_next = "<tab>"
+let g:coc_snippet_prev = "<S-tab>"
+
 nmap <silent> gd <Plug>(coc-definition)
 nmap <silent> gy <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-implementation)
@@ -164,7 +167,7 @@ nmap <silent> gr <Plug>(coc-references)
 nmap <silent> <F2> <Plug>(coc-rename)
 nnoremap <silent> <F5> :<C-u>CocList<CR>
 
-inoremap <silent><expr> <c-space> coc#refresh()
+inoremap <silent> <expr> <C-space> coc#refresh()
 
 " FZF configuration
 augroup AutoFzf
@@ -177,12 +180,12 @@ nmap <leader><tab> <plug>(fzf-maps-n)
 xmap <leader><tab> <plug>(fzf-maps-x)
 omap <leader><tab> <plug>(fzf-maps-o)
 
-imap <c-x><c-k> <plug>(fzf-complete-word)
-imap <c-x><c-f> <plug>(fzf-complete-path)
-imap <c-x><c-j> <plug>(fzf-complete-file)
-imap <c-x><c-l> <plug>(fzf-complete-line)
+imap <C-x><C-k> <plug>(fzf-complete-word)
+imap <C-x><C-f> <plug>(fzf-complete-path)
+imap <C-x><C-j> <plug>(fzf-complete-file)
+imap <C-x><C-l> <plug>(fzf-complete-line)
 
-nnoremap <silent> <c-p> :call fzf#vim#files('.', fzf#vim#with_preview('right'))<CR>
+nnoremap <silent> <C-p> :call fzf#vim#files('.', fzf#vim#with_preview('right'))<CR>
 
 let g:fzf_action = {
     \ 'ctrl-t': 'tab split',
@@ -232,7 +235,7 @@ let g:lightline = {
     \              ['coc_error', 'coc_warning', 'coc_info', 'coc_hint']],
     \     'right': [['lineinfo'],
     \               ['percent'],
-    \               ['fileformat', 'fileencoding', 'filetype']]
+    \               ['coc_status', 'fileformat', 'fileencoding', 'filetype']]
     \ },
     \ 'component': {
     \     'lineinfo': ' %3l:%-2v'
@@ -242,6 +245,7 @@ let g:lightline = {
     \     'readonly': 'MyReadonly',
     \     'modified': 'MyModified',
     \     'filename': 'MyFilename',
+    \     'coc_status': 'LightlineCocStatus',
     \ },
     \ 'component_expand': {
     \     'coc_error': 'LightlineCocErrors',
@@ -303,30 +307,39 @@ augroup AutoCoc
 augroup end
 
 function! s:lightline_coc_diagnostic(kind, sign) abort
-  let info = get(b:, 'coc_diagnostic_info', 0)
-  if empty(info) || get(info, a:kind, 0) == 0
-    return ''
-  endif
-  try
-    let s = g:coc_user_config['diagnostic'][a:sign . 'Sign']
-  catch
-    let s = '•'
-  endtry
-  return printf('%s %d', s, info[a:kind])
+    let info = get(b:, 'coc_diagnostic_info', 0)
+    if empty(info) || get(info, a:kind, 0) == 0
+        return ''
+    endif
+    try
+        let s = g:coc_user_config['diagnostic'][a:sign . 'Sign']
+    catch
+        let s = '•'
+    endtry
+    return printf('%s %d', s, info[a:kind])
 endfunction
 
 function! LightlineCocErrors() abort
-  return s:lightline_coc_diagnostic('error', 'error')
+    return s:lightline_coc_diagnostic('error', 'error')
 endfunction
 
 function! LightlineCocWarnings() abort
-  return s:lightline_coc_diagnostic('warning', 'warning')
+    return s:lightline_coc_diagnostic('warning', 'warning')
 endfunction
 
 function! LightlineCocInfos() abort
-  return s:lightline_coc_diagnostic('information', 'info')
+    return s:lightline_coc_diagnostic('information', 'info')
 endfunction
 
 function! LightlineCocHints() abort
-  return s:lightline_coc_diagnostic('hints', 'hint')
+    return s:lightline_coc_diagnostic('hints', 'hint')
+endfunction
+
+function! LightlineCocStatus() abort
+    try 
+        let status = get(g:, 'coc_status', '')
+    catch
+        let status = ''
+    endtry
+    return status
 endfunction
