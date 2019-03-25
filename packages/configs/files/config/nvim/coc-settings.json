@@ -15,5 +15,7 @@
             "command": "gluon_language-server",
             "filetypes": ["gluon"]
         }
-    }
+    },
+    "diagnostic.virtualText": true,
+    "diagnostic.virtualTextPrefix": "⟩ "
 }

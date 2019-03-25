@@ -302,6 +302,7 @@ endfunction
 augroup AutoCoc
     autocmd!
     autocmd User CocDiagnosticChange call lightline#update()
+    autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
     autocmd FileType list set laststatus=0 noshowmode noruler
       \| autocmd BufLeave <buffer> set laststatus=2 showmode ruler
 augroup end
