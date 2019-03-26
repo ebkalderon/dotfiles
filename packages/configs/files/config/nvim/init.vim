@@ -126,6 +126,7 @@ call coc#add_extension(
     \ 'coc-json',
     \ 'coc-pyls',
     \ 'coc-rls',
+    \ 'coc-snippets',
     \ 'coc-tsserver',
     \ 'coc-yaml'
 \ )
