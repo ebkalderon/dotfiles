@@ -8,8 +8,8 @@
         },
         "dockerfile": {
             "command": "docker-langserver",
-            "filetypes": ["dockerfile"],
-            "args": ["--stdio"]
+            "args": ["--stdio"],
+            "filetypes": ["dockerfile"]
         },
         "gluon": {
             "command": "gluon_language-server",
@@ -17,5 +17,7 @@
         }
     },
     "diagnostic.virtualText": true,
-    "diagnostic.virtualTextPrefix": "⟩ "
+    "diagnostic.virtualTextPrefix": "⟩ ",
+    "suggest.noselect": false,
+    "suggest.preferCompleteThanJumpPlaceholder": true
 }
