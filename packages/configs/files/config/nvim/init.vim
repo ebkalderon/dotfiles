@@ -180,6 +180,11 @@ augroup AutoFzf
       \| autocmd BufLeave <buffer> set laststatus=2 showmode ruler
 augroup end
 
+if has("nvim")
+  au TermOpen * tnoremap <Esc> <c-\><c-n>
+  au FileType fzf tunmap <Esc>
+endif
+
 nmap <leader><tab> <plug>(fzf-maps-n)
 xmap <leader><tab> <plug>(fzf-maps-x)
 omap <leader><tab> <plug>(fzf-maps-o)
