@@ -121,12 +121,15 @@ let $RUST_BACKTRACE = 1
 
 call coc#add_extension(
     \ 'coc-css',
+    \ 'coc-emoji',
+    \ 'coc-eslint',
     \ 'coc-html',
     \ 'coc-java',
     \ 'coc-json',
     \ 'coc-pyls',
     \ 'coc-rls',
     \ 'coc-snippets',
+    \ 'coc-tslint-plugin',
     \ 'coc-tsserver',
     \ 'coc-yaml'
 \ )
