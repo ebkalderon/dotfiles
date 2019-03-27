@@ -36,7 +36,7 @@ included `dotfiles` command, you can pick and choose which packages to install.
    3. [DIY electronics tools](./packages/apps/files/electronics.list)
    4. [Graphics programming tools](./packages/apps/files/graphics.list)
    5. [Visual theme](./packages/apps/files/theme.list)
-   6. [WhatsApp desktop client for Linux](./packages/whatsapp/)
+4. [DIY WhatsApp Desktop Client for Linux](./packages/whatsapp/)
 
 ## Installation
 
