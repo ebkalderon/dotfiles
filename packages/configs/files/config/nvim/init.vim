@@ -83,7 +83,7 @@ Plug 'jreybert/vimagit'
 Plug 'junegunn/fzf.vim'
 Plug 'leafgarland/typescript-vim', { 'for': 'typescript' }
 Plug 'LnL7/vim-nix', { 'for': 'nix' }
-Plug 'neoclide/coc.nvim', { 'do': { -> coc#util#install() } }
+Plug 'neoclide/coc.nvim', { 'do': { -> coc#util#build() } }
 Plug 'ron-rs/ron.vim', { 'for': 'ron' }
 Plug 'rust-lang/rust.vim', { 'for': 'rust' }
 Plug 'Shougo/echodoc.vim'
@@ -126,7 +126,7 @@ call coc#add_extension(
     \ 'coc-html',
     \ 'coc-java',
     \ 'coc-json',
-    \ 'coc-pyls',
+    \ 'coc-python',
     \ 'coc-rls',
     \ 'coc-snippets',
     \ 'coc-tslint-plugin',
