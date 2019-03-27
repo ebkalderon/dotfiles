@@ -41,7 +41,7 @@ augroup AutoIndentation
     autocmd!
     autocmd FileType css,html,javascript,nix,scss,sh,typescript,yaml setlocal shiftwidth=2 tabstop=2
     autocmd FileType rust setlocal colorcolumn=100 textwidth=100
-    autocmd FileType nix,sh setlocal textwidth=0
+    autocmd FileType dockerfile,nix,sh setlocal textwidth=0
 augroup end
 
 " Color options
