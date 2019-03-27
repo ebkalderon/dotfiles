@@ -110,7 +110,7 @@ call plug#end()
 " Gluon      | cargo install gluon_language-server                   |
 " HTML       |                                                       | coc-html
 " Java       |                                                       | coc-java
-" JS/TS      |                                                       | coc-tsserver
+" JS/TS      | yarn global add typescript tslint eslint              | coc-tsserver
 " JSON       |                                                       | coc-json
 " Python     | sudo pip install python-language-server               | coc-pyls
 " Rust       | rustup component add rls rust-analysis rust-src       | coc-rls
