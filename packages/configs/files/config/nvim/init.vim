@@ -83,7 +83,7 @@ Plug 'jreybert/vimagit'
 Plug 'junegunn/fzf.vim'
 Plug 'leafgarland/typescript-vim', { 'for': 'typescript' }
 Plug 'LnL7/vim-nix', { 'for': 'nix' }
-Plug 'neoclide/coc.nvim', { 'tag': '*', 'do': { -> coc#util#install() } }
+Plug 'neoclide/coc.nvim', { 'do': { -> coc#util#install() } }
 Plug 'ron-rs/ron.vim', { 'for': 'ron' }
 Plug 'rust-lang/rust.vim', { 'for': 'rust' }
 Plug 'Shougo/echodoc.vim'
@@ -104,9 +104,9 @@ call plug#end()
 "
 " Language   | Server installation                                   | Extension?
 " -----------|-------------------------------------------------------|-------------
-" Bash       | sudo npm install -g bash-language-server              |
+" Bash       | yarn global add bash-language-server                  |
 " CSS/SCSS   |                                                       | coc-css
-" Dockerfile | sudo npm install -g dockerfile-language-server-nodejs |
+" Dockerfile | yarn global add dockerfile-language-server-nodejs     |
 " Gluon      | cargo install gluon_language-server                   |
 " HTML       |                                                       | coc-html
 " Java       |                                                       | coc-java
