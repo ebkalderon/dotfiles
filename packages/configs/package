@@ -20,7 +20,9 @@ install() {
       done
     elif [[ "${file##*/}" == 'local' ]]; then
       for subfile in "${PACKAGE_FILES}"/local/share/applications/*; do
-        links[${subfile}]=".local/share/applications/${subfile##*/}"
+        if [[ "${PLATFORM_NAME}" != 'MACOS' ]]; then 
+          links[${subfile}]=".local/share/applications/${subfile##*/}"
+        fi
       done
     elif [[ "${file##*/}" == 'gnupg' ]]; then
       for subfile in "${PACKAGE_FILES}"/gnupg/*; do
