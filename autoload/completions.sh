@@ -11,6 +11,9 @@ _dotfiles() {
   cmd="${words[1]}"
 
   case ${cmd} in
+    help)
+      return 0
+      ;;
     install | remove)
       COMPREPLY=( $(compgen -W '--package --verbose' -- "${cur}") )
       return 0
@@ -32,7 +35,7 @@ _dotfiles() {
   esac
 
   if [[ ${cword} == 1 ]]; then
-    local opts='install list new reload remove update -h --help -V --version'
+    local opts='help install list new reload remove update -h --help -V --version'
     COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
     return 0
   fi
