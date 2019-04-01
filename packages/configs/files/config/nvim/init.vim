@@ -181,8 +181,8 @@ augroup AutoFzf
 augroup end
 
 if has("nvim")
-  au TermOpen * tnoremap <Esc> <c-\><c-n>
-  au FileType fzf tunmap <Esc>
+    au TermOpen * tnoremap <Esc> <c-\><c-n>
+    au FileType fzf tunmap <Esc>
 endif
 
 nmap <leader><tab> <plug>(fzf-maps-n)
