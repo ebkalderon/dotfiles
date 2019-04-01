@@ -195,6 +195,7 @@ imap <C-x><C-j> <plug>(fzf-complete-file)
 imap <C-x><C-l> <plug>(fzf-complete-line)
 
 nnoremap <silent> <C-p> :call fzf#vim#files('.', fzf#vim#with_preview('right'))<CR>
+nnoremap <silent> <C-s> :BLines<CR>
 
 let g:fzf_action = {
     \ 'ctrl-t': 'tab split',
