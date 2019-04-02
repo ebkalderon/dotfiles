@@ -83,9 +83,11 @@ Plug 'jreybert/vimagit'
 Plug 'junegunn/fzf.vim'
 Plug 'leafgarland/typescript-vim', { 'for': 'typescript' }
 Plug 'LnL7/vim-nix', { 'for': 'nix' }
+Plug 'neoclide/coc-neco', { 'for': 'vim' }
 Plug 'neoclide/coc.nvim', { 'do': { -> coc#util#build() } }
 Plug 'ron-rs/ron.vim', { 'for': 'ron' }
 Plug 'rust-lang/rust.vim', { 'for': 'rust' }
+Plug 'Shougo/neco-vim', { 'for': 'vim' }
 Plug 'Shougo/echodoc.vim'
 Plug 'Shougo/neoinclude.vim'
 Plug 'thyrgle/vim-dyon', { 'for': 'dyon' }
