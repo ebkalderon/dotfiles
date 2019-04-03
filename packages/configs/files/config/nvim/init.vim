@@ -115,7 +115,7 @@ call plug#end()
 " JS/TS      | yarn global add typescript tslint eslint          | coc-tsserver
 " JSON       |                                                   | coc-json
 " Markdown   | yarn global add markdownlint-cli # diagnostic-ls  |
-" Nix        | <install Nix through official script or package>  |
+" Nix        | <install Nix from script/package> # diagnostic-ls |
 " Python     |                                                   | coc-python
 " Rust       | rustup component add rls rust-analysis rust-src   | coc-rls
 " Vimscript  | sudo -H pip install vim-vint # diagnostic-ls      |
