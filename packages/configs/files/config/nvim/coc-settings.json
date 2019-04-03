@@ -79,7 +79,14 @@
                     "vint": {
                         "command": "vint",
                         "debounce": 100,
-                        "args": ["--style-problem", "--no-color", "--enable-neovim", "-f", "'{file_path}:{line_number}:{column_number}: {severity}: {description} (see {reference})'", "-"],
+                        "args": [
+                            "--style-problem",
+                            "--no-color",
+                            "--enable-neovim",
+                            "-f",
+                            "'{file_path}:{line_number}:{column_number}: {severity}: {description} (see {reference})'",
+                            "-"
+                        ],
                         "offsetLine": 0,
                         "offsetColumn": 0,
                         "sourceName": "vint",
