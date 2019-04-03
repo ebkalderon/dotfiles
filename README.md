@@ -40,18 +40,18 @@ included `dotfiles` command, you can pick and choose which packages to install.
 
 ## Installation
 
-```
-$ git clone https://github.com/ebkalderon/dotfiles ~/.dotfiles
-$ cd ~/.dotfiles
-$ ./dotfiles install
+```sh
+git clone https://github.com/ebkalderon/dotfiles ~/.dotfiles
+cd ~/.dotfiles
+./dotfiles install
 ```
 
 ## Updating
 
 To grab the latest version while preserving uncommitted local changes, run:
 
-```
-$ dotfiles update
+```sh
+dotfiles update
 ```
 
 ## License
