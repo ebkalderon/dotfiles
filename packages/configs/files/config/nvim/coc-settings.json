@@ -63,7 +63,7 @@
                         "sourceName": "nix-instantiate",
                         "formatLines": 1,
                         "formatPattern": [
-                            "^(.+): (.+), at .*:(\\d+):(\\d+)$",
+                            "^(.+): (.+[^,]+),? at .*:(\\d+):(\\d+)$",
                             {
                                 "line": 3,
                                 "column": 4,
