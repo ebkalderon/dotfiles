@@ -104,19 +104,19 @@ call plug#end()
 
 " coc.nvim configuration
 "
-" Language   | Server installation                                   | Extension?
-" -----------|-------------------------------------------------------|-------------
-" Bash       | yarn global add bash-language-server                  |
-" CSS/SCSS   |                                                       | coc-css
-" Dockerfile | yarn global add dockerfile-language-server-nodejs     |
-" Gluon      | cargo install gluon_language-server                   |
-" HTML       |                                                       | coc-html
-" Java       |                                                       | coc-java
-" JS/TS      | yarn global add typescript tslint eslint              | coc-tsserver
-" JSON       |                                                       | coc-json
-" Python     | sudo pip install python-language-server               | coc-pyls
-" Rust       | rustup component add rls rust-analysis rust-src       | coc-rls
-" YAML       |                                                       | coc-yaml
+" Language   | Server installation                               | Extension?
+" -----------|---------------------------------------------------|-------------
+" Bash       | yarn global add bash-language-server              |
+" CSS/SCSS   |                                                   | coc-css
+" Dockerfile | yarn global add dockerfile-language-server-nodejs |
+" Gluon      | cargo install gluon_language-server               |
+" HTML       |                                                   | coc-html
+" Java       |                                                   | coc-java
+" JS/TS      | yarn global add typescript tslint eslint          | coc-tsserver
+" JSON       |                                                   | coc-json
+" Python     | sudo pip install python-language-server           | coc-pyls
+" Rust       | rustup component add rls rust-analysis rust-src   | coc-rls
+" YAML       |                                                   | coc-yaml
 set hidden
 set updatetime=300
 let $RUST_BACKTRACE = 1
