@@ -11,6 +11,10 @@
             "args": ["--stdio"],
             "filetypes": ["dockerfile"]
         },
+        "efm": {
+          "command": "efm-langserver",
+          "filetypes": ["vim", "markdown"]
+        },
         "gluon": {
             "command": "gluon_language-server",
             "filetypes": ["gluon"]

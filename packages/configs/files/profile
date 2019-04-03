@@ -4,7 +4,9 @@
 
 # System-wide exports for all sessions, both graphical and command-line
 
-export PATH="${PATH}:${HOME}/.cargo/bin:${HOME}/.gem/ruby/2.5.0/bin"
+export PATH="${PATH}:${HOME}/.cargo/bin"
+export PATH="${PATH}:${HOME}/.gem/ruby/2.5.0/bin"
+export PATH="${PATH}:${HOME}/.go/bin"
 
 if [[ "${OSTYPE}" == 'linux'* ]]; then
   export QT_QPA_PLATFORMTHEME=gtk2

@@ -114,9 +114,19 @@ call plug#end()
 " Java       |                                                   | coc-java
 " JS/TS      | yarn global add typescript tslint eslint          | coc-tsserver
 " JSON       |                                                   | coc-json
-" Python     | sudo pip install python-language-server           | coc-pyls
+" Markdown   | yarn global add markdownlint-cli # efm-langserver |
+" Python     |                                                   | coc-python
 " Rust       | rustup component add rls rust-analysis rust-src   | coc-rls
+" Vimscript  | sudo -H pip install vim-vint # efm-langserver     |
 " YAML       |                                                   | coc-yaml
+"
+" Entries marked with `efm-langserver` also require the `efm-langserver` Go
+" binary to be accessible in the `$PATH`. To install it, run:
+"
+"   go get github.com/mattn/efm-langserver/cmd/efm-langserver
+"
+" This should fetch, compile, and save `efm-langserver` into `~/go/bin`. Add
+" this path to your `$PATH`, it should work.
 set hidden
 set updatetime=300
 let $RUST_BACKTRACE = 1

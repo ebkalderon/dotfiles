@@ -6,6 +6,7 @@
 export BROWSER=firefox
 export CACA_DRIVER=ncurses # Enable watching videos as ASCII art in terminal
 export EDITOR=nvim
+export GOPATH="${HOME}/.go"
 export MOZ_USE_XINPUT2=1 # Enable touch scrolling in Firefox on Linux
 export RUST_SRC_PATH="$(rustc --print sysroot)/lib/rustlib/src/rust/src"
 
