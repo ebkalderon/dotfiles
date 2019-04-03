@@ -21,7 +21,7 @@ backtrace() {
   fi
 
   echo "Exiting with status ${code}"
-  exit ${code}
+  exit "${code}"
 }
 
 # Enable backtrace output
@@ -251,7 +251,7 @@ case ${subcommand} in
     exit $?
     ;;
   new)
-    dotfiles_new $1 || true
+    dotfiles_new "$1" || true
     exit $?
     ;;
   reload)
