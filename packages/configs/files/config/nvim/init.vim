@@ -114,20 +114,20 @@ call plug#end()
 " Java       |                                                   | coc-java
 " JS/TS      | yarn global add typescript tslint eslint          | coc-tsserver
 " JSON       |                                                   | coc-json
-" Markdown   | yarn global add markdownlint-cli # efm-langserver |
+" Markdown   | yarn global add markdownlint-cli # diagnostic-ls  |
+" Nix        | <install Nix through official script or package>  |
 " Python     |                                                   | coc-python
 " Rust       | rustup component add rls rust-analysis rust-src   | coc-rls
-" Vimscript  | sudo -H pip install vim-vint # efm-langserver     |
+" Vimscript  | sudo -H pip install vim-vint # diagnostic-ls      |
 " YAML       |                                                   | coc-yaml
 "
-" Entries marked with `efm-langserver` also require the `efm-langserver` Go
+" Entries marked with `diagnostic-ls` require the `diagnostic-languageserver`
 " binary to be accessible in the `$PATH`. To install it, run:
 "
-"   go get github.com/mattn/efm-langserver/cmd/efm-langserver
+"   yarn global add diagnostic-languageserver
 "
-" This should fetch, compile, and save `efm-langserver` into `~/go/bin`. Add
-" this path to your `$PATH`, it should work.
-set hidden
+" This should enable arbitrary linters and syntax checkers to be hooked up as a
+" language server to coc.nvim.
 set updatetime=300
 let $RUST_BACKTRACE = 1
 
