@@ -2,6 +2,12 @@
 # autoload/completions.sh
 #
 
+# Load auto-generated Bash completions for Deck
+# For more details: https://github.com/ebkalderon/deck
+if command -v deck > /dev/null; then
+  eval "$(deck completion bash)"
+fi
+
 _dotfiles() {
   local cur prev words cword cmd
   _init_completion || return
