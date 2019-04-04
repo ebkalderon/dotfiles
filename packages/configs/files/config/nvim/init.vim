@@ -157,8 +157,8 @@ endfunction
 
 inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
 
-let g:coc_snippet_next = "<tab>"
-let g:coc_snippet_prev = "<S-tab>"
+let g:coc_snippet_next = '<tab>'
+let g:coc_snippet_prev = '<S-tab>'
 
 " Highlight symbol under cursor on CursorHold
 autocmd CursorHold * silent call CocActionAsync('highlight')
@@ -166,7 +166,7 @@ autocmd CursorHold * silent call CocActionAsync('highlight')
 nnoremap <silent> K :call <SID>show_documentation()<CR>
 
 function! s:show_documentation()
-    if &filetype == 'vim'
+    if &filetype ==# 'vim'
       execute 'h '.expand('<cword>')
     else
       call CocAction('doHover')
@@ -189,9 +189,9 @@ augroup AutoFzf
       \| autocmd BufLeave <buffer> set laststatus=2 showmode ruler
 augroup end
 
-if has("nvim")
-    au TermOpen * tnoremap <Esc> <c-\><c-n>
-    au FileType fzf tunmap <Esc>
+if has('nvim')
+    autocmd TermOpen * tnoremap <Esc> <c-\><c-n>
+    autocmd FileType fzf tunmap <Esc>
 endif
 
 nmap <leader><tab> <plug>(fzf-maps-n)
@@ -229,7 +229,7 @@ let g:fzf_colors = {
 \ }
 
 " GraphViz configuration (needs `graphviz`)
-let g:WMGraphviz_output = "png"
+let g:WMGraphviz_output = 'png'
 
 " Markdown configuration
 let g:markdown_fenced_languages = [
