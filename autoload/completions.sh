@@ -4,7 +4,7 @@
 
 # Load auto-generated Bash completions for Deck
 # For more details: https://github.com/ebkalderon/deck
-if command -v deck > /dev/null; then
+if command -v deck &> /dev/null; then
   eval "$(deck completion bash)"
 fi
 

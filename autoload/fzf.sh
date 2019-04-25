@@ -3,7 +3,7 @@
 #
 
 # Load bash integration for FZF
-if [ -d /usr/share/fzf ]; then
+if [[ -d /usr/share/fzf ]]; then
   source /usr/share/fzf/key-bindings.bash
   source /usr/share/fzf/completion.bash
 elif command -v fzf-share &> /dev/null; then

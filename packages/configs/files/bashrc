@@ -21,13 +21,17 @@ if [[ -d ~/.nix-profile/share/bash-completion/completions ]]; then
   source ~/.nix-profile/share/bash-completion/completions/*
 fi
 
+if [[ -d ~/.nix-profile/etc/bash_completion.d ]]; then
+  source ~/.nix-profile/etc/bash_completion.d/*
+fi
+
 # Use VTE features if available, like keeping the same CWD when opening new tabs
 if [[ -f /etc/profile.d/vte.sh ]]; then
   source /etc/profile.d/vte.sh
 fi
 
 # Define our top-level dotfiles location
-export DOTFILES="/home/ekalderon/.dotfiles"
+export DOTFILES=~/.dotfiles
 export PATH="${PATH}:${DOTFILES}"
 
 # List all scripts inside the "autoload" directory 
