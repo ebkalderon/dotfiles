@@ -2,6 +2,12 @@
 # autoload/functions.sh
 #
 
+if [[ "${OSTYPE}" == 'darwin'* ]]; then
+  coreaudio_restart() {
+    sudo kill "$(ps -ax | grep 'coreaudiod' | grep 'sbin' |awk '{print $1}')"
+  }
+fi
+
 # Hides .desktop file
 deskhide() {
   grep -q '^NoDisplay' $1 && sed -i 's/^NoDisplay.*/NoDisplay=true/' $1 \
@@ -25,7 +31,7 @@ dotfiles() {
     source ~/.bashrc
   fi
 
-  "${DOTFILES}/dotfiles" $@
+  command dotfiles $@
 }
 
 # Colorized man pages
