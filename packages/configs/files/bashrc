@@ -16,6 +16,10 @@ elif [[ -f /usr/local/share/bash-completion/bash_completion ]]; then
   source /usr/local/share/bash-completion/bash_completion
 fi
 
+if [[ -d /usr/local/etc/bash_completion.d ]]; then
+  source /usr/local/etc/bash_completion.d/*
+fi
+
 # Enable per-user bash autocompletion if Nix is installed
 if [[ -d ~/.nix-profile/share/bash-completion/completions ]]; then
   source ~/.nix-profile/share/bash-completion/completions/*
