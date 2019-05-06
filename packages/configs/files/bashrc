@@ -31,10 +31,10 @@ if [[ -f /etc/profile.d/vte.sh ]]; then
 fi
 
 # Define our top-level dotfiles location
-export DOTFILES=~/.dotfiles
+export DOTFILES="/Users/eyalkalderon/.dotfiles"
 export PATH="${PATH}:${DOTFILES}"
 
-# List all scripts inside the "autoload" directory 
+# List all scripts inside the "autoload" directory
 files="$(find "${DOTFILES}/autoload/" -type f | sort)"
 
 # Load all of them
