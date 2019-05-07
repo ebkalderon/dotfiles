@@ -76,6 +76,7 @@ Plug 'jreybert/vimagit'
 Plug 'junegunn/fzf.vim'
 Plug 'leafgarland/typescript-vim', { 'for': 'typescript' }
 Plug 'LnL7/vim-nix', { 'for': 'nix' }
+Plug 'mattn/webapi-vim', { 'for': 'rust' }
 Plug 'neoclide/coc-neco', { 'for': 'vim' }
 Plug 'neoclide/coc.nvim', { 'do': { -> coc#util#build() } }
 Plug 'ron-rs/ron.vim', { 'for': 'ron' }
