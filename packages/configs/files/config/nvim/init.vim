@@ -14,8 +14,8 @@ set laststatus=2
 set noshowmode
 set number
 
-" Enable copying between tmux instances
-set clipboard^=unnamed
+" Enable copying between tmux instances and the system keyboard
+set clipboard^=unnamed,unnamedplus
 
 " Enable mouse scrolling in vim instead of tmux history buffer
 set mouse=a
