@@ -125,7 +125,6 @@
             "filetypes": ["gluon"]
         }
     },
-    "diagnostic.virtualText": true,
     "diagnostic.virtualTextPrefix": "⟩ ",
     "python.autoComplete.addBrackets": true,
     "suggest.noselect": false,

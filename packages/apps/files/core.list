@@ -7,7 +7,7 @@ fzf
 git
 gnupg
 multilib-devel
-neovim
+neovim-nightly
 nodejs-nativefier
 nmap
 pacman-contrib
