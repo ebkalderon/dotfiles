@@ -35,7 +35,7 @@ if [[ -f /etc/profile.d/vte.sh ]]; then
 fi
 
 # Define our top-level dotfiles location
-export DOTFILES="/Users/eyalkalderon/.dotfiles"
+export DOTFILES="/home/ekalderon/.dotfiles"
 export PATH="${PATH}:${DOTFILES}"
 
 # List all scripts inside the "autoload" directory
