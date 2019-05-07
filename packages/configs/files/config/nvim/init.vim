@@ -133,6 +133,7 @@ call coc#add_extension(
     \ 'coc-python',
     \ 'coc-rls',
     \ 'coc-snippets',
+    \ 'coc-solargraph',
     \ 'coc-tslint-plugin',
     \ 'coc-tsserver',
     \ 'coc-yaml'
