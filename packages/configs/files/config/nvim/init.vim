@@ -31,18 +31,11 @@ set backup
 set backupdir=~/.local/share/nvim/backup
 set undofile
 
-" Indentation options
+" Global indentation options
+set colorcolumn=80
 set expandtab
 set shiftwidth=4
 set tabstop=4
-set colorcolumn=80
-set textwidth=80
-augroup AutoIndentation
-    autocmd!
-    autocmd FileType css,html,javascript,nix,scss,sh,typescript,yaml setlocal shiftwidth=2 tabstop=2
-    autocmd FileType rust setlocal colorcolumn=100 textwidth=100
-    autocmd FileType dockerfile,nix,sh setlocal textwidth=0
-augroup end
 
 " Color options
 set t_Co=256
@@ -129,8 +122,6 @@ call plug#end()
 " This should enable arbitrary linters and syntax checkers to be hooked up as a
 " language server to coc.nvim.
 set updatetime=300
-let $RUST_BACKTRACE = 1
-
 call coc#add_extension(
     \ 'coc-css',
     \ 'coc-emoji',
@@ -187,12 +178,12 @@ augroup AutoFzf
     autocmd! FileType fzf
     autocmd FileType fzf set laststatus=0 noshowmode noruler
       \| autocmd BufLeave <buffer> set laststatus=2 showmode ruler
-augroup end
 
-if has('nvim')
-    autocmd TermOpen * tnoremap <Esc> <c-\><c-n>
-    autocmd FileType fzf tunmap <Esc>
-endif
+    if has('nvim')
+        autocmd TermOpen * tnoremap <Esc> <c-\><c-n>
+        autocmd FileType fzf tunmap <Esc>
+    endif
+augroup end
 
 nmap <leader><tab> <plug>(fzf-maps-n)
 xmap <leader><tab> <plug>(fzf-maps-x)
@@ -227,31 +218,6 @@ let g:fzf_colors = {
     \ 'spinner': ['fg', 'Label'],
     \ 'header': ['fg', 'Comment']
 \ }
-
-" GraphViz configuration (needs `graphviz`)
-let g:WMGraphviz_output = 'png'
-
-" Markdown configuration
-let g:markdown_fenced_languages = [
-    \ 'bash=sh',
-    \ 'c',
-    \ 'cpp',
-    \ 'css',
-    \ 'javascript',
-    \ 'js=javascript',
-    \ 'json',
-    \ 'py=python',
-    \ 'python',
-    \ 'typescript',
-    \ 'rust',
-    \ 'sh',
-    \ 'toml',
-    \ 'vim',
-    \ 'yaml',
-\ ]
-
-" Rustfmt integration (via rust.vim)
-let g:rustfmt_autosave = 1
 
 " Lightline configuration (requires Powerline-patched font)
 let g:lightline = {
