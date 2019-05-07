@@ -13,7 +13,7 @@ SUFFIX='.dconf'
 
 install() {
   running 'checking for existence of dconf...'
-  if command -v dconf &> /dev/null; then
+  if command -v dconf > /dev/null; then
     success
   else
     failure

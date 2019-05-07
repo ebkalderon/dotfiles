@@ -24,10 +24,14 @@ install() {
           links[${subfile}]=".local/share/applications/${subfile##*/}"
         fi
       done
+    elif [[ "${file##*/}" == 'gdbinit' ]]; then
+      [[ "${PLATFORM_NAME}" != 'MACOS' ]] && links[${file}]=".${file}"
     elif [[ "${file##*/}" == 'gnupg' ]]; then
       for subfile in "${PACKAGE_FILES}"/gnupg/*; do
         links[${subfile}]=".gnupg/${subfile##*/}"
       done
+    elif [[ "${file##*/}" == 'xinitrc' ]]; then
+      [[ "${PLATFORM_NAME}" != 'MACOS' ]] && links[${file}]=".${file}"
     else
       links[${file}]=".${file##*/}"
     fi
@@ -51,7 +55,7 @@ install() {
 
   # Install Neovim plugins
   running 'installing Neovim plugins... '
-  if command -v nvim &> /dev/null; then
+  if command -v nvim > /dev/null; then
     execute nvim +silent! +PlugUpgrade +PlugUpdate +PlugClean +qa
   else
     failure
