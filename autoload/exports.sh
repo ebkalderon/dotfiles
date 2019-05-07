@@ -7,12 +7,16 @@ export BROWSER=firefox
 export CACA_DRIVER=ncurses # Enable watching videos as ASCII art in terminal
 export EDITOR=nvim
 export GOPATH="${HOME}/.go"
-export MOZ_USE_XINPUT2=1 # Enable touch scrolling in Firefox on Linux
 export RUST_SRC_PATH="$(rustc --print sysroot)/lib/rustlib/src/rust/src"
 
 # Colorization support
 export GCC_COLORS=always
 export GROFF_NO_SGR=1
+
+if [[ "${OSTYPE}" == 'darwin'* ]]; then
+  export CLICOLOR=1
+  export LSCOLORS='ExGxBxDxCxEgEdxbxgxcxd'
+fi
 
 # Color codes
 export COLOR_BLACK="$(tput setaf 0)"

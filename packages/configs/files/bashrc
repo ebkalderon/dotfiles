@@ -12,8 +12,14 @@ shopt -s checkwinsize
 # Enable bash autocompletion
 if [[ -f /etc/bash_completion ]] && ! shopt -oq posix; then
   source /etc/bash_completion
-elif [[ -f /usr/local/share/bash-completion/bash_completion ]]; then
+fi
+
+if [[ -f /usr/local/share/bash-completion/bash_completion ]]; then
   source /usr/local/share/bash-completion/bash_completion
+fi
+
+if [[ -f /usr/local/etc/bash_completion ]]; then
+  source /usr/local/etc/bash_completion
 fi
 
 if [[ -d /usr/local/etc/bash_completion.d ]]; then

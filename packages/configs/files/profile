@@ -4,17 +4,15 @@
 
 # System-wide exports for all sessions, both graphical and command-line
 
+if [[ "${OSTYPE}" == 'linux'* ]]; then
+  export MOZ_USE_XINPUT2=1 # Enable touch scrolling in Firefox on Linux
+  export QT_QPA_PLATFORMTHEME=gtk2
+fi
+
 export PATH="${PATH}:${HOME}/.cargo/bin"
 export PATH="${PATH}:${HOME}/.gem/ruby/2.5.0/bin"
 export PATH="${PATH}:${HOME}/.go/bin"
 
-if [[ "${OSTYPE}" == 'linux'* ]]; then
-  export QT_QPA_PLATFORMTHEME=gtk2
-elif [[ "${OSTYPE}" == 'darwin'* ]]; then
-  export CLICOLOR=1
-  export LSCOLORS='ExGxBxDxCxEgEdxbxgxcxd'
-
-  if [[ -f "$(brew --prefix)/etc/bash_completion" ]]; then
-    source "$(brew --prefix)/etc/bash_completion"
-  fi
+if command -v yarn > /dev/null; then
+  export PATH="${PATH}:$(yarn global bin)"
 fi
