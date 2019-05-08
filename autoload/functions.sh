@@ -3,8 +3,16 @@
 #
 
 if [[ "${OSTYPE}" == 'darwin'* ]]; then
-  coreaudio_restart() {
+  restart_coreaudio() {
     sudo kill "$(ps -ax | grep 'coreaudiod' | grep 'sbin' |awk '{print $1}')"
+  }
+
+  restart_nix_docker() {
+    sudo -v
+    docker rm -f nix-docker-remote-builder
+    ssh-add -K
+    sudo -E nix-agentd
+    sudo -E nix-remote-agent
   }
 fi
 
