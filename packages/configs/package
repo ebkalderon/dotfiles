@@ -24,6 +24,12 @@ install() {
           links[${subfile}]=".local/share/applications/${subfile##*/}"
         fi
       done
+    elif [[ "${file##*/}" == 'cointop' ]]; then
+      if [[ "${PLATFORM_NAME}" == 'LINUX' ]]; then
+        links[${file}]=".config/${file##*/}"
+      else
+        links[${file}]=".${file##*/}"
+      fi
     elif [[ "${file##*/}" == 'gdbinit' ]]; then
       [[ "${PLATFORM_NAME}" != 'MACOS' ]] && links[${file}]=".${file}"
     elif [[ "${file##*/}" == 'gnupg' ]]; then
