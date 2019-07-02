@@ -8,6 +8,11 @@ if command -v deck &> /dev/null; then
   eval "$(deck completion bash)"
 fi
 
+# Load auto-generated Bash completions for grunt
+if command -v grunt &> /dev/null; then
+  eval "$(grunt --completion=bash)"
+fi
+
 _dotfiles() {
   local cur prev words cword cmd
   _init_completion || return
