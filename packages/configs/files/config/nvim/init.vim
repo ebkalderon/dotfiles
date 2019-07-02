@@ -77,11 +77,9 @@ Plug 'junegunn/fzf.vim'
 Plug 'leafgarland/typescript-vim', { 'for': 'typescript' }
 Plug 'LnL7/vim-nix', { 'for': 'nix' }
 Plug 'mattn/webapi-vim', { 'for': 'rust' }
-Plug 'neoclide/coc-neco', { 'for': 'vim' }
 Plug 'neoclide/coc.nvim', { 'do': { -> coc#util#build() } }
 Plug 'ron-rs/ron.vim', { 'for': 'ron' }
 Plug 'rust-lang/rust.vim', { 'for': 'rust' }
-Plug 'Shougo/neco-vim', { 'for': 'vim' }
 Plug 'Shougo/echodoc.vim'
 Plug 'Shougo/neoinclude.vim'
 Plug 'thyrgle/vim-dyon', { 'for': 'dyon' }
@@ -136,6 +134,7 @@ call coc#add_extension(
     \ 'coc-solargraph',
     \ 'coc-tslint-plugin',
     \ 'coc-tsserver',
+    \ 'coc-vimlsp',
     \ 'coc-yaml'
 \ )
 
@@ -159,11 +158,7 @@ autocmd CursorHold * silent call CocActionAsync('highlight')
 nnoremap <silent> K :call <SID>show_documentation()<CR>
 
 function! s:show_documentation()
-    if &filetype ==# 'vim'
-      execute 'h '.expand('<cword>')
-    else
-      call CocAction('doHover')
-    endif
+    call CocAction('doHover')
 endfunction
 
 nmap <silent> gd <Plug>(coc-definition)
