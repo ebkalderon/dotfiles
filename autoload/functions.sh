@@ -3,18 +3,34 @@
 #
 
 if [[ "${OSTYPE}" == 'darwin'* ]]; then
-  restart_coreaudio() {
+  restart-coreaudio() {
     sudo kill "$(ps -ax | grep 'coreaudiod' | grep 'sbin' |awk '{print $1}')"
   }
 
-  restart_nix_docker() {
+  restart-nix-docker() {
     sudo -v
     docker rm -f nix-docker-remote-builder
     ssh-add -K
     sudo -E nix-agentd
     sudo -E nix-remote-agent
   }
+
+  upgrade-neovim() {
+    curl -L https://github.com/neovim/neovim/releases/download/nightly/nvim-macos.tar.gz > ~/Downloads/nvim-macos.tar.gz || return 1
+    mv ~/Downloads/nvim-osx64 ~/Downloads/nvim-osx64.old || return 1
+    if tar zxvf ~/Downloads/nvim-macos.tar.gz -C ~/Downloads/; then
+      rm -rf ~/Downloads/nvim-osx64.old
+    else
+      rm -rf ~/Downloads/nvim-osx64 ~/Downloads/nvim-macos.tar.gz
+      mv ~/Downloads/nvim-osx64.old ~/Downloads/nvim-osx64
+      return 1
+    fi
+  }
 fi
+
+csvopen() {
+  xsv table "$1" | less -N -S -X
+}
 
 # Hides .desktop file
 deskhide() {
