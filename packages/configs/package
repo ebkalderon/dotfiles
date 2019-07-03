@@ -25,19 +25,19 @@ install() {
         fi
       done
     elif [[ "${file##*/}" == 'cointop' ]]; then
-      if [[ "${PLATFORM_NAME}" == 'LINUX' ]]; then
+      if [[ "${PLATFORM_NAME}" != 'MACOS' ]]; then
         links[${file}]=".config/${file##*/}"
       else
         links[${file}]=".${file##*/}"
       fi
     elif [[ "${file##*/}" == 'gdbinit' ]]; then
-      [[ "${PLATFORM_NAME}" != 'MACOS' ]] && links[${file}]=".${file}"
+      [[ "${PLATFORM_NAME}" != 'MACOS' ]] && links[${file}]=".${file##*/}"
     elif [[ "${file##*/}" == 'gnupg' ]]; then
       for subfile in "${PACKAGE_FILES}"/gnupg/*; do
         links[${subfile}]=".gnupg/${subfile##*/}"
       done
     elif [[ "${file##*/}" == 'xinitrc' ]]; then
-      [[ "${PLATFORM_NAME}" != 'MACOS' ]] && links[${file}]=".${file}"
+      [[ "${PLATFORM_NAME}" != 'MACOS' ]] && links[${file}]=".${file##*/}"
     else
       links[${file}]=".${file##*/}"
     fi
