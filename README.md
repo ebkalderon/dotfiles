@@ -19,6 +19,7 @@ included `dotfiles` command, you can pick and choose which packages to install.
 
 1. [Configuration Files](./packages/configs/)
    * [bash](./packages/configs/files/bashrc)
+   * [cointop](./packages/configs/files/cointop)
    * [gdb](./packages/configs/files/gdbinit)
    * [git](./packages/configs/files/gitconfig)
    * [gnupg](./packages/configs/files/gnupg/)
