@@ -1,7 +1,8 @@
 currency = "USD"
-defaultView = "default"
+default_view = "default"
 api = "coingecko"
 colorscheme = "cointop-dark"
+refresh_rate = 60
 
 [shortcuts]
   "$" = "last_page"
@@ -24,6 +25,7 @@ colorscheme = "cointop-dark"
   P = "toggle_portfolio"
   Q = "quit_view"
   "[" = "previous_chart_range"
+  "\\" = "toggle_table_fullscreen"
   "]" = "next_chart_range"
   a = "sort_column_available_supply"
   "alt+down" = "sort_column_desc"
@@ -77,6 +79,9 @@ colorscheme = "cointop-dark"
 [favorites]
 
 [portfolio]
+  Bitcoin = 1.12605328
+  Litecoin = 3.0
+  TenX = 35785.0
 
 [coinmarketcap]
   pro_api_key = ""
