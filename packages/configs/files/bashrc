@@ -23,16 +23,22 @@ if [[ -f /usr/local/etc/bash_completion ]]; then
 fi
 
 if [[ -d /usr/local/etc/bash_completion.d ]]; then
-  source /usr/local/etc/bash_completion.d/*
+  for file in /usr/local/etc/bash_completion.d/*; do
+    source "${file}"
+  done
 fi
 
 # Enable per-user bash autocompletion if Nix is installed
 if [[ -d ~/.nix-profile/share/bash-completion/completions ]]; then
-  source ~/.nix-profile/share/bash-completion/completions/*
+  for file in ~/.nix-profile/share/bash-completion/completions/*; do
+    source "${file}"
+  done
 fi
 
 if [[ -d ~/.nix-profile/etc/bash_completion.d ]]; then
-  source ~/.nix-profile/etc/bash_completion.d/*
+  for file in ~/.nix-profile/etc/bash_completion.d/*; do
+    source "${file}"
+  done
 fi
 
 # Use VTE features if available, like keeping the same CWD when opening new tabs
