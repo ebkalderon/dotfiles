@@ -20,20 +20,6 @@ set clipboard^=unnamed,unnamedplus
 " Enable mouse scrolling in vim instead of tmux history buffer
 set mouse=a
 
-" Allow leaving embedded terminal with <Esc>
-tnoremap <Esc> <C-\><C-n>
-
-" Allow for visual search and replacement of text
-vnoremap <C-r> "hy:%s/<C-r>h//gc<left><left><left>
-
-" Allow for Sublime Text style line reordering
-nnoremap <S-Up> :m .-2<CR>==
-nnoremap <S-Down> :m .+1<CR>==
-inoremap <S-Up> <Esc>:m .-2<CR>==gi
-inoremap <S-Down> <Esc>:m .+1<CR>==gi
-vnoremap <S-Up> :m '<-2<CR>gv=gv
-vnoremap <S-Down> :m '>+1<CR>gv=gv
-
 " Backup options
 set backup
 set backupdir=~/.local/share/nvim/backup
@@ -63,6 +49,20 @@ augroup AutoTerminal
     autocmd!
     autocmd TermOpen * setlocal nonumber norelativenumber
 augroup end
+
+" Allow leaving embedded terminal with <Esc>
+tnoremap <Esc> <C-\><C-n>
+
+" Allow for visual search and replacement of text
+vnoremap <C-r> "hy:%s/<C-r>h//gc<left><left><left>
+
+" Allow for Sublime Text style line reordering
+nnoremap <S-Up> :m .-2<CR>==
+nnoremap <S-Down> :m .+1<CR>==
+inoremap <S-Up> <Esc>:m .-2<CR>==gi
+inoremap <S-Down> <Esc>:m .+1<CR>==gi
+vnoremap <S-Up> :m '<-2<CR>gv=gv
+vnoremap <S-Down> :m '>+1<CR>gv=gv
 
 " Install plugins
 call plug#begin()
