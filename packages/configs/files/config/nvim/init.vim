@@ -76,6 +76,7 @@ endif
 Plug 'alvan/vim-closetag', { 'for': ['html', 'phtml', 'xhtml'] }
 Plug 'ap/vim-css-color', { 'for': ['css', 'sass', 'scss'] }
 Plug 'cespare/vim-toml', { 'for': 'toml' }
+Plug 'Glench/Vim-Jinja2-Syntax', { 'for': 'jinja' }
 Plug 'gluon-lang/vim-gluon', { 'for': 'gluon' }
 Plug 'honza/vim-snippets'
 Plug 'itchyny/lightline.vim'
