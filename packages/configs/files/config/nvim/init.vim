@@ -2,6 +2,45 @@
 " nvim/init.vim
 "
 
+" Install plugins
+call plug#begin()
+
+if executable('fzf')
+    Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --bin' }
+else
+    Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all --no-update-rc' }
+endif
+
+Plug 'alvan/vim-closetag', { 'for': ['html', 'phtml', 'xhtml'] }
+Plug 'ap/vim-css-color', { 'for': ['css', 'sass', 'scss'] }
+Plug 'cespare/vim-toml', { 'for': 'toml' }
+Plug 'Glench/Vim-Jinja2-Syntax', { 'for': 'jinja' }
+Plug 'gluon-lang/vim-gluon', { 'for': 'gluon' }
+Plug 'honza/vim-snippets'
+Plug 'itchyny/lightline.vim'
+Plug 'jsfaint/coc-neoinclude'
+Plug 'jreybert/vimagit'
+Plug 'junegunn/fzf.vim'
+Plug 'leafgarland/typescript-vim', { 'for': 'typescript' }
+Plug 'LnL7/vim-nix', { 'for': 'nix' }
+Plug 'mattn/webapi-vim', { 'for': 'rust' }
+Plug 'neoclide/coc.nvim', { 'do': 'yarn install --frozen-lockfile' }
+Plug 'ron-rs/ron.vim', { 'for': 'ron' }
+Plug 'rust-lang/rust.vim', { 'for': 'rust' }
+Plug 'Shougo/echodoc.vim'
+Plug 'Shougo/neoinclude.vim'
+Plug 'thyrgle/vim-dyon', { 'for': 'dyon' }
+Plug 'tikhomirov/vim-glsl', { 'for': 'glsl' }
+Plug 'timonv/vim-cargo', { 'for': 'rust' }
+Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-commentary'
+Plug 'tpope/vim-markdown', { 'for': 'markdown' }
+Plug 'vim-scripts/dbext.vim', { 'for': 'sql' }
+Plug 'vmchale/dhall-vim', { 'for': 'dhall' }
+Plug 'wannesm/wmgraphviz.vim', { 'for': 'dot' }
+
+call plug#end()
+
 " Enable UTF8 file encoding
 set encoding=utf-8
 scriptencoding utf-8
@@ -63,45 +102,6 @@ inoremap <S-Up> <Esc>:m .-2<CR>==gi
 inoremap <S-Down> <Esc>:m .+1<CR>==gi
 vnoremap <S-Up> :m '<-2<CR>gv=gv
 vnoremap <S-Down> :m '>+1<CR>gv=gv
-
-" Install plugins
-call plug#begin()
-
-if executable('fzf')
-    Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --bin' }
-else
-    Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all --no-update-rc' }
-endif
-
-Plug 'alvan/vim-closetag', { 'for': ['html', 'phtml', 'xhtml'] }
-Plug 'ap/vim-css-color', { 'for': ['css', 'sass', 'scss'] }
-Plug 'cespare/vim-toml', { 'for': 'toml' }
-Plug 'Glench/Vim-Jinja2-Syntax', { 'for': 'jinja' }
-Plug 'gluon-lang/vim-gluon', { 'for': 'gluon' }
-Plug 'honza/vim-snippets'
-Plug 'itchyny/lightline.vim'
-Plug 'jsfaint/coc-neoinclude'
-Plug 'jreybert/vimagit'
-Plug 'junegunn/fzf.vim'
-Plug 'leafgarland/typescript-vim', { 'for': 'typescript' }
-Plug 'LnL7/vim-nix', { 'for': 'nix' }
-Plug 'mattn/webapi-vim', { 'for': 'rust' }
-Plug 'neoclide/coc.nvim', { 'do': 'yarn install --frozen-lockfile' }
-Plug 'ron-rs/ron.vim', { 'for': 'ron' }
-Plug 'rust-lang/rust.vim', { 'for': 'rust' }
-Plug 'Shougo/echodoc.vim'
-Plug 'Shougo/neoinclude.vim'
-Plug 'thyrgle/vim-dyon', { 'for': 'dyon' }
-Plug 'tikhomirov/vim-glsl', { 'for': 'glsl' }
-Plug 'timonv/vim-cargo', { 'for': 'rust' }
-Plug 'tpope/vim-fugitive'
-Plug 'tpope/vim-commentary'
-Plug 'tpope/vim-markdown', { 'for': 'markdown' }
-Plug 'vim-scripts/dbext.vim', { 'for': 'sql' }
-Plug 'vmchale/dhall-vim', { 'for': 'dhall' }
-Plug 'wannesm/wmgraphviz.vim', { 'for': 'dot' }
-
-call plug#end()
 
 " coc.nvim configuration
 "
