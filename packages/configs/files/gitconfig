@@ -1,7 +1,7 @@
 [user]
 	email = ebkalderon@gmail.com
 	name = Eyal Kalderon
-	signingkey = 00AB4C0942DCBA25
+	signingKey = 00AB4C0942DCBA25
 
 [credential]
 	helper = /usr/lib/git-core/git-credential-libsecret
@@ -10,7 +10,7 @@
 	autocrlf = input
 
 [commit]
-    gpgsign = true
+	gpgSign = true
 
 [includeIf "gitdir:~/Documents/work/"]
-    path = ~/Documents/work/.gitconfig
+	path = ~/Documents/work/.gitconfig
