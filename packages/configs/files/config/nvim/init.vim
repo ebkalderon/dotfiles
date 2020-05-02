@@ -106,7 +106,7 @@ vnoremap <S-Down> :m '>+1<CR>gv=gv
 " coc.nvim configuration
 "
 " Language   | Server installation                               | Extension?
-" -----------|---------------------------------------------------|-------------
+" -----------|---------------------------------------------------|------------------
 " Bash       | yarn global add bash-language-server              |
 " CSS/SCSS   |                                                   | coc-css
 " Dockerfile | yarn global add dockerfile-language-server-nodejs |
@@ -118,7 +118,7 @@ vnoremap <S-Down> :m '>+1<CR>gv=gv
 " Markdown   | yarn global add markdownlint-cli # diagnostic-ls  |
 " Nix        | <install Nix from script/package> # diagnostic-ls |
 " Python     |                                                   | coc-python
-" Rust       | rustup component add rls rust-analysis rust-src   | coc-rls
+" Rust       | rustup component add rust-analysis rust-src       | coc-rust-analyzer
 " Vimscript  | sudo -H pip install vim-vint # diagnostic-ls      |
 " YAML       |                                                   | coc-yaml
 "
@@ -138,7 +138,7 @@ call coc#add_extension(
     \ 'coc-java',
     \ 'coc-json',
     \ 'coc-python',
-    \ 'coc-rls',
+    \ 'coc-rust-analyzer',
     \ 'coc-snippets',
     \ 'coc-solargraph',
     \ 'coc-tslint-plugin',
@@ -146,6 +146,9 @@ call coc#add_extension(
     \ 'coc-vimlsp',
     \ 'coc-yaml'
 \ )
+
+let $NVIM_COC_LOG_LEVEL = 'trace'
+let $RUST_LOG = 'nix_language_server=debug,tower_lsp=trace'
 
 " Use tab for trigger completion with characters ahead and navigate
 inoremap <expr> <TAB> pumvisible() ? "\<C-y>" : "\<TAB>"
