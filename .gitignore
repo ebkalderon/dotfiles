@@ -6,3 +6,6 @@ autoload/iterm2_shell_integration.bash
 
 # List of currently installed packages
 packages/installed
+
+# Generated WhatsApp client
+packages/whatsapp/files/WhatsApp-linux-x64

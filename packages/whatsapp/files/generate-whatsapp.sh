@@ -11,7 +11,7 @@
 # * `moka-icon-theme` (https://github.com/snwh/moka-icon-theme)
 # * `wget` (available in most distribution repositories)
 
-readonly OUTPUT_DIR="${PWD}/whats-app-linux-x64"
+readonly OUTPUT_DIR="${PWD}/WhatsApp-linux-x64"
 readonly OPTIONS='--single-instance --tray'
 readonly USE_MOKA_ICON=true
 
