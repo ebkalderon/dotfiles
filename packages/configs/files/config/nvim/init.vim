@@ -204,7 +204,17 @@ imap <C-x><C-f> <plug>(fzf-complete-path)
 imap <C-x><C-j> <plug>(fzf-complete-file)
 imap <C-x><C-l> <plug>(fzf-complete-line)
 
-nnoremap <silent> <C-p> :call fzf#vim#files('.', fzf#vim#with_preview('right'))<CR>
+function! s:find_files()
+    let git_dir = system('git rev-parse --show-toplevel 2> /dev/null')[:-2]
+    if git_dir !=# ''
+        call fzf#vim#gitfiles(git_dir, fzf#vim#with_preview('right'))
+    else
+        call fzf#vim#files('.', fzf#vim#with_preview('right'))
+    endif
+endfunction
+command! ProjectFiles execute s:find_files()
+
+nnoremap <silent> <C-p> :ProjectFiles<CR>
 nnoremap <silent> <C-s> :BLines<CR>
 
 let g:fzf_action = {
