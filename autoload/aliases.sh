@@ -19,11 +19,15 @@ fi
 alias ..='cd ..'
 alias ...='cd ../..'
 alias ....='cd ../../..'
-alias kff='killall firefox'
 alias kmpd='mpd --kill'
 alias l='ls -CF'
 alias la='ls -A'
 alias ll='ls -alF'
-alias pacman-autoclean='sudo pacman -R $(pacman -Qdtq)'
 alias vi='nvim'
 alias vim='nvim'
+
+if [[ "${OSTYPE}" =~ linux* ]]; then
+  alias nix-repl='docker run --rm -it lnl7/nix nix repl "<nixpkgs>"'
+  alias open='xdg-open'
+  alias pacman-autoclean='sudo pacman -R $(pacman -Qdtq)'
+fi
