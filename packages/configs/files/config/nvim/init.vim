@@ -35,6 +35,7 @@ Plug 'timonv/vim-cargo', { 'for': 'rust' }
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-markdown', { 'for': 'markdown' }
+Plug 'troydm/zoomwintab.vim'
 Plug 'vim-scripts/dbext.vim', { 'for': 'sql' }
 Plug 'vmchale/dhall-vim', { 'for': 'dhall' }
 Plug 'wannesm/wmgraphviz.vim', { 'for': 'dot' }
