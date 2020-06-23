@@ -19,6 +19,7 @@ fi
 alias ..='cd ..'
 alias ...='cd ../..'
 alias ....='cd ../../..'
+alias diff='git diff --no-index'
 alias kmpd='mpd --kill'
 alias l='ls -CF'
 alias la='ls -A'
@@ -30,4 +31,7 @@ if [[ "${OSTYPE}" =~ linux* ]]; then
   alias nix-repl='docker run --rm -it lnl7/nix nix repl "<nixpkgs>"'
   alias open='xdg-open'
   alias pacman-autoclean='sudo pacman -R $(pacman -Qdtq)'
+elif [[ "${OSTYPE}" =~ darwin* ]]; then
+  alias readelf='/usr/local/opt/binutils/bin/readelf'
+  alias restart-nix='sudo launchctl kickstart -k system/org.nixos.nix-daemon'
 fi
