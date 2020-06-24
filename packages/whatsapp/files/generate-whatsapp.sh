@@ -13,7 +13,7 @@
 
 readonly OUTPUT_DIR="${PWD}/WhatsApp-linux-x64"
 readonly OPTIONS='--single-instance --tray'
-readonly USE_MOKA_ICON=true
+readonly USE_MOKA_ICON=false
 
 select_icon_spec() {
   if [[ "${USE_MOKA_ICON}" == true ]]; then
@@ -29,7 +29,7 @@ readonly DESKTOP_FILE="[Desktop Entry]
 Name=WhatsApp Desktop
 Comment=Ghetto desktop client for WhatsApp Web
 GenericName=Instant Messenger
-Exec=${OUTPUT_DIR}/whats-app %U
+Exec=${OUTPUT_DIR}/WhatsApp %U
 Icon=$(select_icon_spec)
 Terminal=false
 Type=Application

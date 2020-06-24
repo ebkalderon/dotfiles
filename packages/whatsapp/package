@@ -21,16 +21,16 @@ install() {
   running 'generating and deploying WhatsApp client...'
   execute_silent pushd "${PACKAGE_FILES}/"
   execute ./generate-whatsapp.sh && \
-    cp whats-app-linux-x64/whatsapp.desktop ~/.local/share/applications/
+    cp WhatsApp-linux-x64/whatsapp.desktop ~/.local/share/applications/
   execute_silent popd
 }
 
 uninstall() {
   running 'deleting WhatsApp client...'
 
-  if [[ -d "${PACKAGE_FILES}/whats-app-linux-x64" ]]; then
+  if [[ -d "${PACKAGE_FILES}/WhatsApp-linux-x64" ]]; then
     execute_silent pushd "${PACKAGE_FILES}/"
-    execute rm -r whats-app-linux-x64
+    execute rm -r WhatsApp-linux-x64
     execute_silent popd
   fi
 
