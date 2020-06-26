@@ -13,7 +13,11 @@ install() {
   backup_and_copy "${PACKAGE_FILES}/pacman.conf" /etc/pacman.conf || return 1
   platform_update
 
-  if command -v trizen > /dev/null; then
+  if command -v yay > /dev/null; then
+    ok 'yay detected on system, moving on...'
+  elif command -v pacaur > /dev/null; then
+    ok 'pacaur detected on system, moving on...'
+  elif command -v trizen > /dev/null; then
     ok 'trizen detected on system, moving on...'
   else
     running 'building and installing trizen for AUR support... '
