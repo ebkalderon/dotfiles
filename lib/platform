@@ -9,6 +9,7 @@
 platform_detect() {
   if [ -f /etc/arch-release ]; then
     local packager='sudo pacman'
+    command -v yay &> /dev/null && packager='yay'
     command -v pacaur &> /dev/null && packager='pacaur'
     command -v trizen &> /dev/null && packager='trizen'
 
