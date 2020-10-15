@@ -138,6 +138,7 @@ call coc#add_extension(
     \ 'coc-html',
     \ 'coc-java',
     \ 'coc-json',
+    \ 'coc-prettier',
     \ 'coc-python',
     \ 'coc-rust-analyzer',
     \ 'coc-snippets',

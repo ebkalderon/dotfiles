@@ -125,6 +125,7 @@
             "filetypes": ["gluon"]
         }
     },
+    "coc.preferences.formatOnSaveFiletypes": ["js", "ts"],
     "diagnostic.virtualTextPrefix": "⟩ ",
     "python.autoComplete.addBrackets": true,
     "suggest.noselect": false,
