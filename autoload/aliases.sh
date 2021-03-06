@@ -28,6 +28,7 @@ alias vi='nvim'
 alias vim='nvim'
 
 if [[ "${OSTYPE}" =~ linux* ]]; then
+  alias nix-docker='docker run --rm -it lnl7/nix bash'
   alias nix-repl='docker run --rm -it lnl7/nix nix repl "<nixpkgs>"'
   alias open='xdg-open'
   alias pacman-autoclean='sudo pacman -R $(pacman -Qdtq)'
