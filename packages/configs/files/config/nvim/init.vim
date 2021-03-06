@@ -183,6 +183,7 @@ nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
 nmap <silent> <F2> <Plug>(coc-rename)
 nnoremap <silent> <F5> :<C-u>CocList<CR>
+nnoremap <silent> <M-f> :<C-u>CocCommand rust-analyzer.toggleInlayHints<CR>
 
 inoremap <silent> <expr> <C-space> coc#refresh()
 
