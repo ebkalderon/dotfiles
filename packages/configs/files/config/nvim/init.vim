@@ -25,6 +25,7 @@ Plug 'leafgarland/typescript-vim', { 'for': 'typescript' }
 Plug 'LnL7/vim-nix', { 'for': 'nix' }
 Plug 'mattn/webapi-vim', { 'for': 'rust' }
 Plug 'neoclide/coc.nvim', { 'do': 'yarn install --frozen-lockfile' }
+Plug 'puremourning/vimspector', {'do': './install_gadget.py --enable-c --enable-python --enable-rust'}
 Plug 'ron-rs/ron.vim', { 'for': 'ron' }
 Plug 'rust-lang/rust.vim', { 'for': 'rust' }
 Plug 'Shougo/echodoc.vim'
@@ -361,3 +362,14 @@ function! LightlineCocStatus() abort
     endtry
     return status
 endfunction
+
+" Vimspector configuration
+
+let g:vimspector_enable_mappings = 'HUMAN'
+let g:vimspector_install_gadgets = [ 'debugpy', 'vscode-cpptools', 'CodeLLDB' ]
+
+nmap <leader>dd :call vimspector#Launch()<CR>
+nmap <leader>dx :VimspectorReset<CR>
+nmap <leader>de :VimspectorEval
+nmap <leader>dw :VimspectorWatch
+nmap <leader>do :VimspectorShowOutput
