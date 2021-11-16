@@ -309,8 +309,8 @@ endfunction
 
 " Integrate Fugitive into Lightline
 function! MyFugitive()
-    if exists('*fugitive#head')
-        let s:head = fugitive#head()
+    if exists('*FugitiveHead')
+        let s:head = FugitiveHead()
         return strlen(s:head) ? ' '.s:head : ''
     endif
     return ''
