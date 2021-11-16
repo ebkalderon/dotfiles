@@ -25,7 +25,7 @@ Plug 'leafgarland/typescript-vim', { 'for': 'typescript' }
 Plug 'LnL7/vim-nix', { 'for': 'nix' }
 Plug 'mattn/webapi-vim', { 'for': 'rust' }
 Plug 'neoclide/coc.nvim', { 'do': 'yarn install --frozen-lockfile' }
-Plug 'puremourning/vimspector', {'do': './install_gadget.py --enable-c --enable-python --enable-rust'}
+" Plug 'puremourning/vimspector', {'do': './install_gadget.py --enable-c --enable-python --enable-rust'}
 Plug 'ron-rs/ron.vim', { 'for': 'ron' }
 Plug 'rust-lang/rust.vim', { 'for': 'rust' }
 Plug 'Shougo/echodoc.vim'
