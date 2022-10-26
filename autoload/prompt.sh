@@ -4,7 +4,7 @@
 
 # Executes VTE-specific functions, if available
 _is_vte_term() {
-  if [[ -f /etc/profile.d/vte.sh ]] && [[ -n "${VTE_VERSION}" ]]; then
+  if [[ -n "${VTE_VERSION}" ]] && [[ "$(type -t __vte_prompt_command)" == 'function' ]]; then
     __vte_prompt_command
   fi
 }
