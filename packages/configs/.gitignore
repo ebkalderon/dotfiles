@@ -17,7 +17,5 @@ files/home/.mpd/state
 # ncmpcpp
 files/home/.ncmpcpp/error.log
 
-# Neovim
-files/home/.config/nvim/.init.vim-rplugin~
 files/home/.config/nvim/.netrwhist
-files/home/.config/nvim/plugged
+files/home/.config/nvim/plugin
