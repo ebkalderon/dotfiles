@@ -7,13 +7,11 @@
 #
 
 execute_silent() {
-  local args="$@"
-
   if [[ ${VERBOSE} == 1 ]]; then
-    debug "${args}\n"
-    ${args}
+    debug "$@\n"
+    "$@"
   else
-    ${args} &> /dev/null
+    "$@" &> /dev/null
   fi
 
   return $?
