@@ -1,17 +1,30 @@
 currency = "USD"
 default_view = "default"
+default_chart_range = "1Y"
 api = "coingecko"
 colorscheme = "cointop-dark"
 refresh_rate = 60
+cache_dir = "/home/ekalderon/.cache/cointop"
+compact_notation = false
+enable_mouse = true
 
 [shortcuts]
+  "!" = "sort_column_cost"
+  "#" = "sort_column_pnl_percent"
   "$" = "last_page"
+  "%" = "sort_column_percent_holdings"
+  "+" = "show_price_alert_add_menu"
   "/" = "open_search"
   0 = "first_page"
   1 = "sort_column_1h_change"
   2 = "sort_column_24h_change"
+  3 = "sort_column_30d_change"
   7 = "sort_column_7d_change"
+  "<" = "scroll_left"
+  ">" = "scroll_right"
   "?" = "help"
+  "@" = "sort_column_pnl"
+  A = "toggle_price_alerts"
   C = "show_currency_convert_menu"
   E = "show_portfolio_edit_menu"
   F = "toggle_show_favorites"
@@ -40,10 +53,13 @@ refresh_rate = 60
   "ctrl+c" = "quit"
   "ctrl+d" = "page_down"
   "ctrl+f" = "open_search"
+  "ctrl+j" = "enlarge_chart"
+  "ctrl+k" = "shorten_chart"
   "ctrl+n" = "next_page"
   "ctrl+p" = "previous_page"
   "ctrl+r" = "refresh"
   "ctrl+s" = "save"
+  "ctrl+space" = "toggle_portfolio_balances"
   "ctrl+u" = "page_up"
   down = "move_down"
   e = "show_portfolio_edit_menu"
@@ -70,18 +86,37 @@ refresh_rate = 60
   s = "sort_column_symbol"
   space = "toggle_favorite"
   t = "sort_column_total_supply"
+  tab = "move_down_or_next_page"
   u = "sort_column_last_updated"
   up = "move_up"
   v = "sort_column_24h_volume"
+  y = "sort_column_1y_change"
   "{" = "first_chart_range"
+  "|" = "toggle_chart_fullscreen"
   "}" = "last_chart_range"
 
 [favorites]
+  character = "*"
+  columns = ["rank", "name", "symbol", "price", "1h_change", "24h_change", "7d_change", "24h_volume", "market_cap", "available_supply", "total_supply", "last_updated"]
+  compact_notation = false
+  names = ["Bitcoin"]
 
 [portfolio]
-  Bitcoin = 1.12605328
-  Litecoin = 3.0
-  TenX = 35785.0
+  columns = ["rank", "name", "symbol", "price", "holdings", "balance", "1h_change", "24h_change", "7d_change", "percent_holdings", "cost_price", "cost", "pnl", "pnl_percent", "last_updated"]
+  compact_notation = false
+  holdings = [["Bitcoin", "1.12605328", "0", ""], ["Litecoin", "3", "0", ""], ["TenX", "35785", "0", ""]]
+
+[price_alerts]
+  alerts = []
 
 [coinmarketcap]
   pro_api_key = ""
+
+[table]
+  columns = ["rank", "name", "symbol", "price", "1h_change", "24h_change", "7d_change", "24h_volume", "market_cap", "available_supply", "total_supply", "last_updated"]
+  compact_notation = false
+  keep_row_focus_on_sort = false
+
+[chart]
+  height = 10
+  max_width = 175

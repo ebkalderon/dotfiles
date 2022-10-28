@@ -5,19 +5,19 @@
 #
 
 # bash
-files/bashrc.bak
+files/home/bashrc.bak
 
 # mpd
-files/mpd/database
-files/mpd/log
-files/mpd/pid
-files/mpd/socket
-files/mpd/state
+files/home/.mpd/database
+files/home/.mpd/log
+files/home/.mpd/pid
+files/home/.mpd/socket
+files/home/.mpd/state
 
 # ncmpcpp
-files/ncmpcpp/error.log
+files/home/.ncmpcpp/error.log
 
 # Neovim
-files/config/nvim/.init.vim-rplugin~
-files/config/nvim/.netrwhist
-files/config/nvim/plugged
+files/home/.config/nvim/.init.vim-rplugin~
+files/home/.config/nvim/.netrwhist
+files/home/.config/nvim/plugged

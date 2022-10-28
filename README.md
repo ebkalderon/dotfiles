@@ -18,16 +18,16 @@ directory, installing programs, customizing the look and feel, etc. Using the
 included `dotfiles` command, you can pick and choose which packages to install.
 
 1. [Configuration Files](./packages/configs/)
-   * [bash](./packages/configs/files/bashrc)
-   * [cointop](./packages/configs/files/cointop)
-   * [gdb](./packages/configs/files/gdbinit)
-   * [git](./packages/configs/files/gitconfig)
-   * [gnupg](./packages/configs/files/gnupg/)
-   * [mpd](./packages/configs/files/mpd/)
-   * [ncmpcpp](./packages/configs/files/ncmpcpp/)
-   * [neovim](./packages/configs/files/config/nvim/)
-   * [tmux](./packages/configs/files/tmux.conf)
-   * [top](./packages/configs/files/toprc)
+   * [bash](./packages/configs/files/home/dot-bashrc)
+   * [cointop](./packages/configs/files/home/.config/cointop)
+   * [gdb](./packages/configs/files/home/dot-gdbinit)
+   * [git](./packages/configs/files/home/dot-gitconfig)
+   * [gnupg](./packages/configs/files/home/.gnupg/)
+   * [mpd](./packages/configs/files/home/.mpd/)
+   * [ncmpcpp](./packages/configs/files/home/.ncmpcpp/)
+   * [neovim](./packages/configs/files/home/.config/nvim/)
+   * [tmux](./packages/configs/files/home/dot-tmux.conf)
+   * [top](./packages/configs/files/home/dot-toprc)
 2. [Dconf Settings](./packages/dconf/)
    * [gedit](./packages/dconf/files/org.gnome.gedit.preferences.dconf)
    * [Tilix](./packages/dconf/files/com.gexperts.Tilix.dconf)
@@ -42,6 +42,7 @@ included `dotfiles` command, you can pick and choose which packages to install.
 ## Installation
 
 ```sh
+sudo pacman -S stow # GNU stow is required
 git clone https://github.com/ebkalderon/dotfiles ~/.dotfiles
 cd ~/.dotfiles
 ./dotfiles install
