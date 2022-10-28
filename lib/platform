@@ -62,7 +62,7 @@ platform_check_string() {
   local platforms="$@"
 
   if [[ "${platforms}" != 'ANY' ]]; then
-    if echo "${platforms}" | grep -qE "(^|\s)\!${PLATFORM_NAME}\b"; then
+    if echo "${platforms}" | grep -qE "(^|\\s)!${PLATFORM_NAME}\\b"; then
       debug "'PLATFORMS' string explicitly excludes '${PLATFORM_NAME}'"
       return 1
     elif ! echo "${platforms}" | grep -q "\b${PLATFORM_NAME}\b"; then
