@@ -30,6 +30,11 @@ packages_install() {
       continue
     fi
 
+    if grep -Ex --quiet "${PACKAGE_NAME}" "${DATABASE}"; then
+      header "Package '${PACKAGE_NAME}' is already installed. Skipping..."
+      continue
+    fi
+
     # Create a package-specific backup directory and install the package
     header "${INSTALL_MSG}"
     mkdir -p "${PACKAGE_BACKUPS}"
