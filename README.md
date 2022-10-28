@@ -42,6 +42,7 @@ included `dotfiles` command, you can pick and choose which packages to install.
 ## Installation
 
 ```sh
+sudo pacman -S stow # GNU stow is required
 git clone https://github.com/ebkalderon/dotfiles ~/.dotfiles
 cd ~/.dotfiles
 ./dotfiles install

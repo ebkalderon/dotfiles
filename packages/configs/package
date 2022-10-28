@@ -10,48 +10,22 @@ UNINSTALL_MSG='Restoring dotfiles...'
 PLATFORM='ANY'
 
 install() {
-  declare -A links
+  local stow_command="stow --dir=\"${PACKAGE_FILES}\" --target=\"${HOME}\" --dotfiles"
 
-  # Build up a list of symlinks to make
-  for file in "${PACKAGE_FILES}"/*; do
-    if [[ "${file##*/}" == 'config' ]]; then
-      for subfile in "${PACKAGE_FILES}"/config/*; do
-        links[${subfile}]=".config/${subfile##*/}"
-      done
-    elif [[ "${file##*/}" == 'local' ]]; then
-      for subfile in "${PACKAGE_FILES}"/local/share/applications/*; do
-        if [[ "${PLATFORM_NAME}" != 'MACOS' ]]; then 
-          links[${subfile}]=".local/share/applications/${subfile##*/}"
-        fi
-      done
-    elif [[ "${file##*/}" == 'cointop' ]]; then
-      if [[ "${PLATFORM_NAME}" != 'MACOS' ]]; then
-        links[${file}]=".config/${file##*/}"
-      else
-        links[${file}]=".${file##*/}"
-      fi
-    elif [[ "${file##*/}" == 'gdbinit' ]]; then
-      [[ "${PLATFORM_NAME}" != 'MACOS' ]] && links[${file}]=".${file##*/}"
-    elif [[ "${file##*/}" == 'gnupg' ]]; then
-      for subfile in "${PACKAGE_FILES}"/gnupg/*; do
-        links[${subfile}]=".gnupg/${subfile##*/}"
-      done
-    elif [[ "${file##*/}" == 'xinitrc' ]]; then
-      [[ "${PLATFORM_NAME}" != 'MACOS' ]] && links[${file}]=".${file##*/}"
-    else
-      links[${file}]=".${file##*/}"
-    fi
-  done
+  if [[ "${PLATFORM}" == 'MACOS' ]]; then
+    stow_command="${stow_command} --ignore='^(dot-gdbinit|\\.local\\/share\\/applications|dot-xinitrc)'"
+  else
+    stow_command="${stow_command} --ignore='^dot-cointop'"
+  fi
 
-  # Create the symlinks in the appropriate places
-  for src in "${!links[@]}"; do
-    local dest="${HOME}/${links[$src]}"
-    backup_and_link "${src}" "${dest}"
-  done
+  # Create symlinks, printing any differences between existing ~/ and stowed one
+  eval "${stow_command} --adopt --stow home"
+  git diff HEAD
+  eval "${stow_command} --restow home"
 
   # Update .bashrc with correct dotfiles location if not set
-  sed -i.bak "s,DOTFILES=.*,DOTFILES=\"${DOTFILES}\",g" "${PACKAGE_FILES}/bashrc" \
-    && rm "${PACKAGE_FILES}/bashrc.bak"
+  sed -i.bak "s,DOTFILES=.*,DOTFILES=\"${DOTFILES}\",g" "${PACKAGE_FILES}/home/dot-bashrc" \
+    && rm "${PACKAGE_FILES}/dot-bashrc.bak"
 
   # Create mpd playlist directory and empty database file
   running 'creating mpd playlist directory...'
