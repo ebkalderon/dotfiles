@@ -25,7 +25,7 @@ install() {
 
   # Update .bashrc with correct dotfiles location if not set
   sed -i.bak "s,DOTFILES=.*,DOTFILES=\"${DOTFILES}\",g" "${PACKAGE_FILES}/home/dot-bashrc" \
-    && rm "${PACKAGE_FILES}/dot-bashrc.bak"
+    && rm "${PACKAGE_FILES}/home/dot-bashrc.bak"
 
   # Create mpd playlist directory and empty database file
   running 'creating mpd playlist directory...'
