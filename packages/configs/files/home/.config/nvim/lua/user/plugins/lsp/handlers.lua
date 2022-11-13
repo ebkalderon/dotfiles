@@ -32,9 +32,46 @@ local function configure_inlay_hints()
   })
 end
 
+local function configure_progress_notifs()
+  local notify = require("user.plugins.lsp.notify")
+  local spinners = {}
+
+  vim.api.nvim_create_autocmd("User", {
+    group = vim.api.nvim_create_augroup("LspNotify", { clear = true }),
+    pattern = "LspProgressUpdate",
+    desc = "LSP progress notifications",
+    callback = function()
+      for _, c in pairs(vim.lsp.get_active_clients()) do
+        for token, ctx in pairs(c.messages.progress) do
+          if not spinners[c.id] then
+            spinners[c.id] = {}
+          end
+          local s = spinners[c.id][token]
+          if not ctx.done then
+            if not s then
+              local msg = notify.format_message(ctx.message, ctx.percentage)
+              local opts = { title = notify.format_title(ctx.title, c.name) }
+              spinners[c.id][token] = notify.Spinner(msg, vim.log.levels.INFO, opts)
+            else
+              s:update(notify.format_message(ctx.message, ctx.percentage))
+            end
+          else
+            c.messages.progress[token] = nil
+            if s then
+              s:done(ctx.message or "Complete", nil, { icon = "" })
+              spinners[c.id][token] = nil
+            end
+          end
+        end
+      end
+    end,
+  })
+end
+
 function M.setup()
   configure_diagnostics()
   configure_inlay_hints()
+  configure_progress_notifs()
 end
 
 local function define_capabilities()
@@ -58,51 +95,7 @@ end
 
 M.capabilities = define_capabilities()
 
-local function enable_progress_notifs(client)
-  local notify = require("user.plugins.lsp.notify")
-
-  vim.lsp.handlers["$/progress"] = function(_, result, ctx)
-    local client_id = ctx.client_id
-    local val = result.value
-
-    if not val.kind then
-      return
-    end
-
-    local notif_data = notify.get_notif_data(client_id, result.token)
-
-    if val.kind == "begin" then
-      local message = notify.format_message(val.message, val.percentage)
-
-      notif_data.notification = vim.notify(message, vim.log.levels.INFO, {
-        title = notify.format_title(val.title, client.name),
-        icon = notify.spinner_frames[1],
-        timeout = false,
-        hide_from_history = false,
-      })
-
-      notif_data.spinner = 1
-      notify.update_spinner(ctx.client_id, result.token)
-    elseif val.kind == "report" and notif_data then
-      notif_data.notification = vim.notify(notify.format_message(val.message, val.percentage), vim.log.levels.INFO, {
-        replace = notif_data.notification,
-        hide_from_history = false,
-      })
-    elseif val.kind == "end" and notif_data then
-      notif_data.notification =
-      vim.notify(val.message and notify.format_message(val.message) or "Complete", vim.log.levels.INFO, {
-        icon = "",
-        replace = notif_data.notification,
-        timeout = 3000,
-      })
-
-      notif_data.spinner = nil
-    end
-  end
-end
-
 function M.on_attach(client, bufnr)
-  enable_progress_notifs(client)
   require("lsp-inlayhints").on_attach(client, bufnr, false)
 end
 

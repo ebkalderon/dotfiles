@@ -1,52 +1,93 @@
 local M = {}
-local client_notifs = {}
 
-local function get_notif_data(client_id, token)
- if not client_notifs[client_id] then
-   client_notifs[client_id] = {}
- end
-
- if not client_notifs[client_id][token] then
-   client_notifs[client_id][token] = {}
- end
-
- return client_notifs[client_id][token]
+function M.format_title(title, client_name)
+  return client_name .. (#title > 0 and ": " .. title or "")
 end
 
-
-local spinner_frames = { "⣾", "⣽", "⣻", "⢿", "⡿", "⣟", "⣯", "⣷" }
-
-local function update_spinner(client_id, token)
- local notif_data = get_notif_data(client_id, token)
-
- if notif_data.spinner then
-   local new_spinner = (notif_data.spinner + 1) % #spinner_frames
-   notif_data.spinner = new_spinner
-
-   notif_data.notification = vim.notify(nil, nil, {
-     hide_from_history = true,
-     icon = spinner_frames[new_spinner],
-     replace = notif_data.notification,
-   })
-
-   vim.defer_fn(function()
-     update_spinner(client_id, token)
-   end, 100)
- end
+function M.format_message(message, percentage)
+  return (percentage and percentage .. "%\t" or "") .. (message or "")
 end
 
-local function format_title(title, client_name)
- return client_name .. (#title > 0 and ": " .. title or "")
+local Spinner = {}
+Spinner.__index = Spinner
+setmetatable(Spinner, {
+  __call = function(cls, ...)
+    return cls.new(...)
+  end,
+})
+
+local spinner_frames = { '⣾', '⣽', '⣻', '⢿', '⡿', '⣟', '⣯', '⣷' }
+
+function Spinner.new(msg, lvl, opts)
+  local self = setmetatable({}, Spinner)
+
+  self.msg = msg
+  self.lvl = lvl
+  self.opts = opts or {}
+  self.opts.timeout = false
+
+  self:_spin()
+
+  return self
 end
 
-local function format_message(message, percentage)
- return (percentage and percentage .. "%\t" or "") .. (message or "")
+function Spinner:_update(msg, lvl, opts)
+  -- TODO: debounce
+  opts = opts or {}
+  opts.replace = self.id
+  opts.hide_from_history = true
+  self.id = vim.notify(msg, lvl, opts)
 end
 
-M.get_notif_data = get_notif_data
-M.update_spinner = update_spinner
-M.format_title = format_title
-M.format_message = format_message
-M.spinner_frames = spinner_frames
+function Spinner:update(msg, lvl, opts)
+  if msg ~= nil then
+    self.msg = msg
+  end
+  if lvl ~= nil then
+    self.lvl = lvl
+  end
+  if opts ~= nil then
+    self.opts = opts
+  end
+end
+
+function Spinner:_spin()
+  if self.timer then
+    if self.timer:is_closing() then
+      return
+    end
+    self.timer:close()
+  end
+
+  local opts = self.opts or {}
+  if opts.icon == nil then
+    self.frame = (self.frame or 0) % #spinner_frames + 1
+    opts.icon = spinner_frames[self.frame]
+  end
+  self:_update(self.msg, self.lvl, opts)
+  self.msg = nil
+  self.lvl = nil
+  self.opts = nil
+
+  self.timer = vim.loop.new_timer()
+  self.timer:start(1000 / #spinner_frames, 0, vim.schedule_wrap(function()
+    self:_spin()
+  end))
+end
+
+function Spinner:done(msg, lvl, opts)
+  if not self.timer:is_closing() then
+    self.timer:close()
+  end
+
+  opts = opts or {}
+  if opts.timeout == nil then
+    opts.timeout = 3000
+  end
+
+  self:_update(msg, lvl, opts)
+end
+
+M.Spinner = Spinner
 
 return M
