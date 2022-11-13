@@ -25,6 +25,7 @@ require("mason-tool-installer").setup({
 })
 
 local handlers = require("user.plugins.lsp.handlers")
+handlers.setup()
 
 require("mason-lspconfig").setup_handlers({
   function(server_name)

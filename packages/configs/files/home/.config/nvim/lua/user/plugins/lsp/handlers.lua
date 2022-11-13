@@ -8,8 +8,8 @@ local function configure_diagnostics()
     Info = ""
   }
 
-  for type, icon in pairs(signs) do
-    local hl = "DiagnosticSign" .. type
+  for name, icon in pairs(signs) do
+    local hl = "DiagnosticSign" .. name
     vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
   end
 
@@ -19,14 +19,44 @@ local function configure_diagnostics()
   })
 end
 
-local function enable_inlay_hints(client, bufnr)
-  local inlay_hints = require("lsp-inlayhints")
-  inlay_hints.setup()
-  vim.api.nvim_set_hl(0, "LspInlayHint",
-    { fg = "#75715e", ctermfg = 14, bg = "#3e3d32", nocombine = false, blend = 50, italic = true,
-      cterm = { italic = true } })
-  inlay_hints.on_attach(client, bufnr, false)
+local function configure_inlay_hints()
+  require("lsp-inlayhints").setup()
+  vim.api.nvim_set_hl(0, "LspInlayHint", {
+    fg = "#75715e",
+    ctermfg = 14,
+    bg = "#3e3d32",
+    nocombine = false,
+    blend = 50,
+    italic = true,
+    cterm = { italic = true },
+  })
 end
+
+function M.setup()
+  configure_diagnostics()
+  configure_inlay_hints()
+end
+
+local function define_capabilities()
+  local status_ok, cmp_nvim_lsp = pcall(require, "cmp_nvim_lsp")
+  if status_ok then
+    return cmp_nvim_lsp.default_capabilities()
+  end
+
+  local capabilities = vim.lsp.protocol.make_client_capabilities()
+  capabilities.textDocument.completion.completionItem.snippetSupport = true
+  capabilities.textDocument.completion.completionItem.resolveSupport = {
+    properties = {
+      "documentation",
+      "detail",
+      "additionalTextEdits",
+    },
+  }
+
+  return capabilities
+end
+
+M.capabilities = define_capabilities()
 
 local function enable_progress_notifs(client)
   local notify = require("user.plugins.lsp.notify")
@@ -71,17 +101,9 @@ local function enable_progress_notifs(client)
   end
 end
 
-local is_ok, cmp_nvim_lsp = pcall(require, "cmp_nvim_lsp")
-if is_ok then
-  M.capabilities = cmp_nvim_lsp.default_capabilities()
-else
-  M.capabilities = vim.lsp.protocol.make_client_capabilities()
-end
-
-M.on_attach = function(client, bufnr)
-  configure_diagnostics()
-  enable_inlay_hints(client, bufnr)
+function M.on_attach(client, bufnr)
   enable_progress_notifs(client)
+  require("lsp-inlayhints").on_attach(client, bufnr, false)
 end
 
 return M
