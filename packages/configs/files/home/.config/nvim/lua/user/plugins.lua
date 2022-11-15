@@ -94,8 +94,18 @@ return packer.startup(function(use)
       "nvim-lua/plenary.nvim",
       { "nvim-telescope/telescope-fzf-native.nvim", run = "make" },
       "nvim-telescope/telescope-project.nvim",
+      {
+        "nvim-telescope/telescope-ui-select.nvim",
+        setup = function()
+          vim.ui.select = function(...)
+            require("telescope")
+            vim.ui.select(...)
+          end
+        end,
+      },
     },
     cmd = "Telescope",
+    module_pattern = "telescope",
     config = get_config("telescope"),
   }
 
