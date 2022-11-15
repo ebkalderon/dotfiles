@@ -28,8 +28,8 @@ packer.init({
 })
 
 return packer.startup(function(use)
-  local get_config = function(name)
-    return string.format('require("user.plugins.%s")', name)
+  local load_file = function(name)
+    return 'require("user.plugins.' .. name .. '")'
   end
 
   use { "wbthomason/packer.nvim" }
@@ -40,16 +40,16 @@ return packer.startup(function(use)
   use { "xiyaowong/nvim-transparent" }
 
   -- Appearance
-  use { "akinsho/bufferline.nvim", config = get_config("bufferline") }
-  use { "lewis6991/gitsigns.nvim", config = get_config("gitsigns") }
-  use { "lukas-reineke/indent-blankline.nvim", config = get_config("indent-blankline") }
-  use { "RRethy/vim-illuminate", config = get_config("illuminate") }
-  use { "rcarriga/nvim-notify", requires = { "nvim-lua/plenary.nvim" }, config = get_config("notify") }
-  use { "lukas-reineke/virt-column.nvim", config = get_config("virt-column") }
+  use { "akinsho/bufferline.nvim", config = load_file("bufferline") }
+  use { "lewis6991/gitsigns.nvim", config = load_file("gitsigns") }
+  use { "lukas-reineke/indent-blankline.nvim", config = load_file("indent-blankline") }
+  use { "RRethy/vim-illuminate", config = load_file("illuminate") }
+  use { "rcarriga/nvim-notify", requires = { "nvim-lua/plenary.nvim" }, config = load_file("notify") }
+  use { "lukas-reineke/virt-column.nvim", config = load_file("virt-column") }
 
   -- Text editing
-  use { "windwp/nvim-autopairs", config = get_config("autopairs") }
-  use { "numToStr/Comment.nvim", config = get_config("comment") }
+  use { "windwp/nvim-autopairs", config = load_file("autopairs") }
+  use { "numToStr/Comment.nvim", config = load_file("comment") }
   use { "Glench/Vim-Jinja2-Syntax", ft = "jinja" }
   use { "rust-lang/rust.vim", ft = "rust" }
 
@@ -57,7 +57,7 @@ return packer.startup(function(use)
   use {
     "nvim-lualine/lualine.nvim",
     requires = { "kyazdani42/nvim-web-devicons" },
-    config = get_config("lualine"),
+    config = load_file("lualine"),
   }
 
   -- Autocompletion support
@@ -71,7 +71,7 @@ return packer.startup(function(use)
       "onsails/lspkind.nvim",
       "windwp/nvim-autopairs",
     },
-    config = get_config("cmp"),
+    config = load_file("cmp"),
   }
 
   -- LSP support
@@ -84,7 +84,7 @@ return packer.startup(function(use)
       "lvimuser/lsp-inlayhints.nvim",
       { "folke/neodev.nvim", module = "neodev" },
     },
-    config = get_config("lsp"),
+    config = load_file("lsp"),
   }
 
   -- Fuzzy search
@@ -106,7 +106,7 @@ return packer.startup(function(use)
     },
     cmd = "Telescope",
     module_pattern = "telescope",
-    config = get_config("telescope"),
+    config = load_file("telescope"),
   }
 
   -- File explorer
@@ -115,11 +115,11 @@ return packer.startup(function(use)
     requires = { "nvim-tree/nvim-web-devicons" },
     cmd = "NvimTreeToggle",
     module = "telescope",
-    config = get_config("nvim-tree"),
+    config = load_file("nvim-tree"),
   }
 
   -- Terminal mode
-  use { "akinsho/toggleterm.nvim", config = get_config("toggleterm") }
+  use { "akinsho/toggleterm.nvim", config = load_file("toggleterm") }
 
   if packer_bootstrap then
     packer.sync()
