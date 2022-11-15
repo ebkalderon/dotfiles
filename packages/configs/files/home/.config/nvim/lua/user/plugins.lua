@@ -50,7 +50,7 @@ return packer.startup(function(use)
   -- Text editing
   use { "windwp/nvim-autopairs", config = load_file("autopairs") }
   use { "numToStr/Comment.nvim", config = load_file("comment") }
-  use { "Glench/Vim-Jinja2-Syntax", ft = "jinja" }
+  use { "Glench/Vim-Jinja2-Syntax" }
   use { "rust-lang/rust.vim", ft = "rust" }
 
   -- Statusline
