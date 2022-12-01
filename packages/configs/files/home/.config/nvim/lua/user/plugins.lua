@@ -67,13 +67,19 @@ return packer.startup(function(use)
     config = load_file("cmp"),
   }
 
+  -- Package manager for LSP, DAP, linters, etc.
+  use {
+    "williamboman/mason.nvim",
+    requires = { "WhoIsSethDaniel/mason-tool-installer.nvim" },
+    config = load_file("mason"),
+  }
+
   -- LSP support
   use {
     "neovim/nvim-lspconfig",
+    wants = "mason.nvim",
     requires = {
-      "williamboman/mason.nvim",
       "williamboman/mason-lspconfig.nvim",
-      "WhoIsSethDaniel/mason-tool-installer.nvim",
       "lvimuser/lsp-inlayhints.nvim",
       { "folke/neodev.nvim", module = "neodev" },
     },
