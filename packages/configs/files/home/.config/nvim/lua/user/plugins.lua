@@ -1,10 +1,3 @@
-vim.cmd([[
-  augroup PackerUserConfig
-    autocmd!
-    autocmd BufWritePost plugins.lua source <afile> | PackerSync
-  augroup end
-]])
-
 local ensure_packer = function()
   local fn = vim.fn
   local install_path = fn.stdpath("data").."/site/pack/packer/start/packer.nvim"
