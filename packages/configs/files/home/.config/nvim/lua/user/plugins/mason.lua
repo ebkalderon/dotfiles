@@ -15,5 +15,8 @@ require("mason-tool-installer").setup({
     "typescript-language-server",
     "vim-language-server",
     "yaml-language-server",
+
+    -- Debuggers
+    "codelldb",
   },
 })

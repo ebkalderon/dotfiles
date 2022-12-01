@@ -86,6 +86,18 @@ return packer.startup(function(use)
     config = load_file("lsp"),
   }
 
+  -- DAP support
+  use {
+    "mfussenegger/nvim-dap",
+    wants = "mason.nvim",
+    requires = {
+      "jayp0521/mason-nvim-dap.nvim",
+      "rcarriga/nvim-dap-ui",
+    },
+    module = { "dap", "dapui", "mason-nvim-dap" },
+    config = load_file("dap"),
+  }
+
   -- Fuzzy search
   use {
     "nvim-telescope/telescope.nvim",
