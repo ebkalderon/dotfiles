@@ -84,6 +84,9 @@ telescope.setup({
       hidden_files = true,
       sync_with_nvim_tree = true,
     },
+    ["ui-select"] = {
+      require("telescope.themes").get_dropdown()
+    },
   },
 })
 
