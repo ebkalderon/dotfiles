@@ -77,8 +77,26 @@ require("mason-nvim-dap").setup_handlers({
     }
 
     dap.configurations.cpp = dap.configurations.c
-    dap.configurations.rust = dap.configurations.c
 
-    require("dap.ext.vscode").load_launchjs()
+    local hash = vim.fn.system({"rustc", "-V", "-v"}):match("commit%-hash%: (%w+)")
+    local sysroot = vim.fn.system({"rustc", "--print", "sysroot"}):match("^%s*(.-)%s*$")
+    dap.configurations.rust = {
+      {
+        type = "codelldb",
+        request = "launch",
+        name = "Launch Program (codelldb)",
+        program = function()
+          return vim.fn.input("Path to executable: ", vim.fn.getcwd() .. "/", "file")
+        end,
+        cwd = "${workspaceFolder}",
+        terminal = "integrated",
+        sourceLanguages = { "rust" },
+        sourceMap = { ["/rustc/" .. hash .. "/"] = sysroot .. "/lib/rustlib/src/rust" },
+      },
+    }
+
+    require("dap.ext.vscode").load_launchjs(nil, {
+      codelldb = { "c", "cpp", "rust" },
+    })
   end,
 })
