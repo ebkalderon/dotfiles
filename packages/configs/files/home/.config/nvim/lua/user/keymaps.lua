@@ -69,6 +69,12 @@ vim.api.nvim_create_autocmd("LspAttach", {
     vim.keymap.set("n", "<F5>", function() require("dap").continue() end, bufopts)
     vim.keymap.set("n", "<F17>", function() require("dap").close() end, bufopts) -- <S-F5>
     vim.keymap.set("n", "<F9>", function() require("dap").toggle_breakpoint() end, bufopts)
+    vim.keymap.set("n", "<F21>", function()
+      require("dap").set_breakpoint(vim.fn.input("Breakpoint condition: "))
+    end, bufopts) -- <S-F9>
+    vim.keymap.set("n", "<F10>", function()
+      require("dap").set_breakpoint({ nil, nil, vim.fn.input('Log point message: ') })
+    end, bufopts)
     vim.keymap.set("n", "<F1>", function() require("dap").step_over() end, bufopts)
     vim.keymap.set("n", "<F2>", function() require("dap").step_into() end, bufopts)
     vim.keymap.set("n", "<F14>", function() require("dap").step_out() end, bufopts) -- <S-F2>
