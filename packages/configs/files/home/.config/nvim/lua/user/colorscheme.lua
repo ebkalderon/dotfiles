@@ -1,6 +1,6 @@
 require("transparent").setup({
   enable = true,
-  extra_groups = { "CursorLine", "VertSplit" },
+  extra_groups = { "VertSplit" },
   exclude = { "CursorLineNr", "LineNr", "SignColumn" },
 })
 

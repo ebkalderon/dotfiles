@@ -6,6 +6,7 @@ vim.opt.tabstop = 4                             -- Define hard tab width
 
 -- Appearance options
 vim.opt.cursorline = true                       -- Highlight current line
+vim.opt.cursorlineopt = "number"                -- Highlight only line number component
 vim.opt.number = true                           -- Enable line numbers
 vim.opt.signcolumn = "yes"                      -- Always show sign column (prevents LSP inlay hints from shifting text)
 vim.opt.termguicolors = true                    -- Enable full 256 colors in terminal
