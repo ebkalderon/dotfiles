@@ -10,7 +10,6 @@ vim.cmd("colorscheme molokai")
 -- Minor color tweaks to Molokai
 vim.api.nvim_set_hl(0, "FloatBorder", { link = "NormalFloat" })
 vim.api.nvim_set_hl(0, "SignColumn", { link = "LineNr" })
-vim.opt.fillchars = "eob: "
 
 -- Override default Neovim >=0.6.0 supplied "Underline" categories to use undercurl
 vim.api.nvim_set_hl(0, "DiagnosticUnderlineError", { cterm = { undercurl = true }, undercurl = true, sp = "Red" })
