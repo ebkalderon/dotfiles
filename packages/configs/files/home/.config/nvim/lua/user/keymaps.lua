@@ -62,6 +62,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
     vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, bufopts)
     vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action, bufopts)
     vim.keymap.set('n', '<leader>f', function() vim.lsp.buf.format { async = true } end, bufopts)
+    vim.keymap.set("n", "<leader>h", function() require("lsp-inlayhints").toggle() end, bufopts)
 
     vim.keymap.set("n", "<F4>", function() require("dapui").toggle({ reset = true }) end, bufopts)
     vim.keymap.set("n", "<F5>", function() require("dap").continue() end, bufopts)

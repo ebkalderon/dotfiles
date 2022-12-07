@@ -26,6 +26,7 @@ local function configure_inlay_hints()
         prefix = "  ",
       },
     },
+    enabled_at_startup = false,
   })
   vim.api.nvim_set_hl(0, "LspInlayHint", { fg = "#75715E", bg = "#303030" })
 end
