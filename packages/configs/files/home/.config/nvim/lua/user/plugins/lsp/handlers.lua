@@ -20,16 +20,14 @@ local function configure_diagnostics()
 end
 
 local function configure_inlay_hints()
-  require("lsp-inlayhints").setup()
-  vim.api.nvim_set_hl(0, "LspInlayHint", {
-    fg = "#75715e",
-    ctermfg = 14,
-    bg = "#3e3d32",
-    nocombine = false,
-    blend = 50,
-    italic = true,
-    cterm = { italic = true },
+  require("lsp-inlayhints").setup({
+    inlay_hints = {
+      parameter_hints = {
+        prefix = "  ",
+      },
+    },
   })
+  vim.api.nvim_set_hl(0, "LspInlayHint", { fg = "#75715E", bg = "#303030" })
 end
 
 local function configure_progress_notifs()

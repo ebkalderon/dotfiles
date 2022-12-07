@@ -25,6 +25,9 @@ require("mason-lspconfig").setup_handlers({
           completion = {
             callSnippet = "Replace"
           },
+          hint = {
+            enable = true,
+          },
           workspace = {
             checkThirdParty = false
           },
