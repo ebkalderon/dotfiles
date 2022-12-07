@@ -78,8 +78,8 @@ require("mason-nvim-dap").setup_handlers({
 
     dap.configurations.cpp = dap.configurations.c
 
-    local hash = vim.fn.system({"rustc", "-V", "-v"}):match("commit%-hash%: (%w+)")
-    local sysroot = vim.fn.system({"rustc", "--print", "sysroot"}):match("^%s*(.-)%s*$")
+    local hash = vim.fn.system({ "rustc", "-V", "-v" }):match("commit%-hash%: (%w+)")
+    local sysroot = vim.fn.system({ "rustc", "--print", "sysroot" }):match("^%s*(.-)%s*$")
     dap.configurations.rust = {
       {
         type = "codelldb",
