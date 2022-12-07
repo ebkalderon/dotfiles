@@ -98,6 +98,17 @@ return packer.startup(function(use)
     config = load_file("dap"),
   }
 
+  -- Winbar
+  use {
+    "utilyre/barbecue.nvim",
+    requires = {
+      "smiteshp/nvim-navic",
+      "neovim/nvim-lspconfig",
+      "kyazdani42/nvim-web-devicons",
+    },
+    config = load_file("barbecue"),
+  }
+
   -- Fuzzy search
   use {
     "nvim-telescope/telescope.nvim",
