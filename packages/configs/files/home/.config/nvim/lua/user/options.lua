@@ -15,6 +15,7 @@ vim.opt.termguicolors = true                    -- Enable full 256 colors in ter
 -- Search and popup menu appearance
 vim.opt.hlsearch = true                         -- Highlight all matches while typing
 vim.opt.incsearch = true                        -- Jump straight to next matching result while typing
+vim.opt.pumblend = 20                           -- Set translucency of completion popup menu
 vim.opt.pumheight = 12                          -- Set maximum height for completion popup menu
 
 -- Text wrapping options
