@@ -15,8 +15,8 @@ keymap("n", "<C-Right>", "<C-w>l", opts)
 keymap("n", "<leader>e", ":NvimTreeToggle<CR>", opts)
 
 -- Navigate between buffers
-keymap("n", "<S-Left>", ":bprevious<CR>", opts)
-keymap("n", "<S-Right>", ":bnext<CR>", opts)
+keymap("n", "<S-Left>", ":BufferLineCyclePrev<CR>", opts)
+keymap("n", "<S-Right>", ":BufferLineCycleNext<CR>", opts)
 keymap("n", "<C-x>", ":bdelete<CR>", opts)
 
 -- Stay in visual mode while indenting
