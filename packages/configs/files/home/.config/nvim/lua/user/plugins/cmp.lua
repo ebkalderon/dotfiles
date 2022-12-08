@@ -54,8 +54,8 @@ cmp.setup({
     format = lspkind.cmp_format({ with_text = true, max_width = 50 })
   },
   window = {
-    -- completion = cmp.config.window.bordered(),
-    -- documentation = cmp.config.window.bordered(),
+    completion = cmp.config.window.bordered({ winhighlight = "FloatBorder:Pmenu,CursorLine:PmenuSel" }),
+    documentation = cmp.config.window.bordered({ winhighlight = "FloatBorder:Pmenu,CursorLine:PmenuSel" }),
   },
 })
 

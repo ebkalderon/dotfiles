@@ -16,6 +16,7 @@ local function configure_diagnostics()
   vim.diagnostic.config({
     update_in_insert = true,
     severity_sort = true,
+    float = { border = "rounded" },
   })
 end
 
@@ -29,6 +30,11 @@ local function configure_inlay_hints()
     enabled_at_startup = false,
   })
   vim.api.nvim_set_hl(0, "LspInlayHint", { fg = "#75715E", bg = "#303030" })
+end
+
+local function configure_overrides()
+  vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = "rounded" })
+  vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, { border = "rounded" })
 end
 
 local function configure_progress_notifs()
@@ -69,6 +75,7 @@ end
 
 function M.setup()
   configure_diagnostics()
+  configure_overrides()
   configure_inlay_hints()
   configure_progress_notifs()
 end
