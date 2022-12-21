@@ -3,7 +3,7 @@ local actions = require("telescope.actions")
 
 telescope.setup({
   defaults = {
-    prompt_prefix = " ",
+    prompt_prefix = "   ",
     selection_caret = " ",
     path_display = { "truncate" },
     file_ignore_patterns = { "^.git/" },
@@ -82,6 +82,7 @@ telescope.setup({
   extensions = {
     project = {
       hidden_files = true,
+      theme = "dropdown",
       sync_with_nvim_tree = true,
     },
     ["ui-select"] = {
