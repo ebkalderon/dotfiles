@@ -38,7 +38,6 @@ return packer.startup(function(use)
   use { "lukas-reineke/indent-blankline.nvim", config = load_file("indent-blankline") }
   use { "RRethy/vim-illuminate", config = load_file("illuminate") }
   use { "rcarriga/nvim-notify", requires = { "nvim-lua/plenary.nvim" }, config = load_file("notify") }
-  use { "lukas-reineke/virt-column.nvim", config = load_file("virt-column") }
 
   -- Text editing
   use { "windwp/nvim-autopairs", config = load_file("autopairs") }
