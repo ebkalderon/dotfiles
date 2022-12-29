@@ -33,7 +33,7 @@ keymap("x", "<S-Down>", ":move '>+1<CR>gv=gv", opts)
 
 -- Fuzzy search
 keymap("n", "<C-p>", ":Telescope find_files<CR>", opts)
-keymap("n", "<C-j>", ":Telescope project<CR>", opts)
+keymap("n", "<C-j>", ":Telescope project display_type=two-segment<CR>", opts)
 
 -- Language server shortcuts
 vim.api.nvim_create_autocmd("LspAttach", {
