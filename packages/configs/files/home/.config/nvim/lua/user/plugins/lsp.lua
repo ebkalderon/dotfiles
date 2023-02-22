@@ -11,8 +11,8 @@ require("mason-lspconfig").setup_handlers({
     })
   end,
 
-  ["sumneko_lua"] = function(_)
-    require("lspconfig").sumneko_lua.setup({
+  ["lua_ls"] = function(_)
+    require("lspconfig").lua_ls.setup({
       on_attach = handlers.on_attach,
       capabilities = handlers.capabilities,
       before_init = function(params, config)
