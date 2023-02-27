@@ -1,5 +1,3 @@
-local tree_cb = require("nvim-tree.config").nvim_tree_callback
-
 require("nvim-tree").setup({
   disable_netrw = true,
   update_focused_file = {
@@ -47,12 +45,5 @@ require("nvim-tree").setup({
   view = {
     width = 30,
     side = "left",
-    mappings = {
-      list = {
-        { key = { "l", "<CR>", "o" }, cb = tree_cb("edit") },
-        { key = "<S-CR>", cb = tree_cb("close_node") },
-        { key = "v", cb = tree_cb("vsplit") },
-      },
-    },
   },
 })
