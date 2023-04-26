@@ -46,57 +46,59 @@ for name, dict in pairs(signs) do
   vim.fn.sign_define("Dap" .. name, dict)
 end
 
-require("mason-nvim-dap").setup_handlers({
-  function(source_name)
-    require("mason-nvim-dap.automatic_setup")(source_name)
-  end,
+require("mason-nvim-dap").setup({
+  handlers = {
+    function(config)
+      require('mason-nvim-dap').default_setup(config)
+    end,
 
-  codelldb = function(_)
-    local codelldb_path = require("mason-registry").get_package("codelldb"):get_install_path()
-    dap.adapters.codelldb = {
-      type = "server",
-      host = "127.0.0.1",
-      port = "${port}",
-      executable = {
-        command = codelldb_path .. "/codelldb",
-        args = { "--liblldb", codelldb_path .. "/extension/lldb/lib/liblldb.so", "--port", "${port}" }
+    codelldb = function(config)
+      local codelldb_path = require("mason-registry").get_package("codelldb"):get_install_path()
+      config.adapters.codelldb = {
+        type = "server",
+        host = "127.0.0.1",
+        port = "${port}",
+        executable = {
+          command = codelldb_path .. "/codelldb",
+          args = { "--liblldb", codelldb_path .. "/extension/lldb/lib/liblldb.so", "--port", "${port}" }
+        }
       }
-    }
 
-    dap.configurations.c = {
-      {
-        type = "codelldb",
-        request = "launch",
-        name = "Launch Program (codelldb)",
-        program = function()
-          return vim.fn.input("Path to executable: ", vim.fn.getcwd() .. "/", "file")
-        end,
-        cwd = "${workspaceFolder}",
-        terminal = "integrated",
-      },
-    }
+      config.configurations.c = {
+        {
+          type = "codelldb",
+          request = "launch",
+          name = "Launch Program (codelldb)",
+          program = function()
+            return vim.fn.input("Path to executable: ", vim.fn.getcwd() .. "/", "file")
+          end,
+          cwd = "${workspaceFolder}",
+          terminal = "integrated",
+        },
+      }
 
-    dap.configurations.cpp = dap.configurations.c
+      config.configurations.cpp = config.configurations.c
 
-    local hash = vim.fn.system({ "rustc", "-V", "-v" }):match("commit%-hash%: (%w+)")
-    local sysroot = vim.fn.system({ "rustc", "--print", "sysroot" }):match("^%s*(.-)%s*$")
-    dap.configurations.rust = {
-      {
-        type = "codelldb",
-        request = "launch",
-        name = "Launch Program (codelldb)",
-        program = function()
-          return vim.fn.input("Path to executable: ", vim.fn.getcwd() .. "/", "file")
-        end,
-        cwd = "${workspaceFolder}",
-        terminal = "integrated",
-        sourceLanguages = { "rust" },
-        sourceMap = { ["/rustc/" .. hash .. "/"] = sysroot .. "/lib/rustlib/src/rust" },
-      },
-    }
+      local hash = vim.fn.system({ "rustc", "-V", "-v" }):match("commit%-hash%: (%w+)")
+      local sysroot = vim.fn.system({ "rustc", "--print", "sysroot" }):match("^%s*(.-)%s*$")
+      config.configurations.rust = {
+        {
+          type = "codelldb",
+          request = "launch",
+          name = "Launch Program (codelldb)",
+          program = function()
+            return vim.fn.input("Path to executable: ", vim.fn.getcwd() .. "/", "file")
+          end,
+          cwd = "${workspaceFolder}",
+          terminal = "integrated",
+          sourceLanguages = { "rust" },
+          sourceMap = { ["/rustc/" .. hash .. "/"] = sysroot .. "/lib/rustlib/src/rust" },
+        },
+      }
 
-    require("dap.ext.vscode").load_launchjs(nil, {
-      codelldb = { "c", "cpp", "rust" },
-    })
-  end,
+      require("dap.ext.vscode").load_launchjs(nil, {
+        codelldb = { "c", "cpp", "rust" },
+      })
+    end,
+  }
 })
