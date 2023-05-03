@@ -1,7 +1,6 @@
 require("transparent").setup({
-  enable = true,
   extra_groups = { "VertSplit" },
-  exclude = { "CursorLineNr", "LineNr", "SignColumn" },
+  exclude_groups = { "CursorLineNr", "LineNr", "SignColumn" },
 })
 
 vim.g.molokai_original = 1

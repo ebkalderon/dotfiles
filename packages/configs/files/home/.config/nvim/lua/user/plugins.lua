@@ -30,7 +30,7 @@ return packer.startup(function(use)
 
   -- Colorscheme
   use { "tamelion/neovim-molokai" }
-  use { "xiyaowong/nvim-transparent" }
+  use { "xiyaowong/transparent.nvim" }
 
   -- Appearance
   use { "akinsho/bufferline.nvim", config = load_file("bufferline") }
