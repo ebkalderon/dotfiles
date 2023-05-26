@@ -76,7 +76,7 @@ return packer.startup(function(use)
   -- LSP support
   use {
     "neovim/nvim-lspconfig",
-    wants = "mason.nvim",
+    after = "mason.nvim",
     requires = {
       "williamboman/mason-lspconfig.nvim",
       "lvimuser/lsp-inlayhints.nvim",

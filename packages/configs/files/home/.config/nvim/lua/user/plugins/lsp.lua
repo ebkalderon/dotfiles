@@ -36,3 +36,17 @@ require("mason-lspconfig").setup_handlers({
     })
   end,
 })
+
+-- Example of `stdio` server
+-- require("lspconfig.configs").nixlsp = {
+--   default_config = {
+--     cmd = { vim.env.HOME .. "/Documents/Projects/tower-lsp/target/debug/examples/stdio" },
+--     filetypes = { "nix" },
+--     root_dir = require("lspconfig.util").root_pattern("."),
+--   }
+-- }
+--
+-- require("lspconfig").nixlsp.setup({
+--     on_attach = handlers.on_attach,
+--     capabilities = handlers.capabilities,
+-- })

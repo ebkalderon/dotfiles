@@ -83,10 +83,15 @@ end
 local function define_capabilities()
   local status_ok, cmp_nvim_lsp = pcall(require, "cmp_nvim_lsp")
   if status_ok then
-    return cmp_nvim_lsp.default_capabilities()
+    local capabilities = cmp_nvim_lsp.default_capabilities()
+    capabilities.window = capabilities.window or {}
+    capabilities.window.workDoneProgress = true
+    return capabilities
   end
 
   local capabilities = vim.lsp.protocol.make_client_capabilities()
+  capabilities.window = capabilities.window or {}
+  capabilities.window.workDoneProgress = true
   capabilities.textDocument.completion.completionItem.snippetSupport = true
   capabilities.textDocument.completion.completionItem.resolveSupport = {
     properties = {
