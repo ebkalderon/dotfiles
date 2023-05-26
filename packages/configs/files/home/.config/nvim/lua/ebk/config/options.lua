@@ -1,3 +1,7 @@
+-- Map <space> as <leader>
+vim.g.mapleader = " "
+vim.g.maplocalleader = " "
+
 -- Indentation options
 vim.opt.expandtab = true                        -- Convert tabs to spaces (use soft tabs)
 vim.opt.shiftwidth = 4                          -- Define soft tab width

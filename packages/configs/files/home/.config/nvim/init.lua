@@ -1,6 +1,1 @@
-pcall(require, "impatient")
-require("user.options")
-require("user.plugins")
-require("user.colorscheme")
-require("user.autocmd")
-require("user.keymaps")
+require("ebk")
