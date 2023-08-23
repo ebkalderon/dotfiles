@@ -1,0 +1,7 @@
+[user]
+	name = Eyal Kalderon
+	email = eyal.kalderon@disneystreaming.com
+	signingKey = 0F49E2169422E4F8
+
+[url "git@github.bamtech.co:"]
+	insteadOf = https://github.bamtech.co/
