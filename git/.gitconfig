@@ -1,0 +1,25 @@
+[user]
+	email = ebkalderon@gmail.com
+	name = Eyal Kalderon
+	signingKey = 00AB4C0942DCBA25
+
+[core]
+	autocrlf = input
+
+[commit]
+	gpgSign = true
+
+[pull]
+	ff = only
+
+[includeIf "gitdir:/home/"]
+	path = ~/.gitconfig-linux
+
+[includeIf "gitdir:/Users/"]
+	path = ~/.gitconfig-macos
+
+[includeIf "gitdir:~/Documents/Repos/"]
+	path = ~/.gitconfig-work
+
+[includeIf "gitdir:~/.cargo/"]
+	path = ~/.gitconfig-work
