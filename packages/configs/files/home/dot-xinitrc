@@ -1,3 +1,0 @@
-# For yanking/pasting in vim to and from X11 applications
-autocutsel -fork &
-autocutsel -selection PRIMARY -fork &
