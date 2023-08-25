@@ -1,4 +1,7 @@
 gnupg-*/*
 !gnupg-*/.gnupg/gpg-agent.conf
 
+mpd-*/.config/mpd/*
+!mpd-*/.config/mpd/mpd.conf
+
 tmux/.tmux/plugins
