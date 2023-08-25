@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+STOW='stow --verbose --restow'
+
+echo 'Installing dotfiles...'
+mkdir -p ~/.bashrc.d
+$STOW cointop bash fzf git ncmpcpp neovim tmux top
+
+case "$OSTYPE" in
+  linux*)
+    mkdir -p ~/.config/mpd/playlists
+    mkdir -p ~/.local/share/mpd
+    touch ~/.local/share/mpd/state
+    $STOW gnupg-linux mpd-linux
+    ;;
+  darwin*)
+    mkdir -p ~/.mpd/playlists
+    touch ~/.mpd/{socket,state}
+    $STOW gnupg-macos mpd-macos
+    ;;
+  *) ;;
+esac

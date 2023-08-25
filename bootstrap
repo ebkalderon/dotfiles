@@ -1,0 +1,168 @@
+#!/usr/bin/env bash
+
+# Installs prerequisite programs (git, stow), installs a package manager (if
+# not present on macOS or Arch), and clones ~/.dotfiles, if missing.
+#
+# This script does not depend on anything else in this repo. If you trust the
+# source, it may be downloaded and executed as a convenient one-liner:
+#
+# bash <(curl https://raw.githubusercontent.com/ebkalderon/dotfiles/rewrite-dotfiles/bootstrap -sSf)
+#
+# However, this poses a potential security risk. Always inspect the contents of
+# downloaded scripts before executing them!
+
+set -euo pipefail
+
+# If set to `true` on Arch Linux, script will install `pamac` instead of `yay`.
+ARCH_LINUX_PREFER_PAMAC=false
+
+function print_disclaimer() {
+  local arch_aur_helper
+  arch_aur_helper="$( ([[ "${ARCH_LINUX_PREFER_PAMAC:-false}" == true ]] && echo pamac-aur) || echo yay)"
+
+  printf 'This script will:\n\n'
+  printf '1) Perform pre-setup tasks\n'
+  printf "   - On Arch Linux, this will update and install '%s'\n" "$arch_aur_helper"
+  printf '   - On macOS, this will install Homebrew and upgrade to newer bash\n'
+  printf "2) Install 'git' and 'stow'\n"
+  printf '   - On Arch Linux, this will update and install via pacman\n'
+  printf '   - On Ubuntu/Debian/Linux Mint, this will update and install via apt\n'
+  printf '   - On macOS, this will update and install via Homebrew\n'
+  printf "3) Clone 'ebkalderon/dotfiles' repo to ~/.dotfiles if not present (will skip otherwise)\n"
+  printf '   - This script will NOT deploy the dotfiles to your home directory, in case you change your mind\n\n'
+
+  read -p 'Would you like to continue? (y/N) ' -n 1 -r confirm
+  echo
+
+  if [[ ! "$confirm" =~ ^[Yy]$ ]]; then
+    echo 'Bootstrap aborted.'
+    exit 0
+  fi
+}
+
+function pre_setup_tasks() {
+  case "$OSTYPE" in
+    darwin*) OS="macos" ;;
+    linux*)
+      source /etc/os-release
+      OS="$ID"
+
+      case "$OS" in
+        arch|linuxmint|ubuntu) ;;
+        *)
+          >&2 echo "Error: Unsupported Linux distribution '$OS' [arch|linuxmint|ubuntu]"
+          exit 1
+          ;;
+      esac
+      ;;
+    *)
+      >&2 echo "Error: Unsupported operating system: $OSTYPE [arch|linuxmint|macos|ubuntu]"
+      exit 1
+      ;;
+  esac
+
+  printf "\n1) Detected supported OS: %s\n" "$OS"
+}
+
+function install_packages() {
+  function install_yay() {
+    if command -v yay > /dev/null; then
+      echo 'yay is already installed; skipping...'
+      return 0
+    fi
+
+    BUILD_DIR="$(mktemp -d)"
+    trap 'rm -rf "$BUILD_DIR"' EXIT ERR
+    cd "$BUILD_DIR"
+
+    curl -O https://aur.archlinux.org/cgit/aur.git/snapshot/yay.tar.gz
+    tar zxvf yay.tar.gz
+    pushd yay/
+    makepkg -sri --noconfirm ./PKGBUILD
+  }
+  
+  function install_pamac() {
+    if command -v pamac > /dev/null; then
+      echo 'pamac is already installed; skipping...'
+      return 0
+    fi
+
+    BUILD_DIR="$(mktemp -d)"
+    trap 'rm -rf "$BUILD_DIR"' EXIT ERR
+    cd "$BUILD_DIR"
+
+    curl --remote-name-all https://aur.archlinux.org/cgit/aur.git/snapshot/pamac-aur.tar.gz \
+      https://aur.archlinux.org/cgit/aur.git/snapshot/libpamac-aur.tar.gz
+
+    tar zxvf pamac-aur.tar.gz
+    tar zxvf libpamac-aur.tar.gz
+
+    pushd libpamac-aur/
+    makepkg -sri --noconfirm ./PKGBUILD
+
+    popd && pushd pamac-aur/
+    makepkg -sri --noconfirm ./PKGBUILD
+  }
+
+  function install_homebrew() {
+    if command -v brew > /dev/null; then
+      echo 'brew is already installed; skipping...'
+      return 0
+    fi
+
+    NONINTERACTIVE=true /bin/bash <(curl https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh -sSf)
+  }
+
+  case "$OS-${ARCH_LINUX_PREFER_PAMAC:-false}" in
+    arch-true) local pkg_mgr='pamac, ' ;;
+    arch*) local pkg_mgr='yay, ' ;;
+    macos*) local pkg_mgr='brew, bash, ' ;;
+  esac
+
+  printf "\n2) Installing prerequisite packages (%sgit, stow)...\n" "${pkg_mgr:-}"
+
+  case "$OS" in
+    arch)
+      sudo pacman -Sy --noconfirm --needed curl git stow
+
+      if [[ "${ARCH_LINUX_PREFER_PAMAC:-false}" == true ]]; then
+        install_pamac
+      else
+        install_yay
+      fi
+      ;;
+    linuxmint|ubuntu)
+      sudo apt --quiet -y update
+      sudo apt --quiet -y install git stow
+      ;;
+    macos)
+      install_homebrew
+      brew update --quiet
+      brew install --quiet bash git stow
+
+      if [[ "$SHELL" != "/usr/local/bin/bash" ]]; then
+        chsh -s /usr/local/bin/bash "$USER"
+      else
+        echo 'default shell is already /usr/local/bin/bash, skipping...'
+      fi
+      ;;
+  esac
+}
+
+function clone_dotfiles() {
+  if [[ -d ~/.dotfiles ]]; then
+    printf '\n3) Found ~/.dotfiles directory; skipping git clone step...\n'
+  else
+    printf '\n3) Cloning ~/.dotfiles directory...\n'
+    git clone -b rewrite-dotfiles --recursive https://github.com/ebkalderon/dotfiles ~/.dotfiles
+    pushd ~/.dotfiles
+    git submodule foreach git checkout master
+  fi
+}
+
+print_disclaimer
+pre_setup_tasks
+install_packages
+clone_dotfiles
+
+printf '\nBootstrap successful! Install dotfiles with: cd ~/.dotfiles && ./install\n'
