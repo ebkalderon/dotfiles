@@ -1,0 +1,71 @@
+#
+# ~/.config/ncmpcpp/config
+#
+
+# See example configuration for details: https://github.com/ncmpcpp/ncmpcpp/blob/master/doc/config
+
+##### directories ######
+
+lyrics_directory = ~/.lyrics
+mpd_music_dir = ~/Music
+mpd_crossfade_time = 5
+
+##### music visualizer #####
+
+visualizer_data_source = /tmp/mpd.fifo
+visualizer_output_name = Visualizer feed
+visualizer_in_stereo = yes
+visualizer_type = spectrum
+visualizer_color = cyan
+
+##### song format #####
+
+song_list_format = $1$9%l$1$9 $1¦$9 $2%a$9 $1¦$9 $5%b$9 $R$1$9%t$1$9 $1¦$9 $1%n$9
+song_library_format = {%n > }{%t}|{%f}
+current_item_prefix = $(red)$r
+current_item_suffix = $/r$(end)
+current_item_inactive_column_prefix = $(red)$r
+current_item_inactive_column_suffix = $/r$(end)
+now_playing_prefix = $b
+now_playing_suffix = $/b
+browser_playlist_prefix = "$2playlist$9 "
+song_window_title_format = "MPD: {%a > }{%t}{ [%b{ Disc %d}]}|{%f}"
+
+##### columns settings #####
+
+song_columns_list_format = "(3f)[102]{n} (40)[default]{t|f} (25)[red]{a} (30)[blue]{b} (4f)[102]{l}"
+
+##### various settings #####
+
+playlist_display_mode = columns
+browser_display_mode = columns
+search_engine_display_mode = columns
+discard_colors_if_item_is_selected = yes
+autocenter_mode = no
+progressbar_look = "─╼ "
+header_visibility = no
+statusbar_visibility = no
+titles_visibility = no
+cyclic_scrolling = yes
+lyrics_fetchers = azlyrics, genius, musixmatch, sing365, metrolyrics, justsomelyrics, jahlyrics, plyrics, tekstowo, zeneszoveg, internet
+follow_now_playing_lyrics = yes
+fetch_lyrics_for_current_song_in_background = no
+store_lyrics_in_song_dir = no
+startup_slave_screen = visualizer
+locked_screen_width_part = 70
+mouse_list_scroll_whole_page = no
+external_editor = nvim
+use_console_editor = yes
+
+##### colors definitions #####
+
+colors_enabled = yes
+header_window_color = default
+volume_color = cyan
+state_line_color = default
+state_flags_color = green:b
+main_window_color = default
+color1 = default
+color2 = green
+progressbar_color = yellow:b
+statusbar_color = 102
