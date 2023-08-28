@@ -14,7 +14,7 @@ case "$OSTYPE" in
     [ -d ~/.local/share/mpd ] && rm -r ~/.local/share/mpd
     ;;
   darwin*)
-    $STOW_DELETE gnupg-macos mpd-macos
+    $STOW_DELETE gnupg-macos iterm2 mpd-macos
     [ -d ~/.mpd ] && rm -r ~/.mpd
     ;;
   *) ;;

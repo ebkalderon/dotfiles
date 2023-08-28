@@ -18,7 +18,7 @@ case "$OSTYPE" in
   darwin*)
     mkdir -p ~/.mpd/playlists
     touch ~/.mpd/{socket,state}
-    $STOW gnupg-macos mpd-macos
+    $STOW gnupg-macos iterm2 mpd-macos
     ;;
   *) ;;
 esac
