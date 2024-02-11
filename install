@@ -13,7 +13,7 @@ case "$OSTYPE" in
     mkdir -p ~/.config/mpd/playlists
     mkdir -p ~/.local/share/mpd
     touch ~/.local/share/mpd/state
-    $STOW gnupg-linux mpd-linux
+    $STOW gnupg-linux hide-desktop-entries-linux mpd-linux
     ;;
   darwin*)
     mkdir -p ~/.mpd/playlists
