@@ -9,7 +9,7 @@ $STOW_DELETE cointop bash fzf git ncmpcpp neovim tmux top
 
 case "$OSTYPE" in
   linux*)
-    $STOW_DELETE gnupg-linux mpd-linux
+    $STOW_DELETE gnupg-linux hide-desktop-entries-linux mpd-linux
     [ -d ~/.config/mpd ] && rm -r ~/.config/mpd
     [ -d ~/.local/share/mpd ] && rm -r ~/.local/share/mpd
     ;;
