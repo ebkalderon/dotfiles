@@ -1,0 +1,312 @@
+#!/usr/bin/env bash
+
+# dotfiles
+#
+# Command-line utility for managing my dotfiles. This script is a thin wrapper
+# around GNU stow which natively supports platform-specific configs, multiple
+# profiles (e.g. personal vs. work), and scriptable transaction hooks, all in a
+# simple declarative format.
+
+set -euo pipefail
+
+readonly LOG_LEVEL="${LOG_LEVEL:-ERROR}"
+declare -rA LOG_LEVELS=([DEBUG]=0 [INFO]=1 [WARN]=2 [ERROR]=3)
+readonly SCRIPT='package.sh'
+readonly STOW_CMD=(stow --verbose "--target=$HOME")
+
+declare -A PACKAGES
+
+function log() {
+    local priority="$1"
+    local message="$2"
+
+    if [[ -z "${LOG_LEVELS[$priority]}" ]]; then
+        return
+    elif (( "${LOG_LEVELS[$priority]}" < "${LOG_LEVELS[${LOG_LEVEL^^}]}" )); then
+        return
+    else
+        echo "$priority: $message" 1>&2
+    fi
+}
+
+# Utility functions for parsing package specifiers, e.g. "bash", "bash+work,server"
+
+function package_spec_parse_name() {
+    local package_spec="$1"
+    echo "$package_spec" | cut -d '+' -f 1
+}
+
+function package_spec_parse_profiles() {
+    local package_spec="$1"
+    echo "$package_spec" | cut -s -d '+' -f 2 | sed $'s/,/\\\n/g'
+}
+
+# Core functions for working with packages
+
+function package_load_from() {
+    local dir="$1"
+    local package_name config_dir
+    package_name="$(basename "$dir")"
+
+    case "$OSTYPE" in
+        linux*) local platform='linux' ;;
+        darwin*) local platform='macos' ;;
+        *) return 1 ;;
+    esac
+
+    if [[ ! -d "$dir" ]]; then
+        log 'DEBUG' "skipping non-package (not a directory): $dir"
+        return 2
+    elif ! grep -qE '^(\w|[.-])+$' <<<"$package_name"; then
+        log 'DEBUG' "skipping non-package (illegal chars in dir name): $dir"
+        return 2
+    elif [[ -z "$(find "$dir" -maxdepth 1 -regex '^.*/config\(-\(\w\|[.-]\)+\)?$' -type d -or -name "$SCRIPT" -type f)" ]]; then
+        log 'DEBUG' "skipping non-package (wrong dir structure): $dir"
+        return 2
+    elif [[ -d "$dir/config-all" ]]; then
+        log 'DEBUG' "skipping non-package (invalid dir 'config-all'): $dir"
+        return 2
+    fi
+
+    log 'INFO' "found package '$package_name' at path: $dir"
+    PACKAGES[all]+="${PACKAGES[all]:+,}$package_name"
+
+    config_dir="$(find "$dir" -maxdepth 1 -regex "^.*/config\(-$platform\)?$" -type d -exec realpath -e {} \; -quit)"
+
+    if [[ -z "${config_dir:-}" ]]; then
+        PACKAGES[$package_name]='incompatible'
+        return 3
+    fi
+
+    PACKAGES[$package_name]='compatible'
+    PACKAGES[$package_name,dir]="$(realpath -e "$dir")"
+    PACKAGES[$package_name,config]="$config_dir"
+    PACKAGES[all-installable]+="${PACKAGES[all-installable]:+,}$package_name"
+
+    for profile_dir in "$dir"/config-*; do
+        case "$profile_dir" in
+            */config-linux|*/config-macos) continue ;;
+            *) [[ ! -d "$profile_dir" ]] && continue ;;
+        esac
+
+        local profile_name
+        profile_name="$(basename "$profile_dir" | sed 's/^config-//')"
+
+        PACKAGES[$package_name,config-$profile_name]="$(realpath -e "$profile_dir")"
+        PACKAGES[$package_name,profiles]+="${PACKAGES[$package_name,profiles]:+,}$profile_name"
+    done
+
+    if [[ -f "$dir/$SCRIPT" ]]; then
+        function detect_hook_in_script() {
+            local script_file="$1"
+            for hook_name in "${@:2}"; do
+                if bash -c "source '$script_file'; [[ \$(type -t $hook_name) = function ]]" 2>&1; then
+                    PACKAGES[$package_name,hook-$2]="$hook_name"
+                    return
+                fi
+            done
+        }
+
+        detect_hook_in_script "$dir/$SCRIPT" 'config_prepare' "config_prepare_$platform"
+        detect_hook_in_script "$dir/$SCRIPT" 'config_cleanup' "config_cleanup_$platform"
+    fi
+}
+
+function package_exists() {
+    local package_name="$1"
+    [[ -n "${PACKAGES[$package_name]:-}" ]]
+}
+
+function package_is_compatible() {
+    local package_spec="$1"
+    local package_name
+    package_name="$(package_spec_parse_name "$package_spec")"
+
+    package_exists "$package_name" || return 255
+
+    case "${PACKAGES[$package_name]:-}" in
+        compatible) return 0 ;;
+        incompatible) return 1 ;;
+        *) return 255 ;;
+    esac
+}
+
+function package_get_configs() {
+    local package_spec="$1"
+    local package_name
+    package_name="$(package_spec_parse_name "$package_spec")"
+
+    package_exists "$package_name" || return 255
+
+    if [[ "$(package_spec_parse_profiles "$package_spec")" = 'all' ]]; then
+        local profiles="${PACKAGES[$package_name,profiles]:-}"
+        package_spec="$package_name${profiles:++$profiles}"
+        log 'INFO' "resolved '$package_name+all' package spec into '$package_spec'"
+    fi
+
+    mapfile -t package_profiles < <(package_spec_parse_profiles "$package_spec")
+
+    for profile in "${package_profiles[@]}"; do
+        [[ -n "${PACKAGES[$package_name,config-$profile]:-}" ]] || return 2
+    done
+
+    echo "${PACKAGES[$package_name,config]}"
+    for profile in "${package_profiles[@]}"; do
+        echo "${PACKAGES[$package_name,config-$profile]}"
+    done
+}
+
+function package_call_hook() {
+    local package_name="$1"
+    local hook_name="$2"
+
+    package_exists "$package_name" || return 255
+
+    if [[ -n "${PACKAGES[$package_name,hook-$hook_name]:-}" ]]; then
+        local package_dir="${PACKAGES[$package_name,dir]}"
+        bash -c "set -euo pipefail; cd '$package_dir'; source '$SCRIPT'; ${PACKAGES[$package_name,hook-$hook_name]}"
+    fi
+}
+
+function package_install() {
+    local package_spec="$1"
+    local package_name
+    package_name="$(package_spec_parse_name "$package_spec")"
+
+    package_exists "$package_name" || return 255
+
+    package_call_hook "$package_name" 'config_prepare'
+
+    mapfile -t package_configs < <(package_get_configs "$package_spec" | xargs -n 1 basename)
+    (cd "${PACKAGES[$package_name,dir]}"; "${STOW_CMD[@]}" --restow "${package_configs[@]}")
+}
+
+function package_uninstall() {
+    local package_name="$1"
+
+    package_exists "$package_name" || return 255
+
+    mapfile -t package_configs < <(package_get_configs "$package_name+all" | xargs -n 1 basename)
+    (cd "${PACKAGES[$package_name,dir]}"; "${STOW_CMD[@]}" --delete "${package_configs[@]}")
+
+    package_call_hook "$package_name" 'config_cleanup'
+}
+
+# Main business logic for `dotfiles` script
+
+function read_packages() {
+    for dir in ./*; do
+        package_load_from "$dir" || true
+    done
+
+    if [[ "${LOG_LEVEL^^}" = 'DEBUG' ]]; then
+        mapfile -t keys < <(echo "${!PACKAGES[@]}" | tr ' ' $'\n' | sort)
+        for k in "${keys[@]}"; do
+            log 'DEBUG' "PACKAGES[$k]=${PACKAGES[$k]}";
+        done
+    fi
+}
+
+function dotfiles_install() {
+    local package_specs=("$@")
+    [[ -n "$*" ]] || IFS=',' read -ra package_specs <<<"${PACKAGES[all-installable]}"
+
+    for spec in "${package_specs[@]}"; do
+        local result=0
+        package_is_compatible "$spec" || result=$?
+
+        case "$result" in
+            0) continue ;;
+            1) log 'ERROR' "package '$(package_spec_parse_name "$spec")' doesn't support $OSTYPE" ;;
+            2) log 'ERROR' "'$spec' doesn't refer to a valid package" ;;
+            3) log 'ERROR' "cannot install '$(package_spec_parse_name "$spec")', incompatible with host OS" ;;
+            255) log 'ERROR' "package '$spec' does not exist" ;;
+            *) ;;
+        esac
+
+        return "$result"
+    done
+
+    printf "This will symlink the following dotfiles:\n\n%5s%s\n\n" '' "${package_specs[*]}"
+    read -p 'Proceed with installation? (y/N) ' -n 1 -r confirm; echo
+
+    if [[ ! "$confirm" =~ ^[Yy]$ ]]; then
+        echo 'Installation aborted.'
+        exit 0
+    fi
+
+    for spec in "${package_specs[@]}"; do
+        package_install "$spec"
+    done
+
+    echo 'Installation complete!'
+}
+
+function dotfiles_uninstall() {
+    local package_names=("$@")
+    [[ -n "$*" ]] || IFS=',' read -ra package_names <<<"${PACKAGES[all-installable]}"
+
+    for name in "${package_names[@]}"; do
+        if ! package_exists "$name"; then
+            log 'ERROR' "cannot uninstall package '$name' because it doesn't exist"
+            return 1
+        fi
+    done
+
+    printf "This will un-symlink the following dotfiles:\n\n%5s%s\n\n" '' "${package_names[*]}"
+    read -p 'Proceed with uninstallation? (y/N) ' -n 1 -r confirm; echo
+
+    if [[ ! "$confirm" =~ ^[Yy]$ ]]; then
+        echo 'Uninstallation aborted.'
+        exit 0
+    fi
+
+    for name in "${package_names[@]}"; do
+        package_uninstall "$name"
+    done
+
+    echo 'Unistallation complete!'
+}
+
+function dotfiles_list() {
+    local fmt_args=('Name:' 'Optional Profiles:')
+
+    if [[ "$*" =~ ^(-a|--all)$ ]]; then
+        local show_all='all'
+        local table_width=41
+        fmt_args=('' "${fmt_args[@]}")
+    elif [[ -n "$*" ]]; then
+        return 1
+    fi
+
+    IFS=',' read -ra packages <<<"${PACKAGES[${show_all:-all-installable}]}"
+
+    printf "${show_all:+%-2s}%-21s%s\n" "${fmt_args[@]}"
+    printf "%${table_width:-39}s\n" ' ' | tr ' ' '='
+
+    for package_name in "${packages[@]}"; do
+        local fmt_args=("$package_name" "${PACKAGES[$package_name,profiles]:-}")
+        if [[ -n "${show_all:-}" ]]; then
+            local not_compatible=''
+            package_is_compatible "$package_name" || not_compatible='✗ '
+            fmt_args=("$not_compatible" "${fmt_args[@]}")
+        fi
+        printf "${show_all:+%-2s}%-21s%s\n" "${fmt_args[@]}"
+    done
+}
+
+function dotfiles_help() {
+    echo 'dotfiles install [PACKAGE_SPEC]...'
+    echo 'dotfiles uninstall [PACKAGE]...'
+    echo 'dotfiles list [-a|--all]'
+}
+
+read_packages
+
+case "${1:-}" in
+    install) dotfiles_install "${@:2}" ;;
+    uninstall) dotfiles_uninstall "${@:2}" ;;
+    list) dotfiles_list "${@:2}";;
+    -h|--help|help) dotfiles_help ;;
+    *) dotfiles_help; exit 1 ;;
+esac

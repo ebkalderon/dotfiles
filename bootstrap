@@ -165,4 +165,4 @@ pre_setup_tasks
 install_packages
 clone_dotfiles
 
-printf '\nBootstrap successful! Install dotfiles with: cd ~/.dotfiles && ./install\n'
+printf '\nBootstrap successful! Install dotfiles with: cd ~/.dotfiles && ./dotfiles install\n'

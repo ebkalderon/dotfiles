@@ -1,2 +1,0 @@
-[credential]
-	helper = !~/.dotfiles/git/git-credential-libsecret $@
