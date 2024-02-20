@@ -27,14 +27,15 @@ package detection.
 
 > **Note:** Since a dotfiles package directory is itself a valid GNU Stow
 > directory, additional CLI arguments to `stow` can be passed in by creating a
-> `.stowrc` file directory in the package directory ([upstream docs][stow]).
-> This may be used to tune the stowing/unstowing behavior of the config files.
+> `.stowrc` file ([upstream docs][stow]) directly beneath ① . This may be used
+> to fine-tune the exact restow/delete behavior of the configs, e.g. requiring
+> `--no-folding`.
 
 [stow]: https://www.gnu.org/software/stow/manual/html_node/Resource-Files.html
 
 ### 1.1. Package directory
 
-* Allowed top-level directory names: `^[A-Za-z0-9._-]+$`
+* Top-level directory name must match: `^[A-Za-z0-9._-]+$`
 * The name of this directory becomes the _package name_.
 
 ### 1.2. Base config `stow` packages
@@ -52,12 +53,10 @@ package detection.
   * Disallowed names: `config-all`
   * Everything following the `config-` prefix becomes the name of a _profile_.
 * Not installed by `dotfiles install` nor `dotfiles install <package>` by
-  default. Enabled manually using a _package specifier_.
-  * Package spec syntax: `package+profile` or `package+profile1,profile2`
-    * **Example:** `dotfiles install bash+work,desktop`
-    * **Meaning:** "Install the `bash/config` + `bash/config-work` +
-      `bash/config-laptop` Stow packages to `$HOME`"
+  default. Must install manually using a [_package specifier_][pkgspec].
 * Deploys to/from `$HOME` via `stow --restow` or `stow --delete`, respectively.
+
+[pkgspec]: #21-package-specifier-syntax
 
 ### 1.4. Package script
 
@@ -98,3 +97,21 @@ function config_cleanup() {
 # platform-specific counterpart(s) exist, the former will take precedence over
 # the latter.
 ```
+
+## 2. Appendix
+
+### 2.1. Package specifier syntax
+
+The grammar for _package specifier_ ("package spec") strings is as follows:
+
+1. Install base package: `package`
+   * **Example:** `dotfiles install bash`
+   * **Meaning:** "Install the `bash/config` Stow package to `$HOME`"
+2. Enable one or more profiles: `package+profile`, `package+profile1,profile2`
+   * **Example:** `dotfiles install bash+work,desktop`
+   * **Meaning:** "Install the `bash/config` + `bash/config-work` +
+     `bash/config-laptop` Stow packages to `$HOME`"
+3. Enable all available profiles: `package+all`
+   * **Example:** `dotfiles install bash+all`
+   * **Meaning:** "Install `bash/config` + all available profile-specific Stow
+     packages (if any) to `$HOME`"
