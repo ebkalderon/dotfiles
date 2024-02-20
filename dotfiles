@@ -120,9 +120,9 @@ function package_exists() {
 
 function package_is_compatible() {
     local package_spec="$1"
+
     local package_name
     package_name="$(package_spec_parse_name "$package_spec")"
-
     package_exists "$package_name" || return 255
 
     case "${PACKAGES[$package_name]:-}" in
@@ -134,9 +134,9 @@ function package_is_compatible() {
 
 function package_get_configs() {
     local package_spec="$1"
+
     local package_name
     package_name="$(package_spec_parse_name "$package_spec")"
-
     package_exists "$package_name" || return 255
 
     if [[ "$(package_spec_parse_profiles "$package_spec")" = 'all' ]]; then
@@ -171,16 +171,17 @@ function package_call_hook() {
 
 function package_install() {
     local package_spec="$1"
+
     local package_name
     package_name="$(package_spec_parse_name "$package_spec")"
-
     package_exists "$package_name" || return 255
 
+    local package_configs
+    package_configs="$(package_get_configs "$package_spec")"
+    mapfile -t package_configs < <(echo "$package_configs" | xargs -n 1 basename)
+
     package_call_hook "$package_name" 'config_prepare'
-
-    mapfile -t package_configs < <(package_get_configs "$package_spec" | xargs -n 1 basename)
     (cd "${PACKAGES[$package_name,dir]}"; "${STOW_CMD[@]}" --restow "${package_configs[@]}")
-
     package_call_hook "$package_name" 'config_finish'
 }
 
@@ -189,9 +190,11 @@ function package_uninstall() {
 
     package_exists "$package_name" || return 255
 
-    mapfile -t package_configs < <(package_get_configs "$package_name+all" | xargs -n 1 basename)
-    (cd "${PACKAGES[$package_name,dir]}"; "${STOW_CMD[@]}" --delete "${package_configs[@]}")
+    local package_configs
+    package_configs="$(package_get_configs "$package_name+all")"
+    mapfile -t package_configs < <(echo "$package_configs" | xargs -n 1 basename)
 
+    (cd "${PACKAGES[$package_name,dir]}"; "${STOW_CMD[@]}" --delete "${package_configs[@]}")
     package_call_hook "$package_name" 'config_cleanup'
 }
 
