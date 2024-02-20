@@ -275,26 +275,26 @@ function dotfiles_list() {
     local fmt_args=('Name:' 'Optional Profiles:')
 
     if [[ "$*" =~ ^(-a|--all)$ ]]; then
-        local show_all='all'
+        local display_mode='all'
         local table_width=41
         fmt_args=('' "${fmt_args[@]}")
     elif [[ -n "$*" ]]; then
         return 1
     fi
 
-    IFS=',' read -ra packages <<<"${PACKAGES[${show_all:-all-installable}]}"
+    IFS=',' read -ra packages <<<"${PACKAGES[${display_mode:-all-installable}]}"
 
-    printf "${show_all:+%-2s}%-21s%s\n" "${fmt_args[@]}"
+    printf "${display_mode:+%-2s}%-21s%s\n" "${fmt_args[@]}"
     printf "%${table_width:-39}s\n" ' ' | tr ' ' '='
 
     for package_name in "${packages[@]}"; do
         local fmt_args=("$package_name" "${PACKAGES[$package_name,profiles]:-}")
-        if [[ -n "${show_all:-}" ]]; then
+        if [[ -n "${display_mode:-}" ]]; then
             local not_compatible=''
             package_is_compatible "$package_name" || not_compatible='✗ '
             fmt_args=("$not_compatible" "${fmt_args[@]}")
         fi
-        printf "${show_all:+%-2s}%-21s%s\n" "${fmt_args[@]}"
+        printf "${display_mode:+%-2s}%-21s%s\n" "${fmt_args[@]}"
     done
 }
 
