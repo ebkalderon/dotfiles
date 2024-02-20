@@ -12,12 +12,12 @@ alias ll='ls -alF'
 
 # Editor aliases
 if command -v nvim > /dev/null; then
-  alias vi='nvim'
-  alias vim='nvim'
+    alias vi='nvim'
+    alias vim='nvim'
 fi
 
 # Convenient `open` and `trash` commands for Linux and macOS
 if [[ "$OSTYPE" =~ linux ]]; then
-  command -v xdg-open > /dev/null && alias open='xdg-open'
-  command -v gio > /dev/null && alias trash='gio trash'
+    command -v xdg-open > /dev/null && alias open='xdg-open'
+    command -v gio > /dev/null && alias trash='gio trash'
 fi

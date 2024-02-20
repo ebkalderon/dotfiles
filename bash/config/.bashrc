@@ -14,16 +14,16 @@ shopt -s checkwinsize
 # if it's already enabled in /etc/bash.bashrc and /etc/profile sources
 # /etc/bash.bashrc)
 if ! shopt -oq posix; then
-  bash_completion=(
-    "/etc/bash_completion"
-    "/usr/share/bash-completion/bash_completion"
-    "/usr/local/share/bash-completion/bash_completion"
-    "${NIX_PROFILE:-$HOME/.nix-profile}/etc/profile.d/bash_completion.sh"
-  )
+    bash_completion=(
+        "/etc/bash_completion"
+        "/usr/share/bash-completion/bash_completion"
+        "/usr/local/share/bash-completion/bash_completion"
+        "${NIX_PROFILE:-$HOME/.nix-profile}/etc/profile.d/bash_completion.sh"
+    )
 
-  for f in ${bash_completion[@]}; do
-    [[ -f "$f" ]] && source "$f"
-  done
+    for f in "${bash_completion[@]}"; do
+        [[ -f "$f" ]] && source "$f"
+    done
 fi
 
 # Load all scripts in ~/.bashrc.d/

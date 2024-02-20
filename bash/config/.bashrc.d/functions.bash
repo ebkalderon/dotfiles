@@ -4,5 +4,5 @@
 
 # Better than default `diff` command
 function diff() {
-  git diff --no-index $@
+    git diff --no-index "$@"
 }

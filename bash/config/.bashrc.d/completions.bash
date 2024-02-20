@@ -3,9 +3,9 @@
 #
 
 if command -v grunt > /dev/null; then
-  eval "$(grunt --completion=bash)"
+    eval "$(grunt --completion=bash)"
 fi
 
 if command -v kubectl > /dev/null; then
-  eval "$(kubectl completion bash)"
+    eval "$(kubectl completion bash)"
 fi
