@@ -71,15 +71,23 @@ package detection.
 # with `set -euo pipefail` enabled.
 
 function config_prepare() {
-    # Executed before `stow --restow` of configs (`dotfiles install`)
+    # Executed BEFORE `stow --restow` of configs (`dotfiles install`)
 }
 
 # If desired, replace `config_prepare` with 1 or both of:
 # function config_prepare_linux() { ... }
 # function config_prepare_macos() { ... }
 
+function config_finish() {
+    # Executed AFTER `stow --restow` of configs (`dotfiles install`)
+}
+
+# If desired, replace `config_finish` with 1 or both of:
+# function config_finish_linux() { ... }
+# function config_finish_macos() { ... }
+
 function config_cleanup() {
-    # Executed after `stow --delete` of configs (`dotfiles uninstall`)
+    # Executed AFTER `stow --delete` of configs (`dotfiles uninstall`)
 }
 
 # If desired, replace `config_cleanup` with 1 or both of:
