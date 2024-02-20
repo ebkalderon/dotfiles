@@ -85,6 +85,14 @@ function config_finish() {
 # function config_finish_linux() { ... }
 # function config_finish_macos() { ... }
 
+function config_precleanup() {
+    # Executed BEFORE `stow --delete` of configs (`dotfiles uninstall`)
+}
+
+# If desired, replace `config_precleanup` with 1 or both of:
+# function config_precleanup_linux() { ... }
+# function config_precleanup_macos() { ... }
+
 function config_cleanup() {
     # Executed AFTER `stow --delete` of configs (`dotfiles uninstall`)
 }

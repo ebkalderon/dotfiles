@@ -109,6 +109,7 @@ function package_load_from() {
 
         detect_hook_in_script "$dir/$SCRIPT" 'config_prepare' "config_prepare_$platform"
         detect_hook_in_script "$dir/$SCRIPT" 'config_finish' "config_finish_$platform"
+        detect_hook_in_script "$dir/$SCRIPT" 'config_precleanup' "config_precleanup_$platform"
         detect_hook_in_script "$dir/$SCRIPT" 'config_cleanup' "config_cleanup_$platform"
     fi
 }
@@ -203,6 +204,7 @@ function package_uninstall() {
     package_configs="$(package_get_configs "$package_name+all")"
     mapfile -t package_configs < <(echo "$package_configs" | xargs -n 1 basename)
 
+    package_call_hook "$package_name" 'config_precleanup'
     (cd "${PACKAGES[$package_name,dir]}"; "${STOW_CMD[@]}" --delete "${package_configs[@]}")
     package_call_hook "$package_name" 'config_cleanup'
 }
