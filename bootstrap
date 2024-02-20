@@ -6,7 +6,7 @@
 # This script does not depend on anything else in this repo. If you trust the
 # source, it may be downloaded and executed as a convenient one-liner:
 #
-# bash <(curl https://raw.githubusercontent.com/ebkalderon/dotfiles/rewrite-dotfiles/bootstrap -sSf)
+# bash <(curl https://raw.githubusercontent.com/ebkalderon/dotfiles/master/bootstrap -sSf)
 #
 # However, this poses a potential security risk. Always inspect the contents of
 # downloaded scripts before executing them!
@@ -154,7 +154,7 @@ function clone_dotfiles() {
     printf '\n3) Found ~/.dotfiles directory; skipping git clone step...\n'
   else
     printf '\n3) Cloning ~/.dotfiles directory...\n'
-    git clone -b rewrite-dotfiles --recursive https://github.com/ebkalderon/dotfiles ~/.dotfiles
+    git clone --recursive https://github.com/ebkalderon/dotfiles ~/.dotfiles
     pushd ~/.dotfiles
     git submodule foreach git checkout master
   fi
