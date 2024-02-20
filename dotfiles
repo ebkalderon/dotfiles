@@ -193,7 +193,7 @@ function package_install() {
     mapfile -t package_configs < <(echo "$package_configs" | xargs -n 1 basename)
 
     package_call_hook "$package_name" 'config_prepare'
-    (cd "${PACKAGES[$package_name,dir]}"; "${STOW_CMD[@]}" --restow "${package_configs[@]}")
+    (cd "${PACKAGES[$package_name,dir]}"; "${STOW_CMD[@]}" --stow "${package_configs[@]}")
     package_call_hook "$package_name" 'config_finish'
 }
 

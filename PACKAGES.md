@@ -28,7 +28,7 @@ package detection.
 > **Note:** Since a dotfiles package directory is itself a valid GNU Stow
 > directory, additional CLI arguments to `stow` can be passed in by creating a
 > `.stowrc` file ([upstream docs][stow]) directly beneath ① . This may be used
-> to fine-tune the exact restow/delete behavior of the configs, e.g. requiring
+> to fine-tune the exact stow/delete behavior of the configs, e.g. requiring
 > `--no-folding`.
 
 [stow]: https://www.gnu.org/software/stow/manual/html_node/Resource-Files.html
@@ -45,7 +45,7 @@ package detection.
   2. Platform-specific dir(s): `config-linux` and/or `config-macos`
 * If both the unified `config` dir and `config-{linux,macos}` exist, the former
   will take precedence over the latter.
-* Deploys to/from `$HOME` via `stow --restow` or `stow --delete`, respectively.
+* Deploys to/from `$HOME` via `stow --stow` or `stow --delete`, respectively.
 
 ### 1.3. Profile-specific `stow` packages (optional)
 
@@ -54,7 +54,7 @@ package detection.
   * Everything following the `config-` prefix becomes the name of a _profile_.
 * Not installed by `dotfiles install` nor `dotfiles install <package>` by
   default. Must install manually using a [_package specifier_][pkgspec].
-* Deploys to/from `$HOME` via `stow --restow` or `stow --delete`, respectively.
+* Deploys to/from `$HOME` via `stow --stow` or `stow --delete`, respectively.
 
 [pkgspec]: #21-package-specifier-syntax
 
@@ -70,7 +70,7 @@ package detection.
 # with `set -euo pipefail` enabled.
 
 function config_prepare() {
-    # Executed BEFORE `stow --restow` of configs (`dotfiles install`)
+    # Executed BEFORE `stow --stow` of configs (`dotfiles install`)
 }
 
 # If desired, replace `config_prepare` with 1 or both of:
@@ -78,7 +78,7 @@ function config_prepare() {
 # function config_prepare_macos() { ... }
 
 function config_finish() {
-    # Executed AFTER `stow --restow` of configs (`dotfiles install`)
+    # Executed AFTER `stow --stow` of configs (`dotfiles install`)
 }
 
 # If desired, replace `config_finish` with 1 or both of:
