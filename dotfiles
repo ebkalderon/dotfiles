@@ -235,7 +235,6 @@ function dotfiles_install() {
             0) continue ;;
             1) log 'ERROR' "package '$(package_spec_parse_name "$spec")' doesn't support $OSTYPE" ;;
             2) log 'ERROR' "'$spec' doesn't refer to a valid package" ;;
-            3) log 'ERROR' "cannot install '$(package_spec_parse_name "$spec")', incompatible with host OS" ;;
             255) log 'ERROR' "package '$spec' does not exist" ;;
             *) ;;
         esac
