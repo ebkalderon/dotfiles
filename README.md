@@ -26,8 +26,8 @@ format][pkgdocs]. Using the included `dotfiles` command, you can pick and
 choose which dotfiles to install. For instance:
 
 ```bash
-dotfiles install               # Installs all dotfiles compatible with your OS
-dotfiles install bash+work fzf # Installs `bash` configs (work profile) and `fzf` configs
+dotfiles install                # Installs all dotfiles compatible with your OS
+dotfiles install bash+work fzf  # Installs `bash` configs (work profile) and `fzf` configs
 ```
 
 [GNU Stow]: https://www.gnu.org/software/stow/
