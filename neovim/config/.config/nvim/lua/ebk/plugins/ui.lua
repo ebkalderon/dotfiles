@@ -4,13 +4,13 @@ return {
   {
     "utilyre/barbecue.nvim",
     event = "VeryLazy",
+    cmd = "Barbecue",
     dependencies = {
       { "smiteshp/nvim-navic", lazy = true },
       { "neovim/nvim-lspconfig" },
       { "nvim-tree/nvim-web-devicons" },
     },
     opts = {
-      attach_navic = true,
       exclude_filetypes = {
         "gitcommit",
         "help",
@@ -26,7 +26,7 @@ return {
 
   {
     "akinsho/bufferline.nvim",
-    event = "BufReadPost",
+    event = "VeryLazy",
     dependencies = { "nvim-tree/nvim-web-devicons" },
     opts = {
       options = {
@@ -172,10 +172,9 @@ return {
     end,
   },
 
-  {
-    "nvim-tree/nvim-web-devicons",
-    lazy = true,
-  },
+  { "nvim-tree/nvim-web-devicons", lazy = true },
+
+  { "MunifTanjim/nui.nvim", lazy = true },
 
   {
     "akinsho/toggleterm.nvim",
