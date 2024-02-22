@@ -7,7 +7,7 @@ return {
       "nvim-treesitter/playground",
     },
     opts = {
-      ensure_installed = { "bash", "lua", "rust" },
+      ensure_installed = { "bash", "lua", "markdown", "markdown_inline", "rust" },
       auto_install = true,
       highlight = {
         enable = true,
