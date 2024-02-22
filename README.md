@@ -98,5 +98,5 @@ Compatible with Arch Linux, Linux Mint, and macOS.
 
 ## License
 
-These dotfiles and bootstrap scripts are distributed as free and open source
-software under the terms of the [MIT License](./LICENSE).
+These dotfiles are distributed as free and open source software under the terms
+of the [MIT License](./LICENSE).
