@@ -183,18 +183,6 @@ return {
       open_mapping = [[<C-\>]],
       direction = "float",
     },
-    init = function()
-      local Terminal = require("toggleterm.terminal").Terminal
-      local lazygit = Terminal:new({ cmd = "lazygit", direction = "float", hidden = true })
-
-      ---@diagnostic disable-next-line: lowercase-global
-      function _lazygit_toggle()
-        lazygit:toggle()
-      end
-    end,
-    keys = {
-      { "<leader>gg", "<cmd>lua _lazygit_toggle()<CR>", desc = "Lazygit" },
-    },
   },
 
   {
