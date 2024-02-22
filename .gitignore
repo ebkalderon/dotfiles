@@ -1,4 +1,4 @@
-gnupg/config-*/*
+gnupg/config-*/.gnupg/*
 !gnupg/config-*/.gnupg/gpg-agent.conf
 
 mpd/config-*/.config/mpd/*
