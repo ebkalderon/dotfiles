@@ -21,6 +21,27 @@ return {
   },
 
   {
+    "NeogitOrg/neogit",
+    cmd = "Neogit",
+    dependencies = {
+      { "nvim-lua/plenary.nvim" },
+      { "sindrets/diffview.nvim", lazy = true },
+      { "nvim-telescope/telescope.nvim" },
+    },
+    keys = {
+      { "<leader>gg", "<cmd>Neogit<CR>", mode = { "n" }, desc = "Open Neogit" }
+    },
+    opts = {
+      graph_style = "unicode",
+      signs = {
+        hunk = { "", "" },
+        item = { "", "" },
+        section = { "", "" },
+      },
+    },
+  },
+
+  {
     "nvim-neo-tree/neo-tree.nvim",
     branch = "v3.x",
     cmd = "Neotree",
