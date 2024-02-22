@@ -2,12 +2,12 @@ return {
   {
     "neovim/nvim-lspconfig",
     branch = "master",
-    event = { "BufReadPre", "BufNewFile" },
+    event = { "BufReadPost", "BufNewFile", "BufWritePre" },
     dependencies = {
       { "williamboman/mason.nvim" },
       { "williamboman/mason-lspconfig.nvim" },
       { "folke/neodev.nvim", ft = "lua" },
-      { "folke/neoconf.nvim", cmd = "Neoconf", config = true },
+      { "folke/neoconf.nvim", cmd = "Neoconf", config = true, dependencies = { "nvim-lspconfig" } },
     },
     config = function()
       local signs = require("ebk.util.icons").diagnostics
@@ -73,6 +73,7 @@ return {
   {
     "williamboman/mason.nvim",
     cmd = "Mason",
+    build = ":MasonUpdate",
     opts = {
       ensure_installed = {
         "codelldb",
