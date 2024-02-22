@@ -75,8 +75,8 @@ return {
     cmd = "Mason",
     opts = {
       ensure_installed = {
-        -- Debuggers
         "codelldb",
+        "shellcheck",
       },
     },
     config = function(_, opts)
