@@ -62,7 +62,7 @@ package detection.
 
 * File name must match: `package.sh`
 * Contains optional _package hooks_ executed during package transactions.
-* The `package.sh` may contain some or none of the hook functions described
+* The `package.sh` may contain **some or none** of the hook functions described
   below. Alternatively, the `package.sh` script may be omitted altogether.
 
 ```sh
