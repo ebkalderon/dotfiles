@@ -56,7 +56,7 @@ package detection.
   default. Must install manually using a [_package specifier_][pkgspec].
 * Deploys to/from `$HOME` via `stow --stow` or `stow --delete`, respectively.
 
-[pkgspec]: #21-package-specifier-syntax
+[pkgspec]: #31-package-specifier-syntax
 
 ### 1.4. Package script
 
@@ -106,9 +106,88 @@ function config_cleanup() {
 # the latter.
 ```
 
-## 2. Appendix
+## 2. Examples
 
-### 2.1. Package specifier syntax
+Below are some examples of valid packages:
+
+### 2.1. Simple packages
+
+```text
+is-cross-platform/
+└── config/
+    └── .my-dotfiles-here
+```
+
+```text
+also-cross-platform/
+├── config-linux/
+│   └── .this-package-has
+└── config-macos/
+    └── .os-specific-configs
+```
+
+### 2.2. Platform-specific packages
+
+```text
+os-specific-package/
+└── config-linux/
+    └── .only-works-on-linux
+```
+
+### 2.3. Package with pre/post hooks
+
+```text
+package-with-hooks/
+├── config/
+│   └── .config/
+│       └── myapp/
+│           └── settings.conf
+└── package.sh
+```
+
+```bash
+# package-with-hooks/package.sh
+
+# This pre-install hook ensures that `stow` will always symlink:
+#
+#   ./config/.config/myapp/ ---> ~/.config/myapp
+#
+# and _never_ try to do:
+#
+#   ./config/.config/ ---> ~/.config
+#
+# should the `~/.config` directory not already exist beforehand.
+function config_prepare() {
+    mkdir -p ~/.config
+
+}
+
+# This post-install hook finishes setup once ~/.config/myapp is symlinked.
+function config_finish() {
+    myapp --do-some-setup-stuff
+}
+```
+
+### 2.4. Package with custom `stow` behavior
+
+```text
+package-with-stowrc/
+├── config/
+│   └── .config/
+│       └── myapp/
+│           └── settings.conf
+└── .stowrc
+```
+
+**`.stowrc`:**
+```text
+--no-folding
+--override=.config/myapp/settings.conf
+```
+
+## 3. Appendix
+
+### 3.1. Package specifier syntax
 
 The grammar for _package specifier_ ("package spec") strings is as follows:
 
