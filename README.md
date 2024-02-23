@@ -36,8 +36,8 @@ dotfiles install                # Installs _all_ dotfiles compatible with your O
 
 ## Install
 
-> **Warning**
-> Please audit the `bootstrap` script first before executing the commands below!
+> **Warning** Please audit the [`bootstrap`](./bootstrap) script first before
+> executing the commands below!
 
 ```sh
 bash <(curl https://raw.githubusercontent.com/ebkalderon/dotfiles/master/bootstrap -sSf)
