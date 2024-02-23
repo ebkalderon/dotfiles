@@ -17,12 +17,11 @@ set -euo pipefail
 ARCH_LINUX_PREFER_PAMAC=false
 
 function print_disclaimer() {
-  local arch_aur_helper
-  arch_aur_helper="$( ([[ "${ARCH_LINUX_PREFER_PAMAC:-false}" == true ]] && echo pamac-aur) || echo yay)"
+  [[ "${ARCH_LINUX_PREFER_PAMAC:-false}" = true ]] && local arch_aur_helper='pamac'
 
   printf 'This script will:\n\n'
   printf '1) Perform pre-setup tasks\n'
-  printf "   - On Arch Linux, this will update and install '%s'\n" "$arch_aur_helper"
+  printf "   - On Arch Linux, this will update and install '%s'\n" "${arch_aur_helper:-yay}"
   printf '   - On macOS, this will install Homebrew and upgrade to newer bash\n'
   printf "2) Install 'git' and 'stow'\n"
   printf '   - On Arch Linux, this will update and install via pacman\n'
@@ -140,7 +139,7 @@ function install_packages() {
       brew update --quiet
       brew install --quiet bash git stow
 
-      if [[ "$SHELL" != "/usr/local/bin/bash" ]]; then
+      if [[ "$SHELL" != '/usr/local/bin/bash' ]]; then
         chsh -s /usr/local/bin/bash "$USER"
       else
         echo 'default shell is already /usr/local/bin/bash, skipping...'
