@@ -17,146 +17,146 @@ set -euo pipefail
 ARCH_LINUX_PREFER_PAMAC=false
 
 function print_disclaimer() {
-  [[ "${ARCH_LINUX_PREFER_PAMAC:-false}" = true ]] && local arch_aur_helper='pamac'
+    [[ "${ARCH_LINUX_PREFER_PAMAC:-false}" = true ]] && local arch_aur_helper='pamac'
 
-  printf 'This script will:\n\n'
-  printf '1) Perform pre-setup tasks\n'
-  printf "   - On Arch Linux, this will update and install '%s'\n" "${arch_aur_helper:-yay}"
-  printf '   - On macOS, this will install Homebrew and upgrade to newer bash\n'
-  printf "2) Install 'git' and 'stow'\n"
-  printf '   - On Arch Linux, this will update and install via pacman\n'
-  printf '   - On Ubuntu/Debian/Linux Mint, this will update and install via apt\n'
-  printf '   - On macOS, this will update and install via Homebrew\n'
-  printf "3) Clone 'ebkalderon/dotfiles' repo to ~/.dotfiles if not present (will skip otherwise)\n"
-  printf '   - This script will NOT deploy the dotfiles to your home directory, in case you change your mind\n\n'
+    printf 'This script will:\n\n'
+    printf '1) Perform pre-setup tasks\n'
+    printf "   - On Arch Linux, this will update and install '%s'\n" "${arch_aur_helper:-yay}"
+    printf '   - On macOS, this will install Homebrew and upgrade to newer bash\n'
+    printf "2) Install 'git' and 'stow'\n"
+    printf '   - On Arch Linux, this will update and install via pacman\n'
+    printf '   - On Ubuntu/Debian/Linux Mint, this will update and install via apt\n'
+    printf '   - On macOS, this will update and install via Homebrew\n'
+    printf "3) Clone 'ebkalderon/dotfiles' repo to ~/.dotfiles if not present (will skip otherwise)\n"
+    printf '   - This script will NOT deploy the dotfiles to your home directory, in case you change your mind\n\n'
 
-  read -p 'Would you like to continue? (y/N) ' -n 1 -r confirm
-  echo
+    read -p 'Would you like to continue? (y/N) ' -n 1 -r confirm
+    echo
 
-  if [[ ! "$confirm" =~ ^[Yy]$ ]]; then
-    echo 'Bootstrap aborted.'
-    exit 0
-  fi
+    if [[ ! "$confirm" =~ ^[Yy]$ ]]; then
+        echo 'Bootstrap aborted.'
+        exit 0
+    fi
 }
 
 function pre_setup_tasks() {
-  case "$OSTYPE" in
-    darwin*) OS="macos" ;;
-    linux*)
-      source /etc/os-release
-      OS="$ID"
+    case "$OSTYPE" in
+        darwin*) OS="macos" ;;
+        linux*)
+            source /etc/os-release
+            OS="$ID"
 
-      case "$OS" in
-        arch|linuxmint|ubuntu) ;;
+            case "$OS" in
+                arch|linuxmint|ubuntu) ;;
+                *)
+                    >&2 echo "Error: Unsupported Linux distribution '$OS' [arch|linuxmint|ubuntu]"
+                    exit 1
+                    ;;
+            esac
+            ;;
         *)
-          >&2 echo "Error: Unsupported Linux distribution '$OS' [arch|linuxmint|ubuntu]"
-          exit 1
-          ;;
-      esac
-      ;;
-    *)
-      >&2 echo "Error: Unsupported operating system: $OSTYPE [arch|linuxmint|macos|ubuntu]"
-      exit 1
-      ;;
-  esac
+            >&2 echo "Error: Unsupported operating system: $OSTYPE [arch|linuxmint|macos|ubuntu]"
+            exit 1
+            ;;
+    esac
 
-  printf "\n1) Detected supported OS: %s\n" "$OS"
+    printf "\n1) Detected supported OS: %s\n" "$OS"
 }
 
 function install_packages() {
-  function install_yay() {
-    if command -v yay > /dev/null; then
-      echo 'yay is already installed; skipping...'
-      return 0
-    fi
+    function install_yay() {
+        if command -v yay > /dev/null; then
+            echo 'yay is already installed; skipping...'
+            return 0
+        fi
 
-    BUILD_DIR="$(mktemp -d)"
-    trap 'rm -rf "$BUILD_DIR"' EXIT ERR
-    cd "$BUILD_DIR"
+        BUILD_DIR="$(mktemp -d)"
+        trap 'rm -rf "$BUILD_DIR"' EXIT ERR
+        cd "$BUILD_DIR"
 
-    curl -O https://aur.archlinux.org/cgit/aur.git/snapshot/yay.tar.gz
-    tar zxvf yay.tar.gz
-    pushd yay/
-    makepkg -sri --noconfirm ./PKGBUILD
-  }
-  
-  function install_pamac() {
-    if command -v pamac > /dev/null; then
-      echo 'pamac is already installed; skipping...'
-      return 0
-    fi
+        curl -O https://aur.archlinux.org/cgit/aur.git/snapshot/yay.tar.gz
+        tar zxvf yay.tar.gz
+        pushd yay/
+        makepkg -sri --noconfirm ./PKGBUILD
+    }
 
-    BUILD_DIR="$(mktemp -d)"
-    trap 'rm -rf "$BUILD_DIR"' EXIT ERR
-    cd "$BUILD_DIR"
+    function install_pamac() {
+        if command -v pamac > /dev/null; then
+            echo 'pamac is already installed; skipping...'
+            return 0
+        fi
 
-    curl --remote-name-all https://aur.archlinux.org/cgit/aur.git/snapshot/pamac-aur.tar.gz \
-      https://aur.archlinux.org/cgit/aur.git/snapshot/libpamac-aur.tar.gz
+        BUILD_DIR="$(mktemp -d)"
+        trap 'rm -rf "$BUILD_DIR"' EXIT ERR
+        cd "$BUILD_DIR"
 
-    tar zxvf pamac-aur.tar.gz
-    tar zxvf libpamac-aur.tar.gz
+        curl --remote-name-all https://aur.archlinux.org/cgit/aur.git/snapshot/pamac-aur.tar.gz \
+            https://aur.archlinux.org/cgit/aur.git/snapshot/libpamac-aur.tar.gz
 
-    pushd libpamac-aur/
-    makepkg -sri --noconfirm ./PKGBUILD
+        tar zxvf pamac-aur.tar.gz
+        tar zxvf libpamac-aur.tar.gz
 
-    popd && pushd pamac-aur/
-    makepkg -sri --noconfirm ./PKGBUILD
-  }
+        pushd libpamac-aur/
+        makepkg -sri --noconfirm ./PKGBUILD
 
-  function install_homebrew() {
-    if command -v brew > /dev/null; then
-      echo 'brew is already installed; skipping...'
-      return 0
-    fi
+        popd && pushd pamac-aur/
+        makepkg -sri --noconfirm ./PKGBUILD
+    }
 
-    NONINTERACTIVE=true /bin/bash <(curl https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh -sSf)
-  }
+    function install_homebrew() {
+        if command -v brew > /dev/null; then
+            echo 'brew is already installed; skipping...'
+            return 0
+        fi
 
-  case "$OS-${ARCH_LINUX_PREFER_PAMAC:-false}" in
-    arch-true) local pkg_mgr='pamac, ' ;;
-    arch*) local pkg_mgr='yay, ' ;;
-    macos*) local pkg_mgr='brew, bash, ' ;;
-  esac
+        NONINTERACTIVE=true /bin/bash <(curl https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh -sSf)
+    }
 
-  printf "\n2) Installing prerequisite packages (%sgit, stow)...\n" "${pkg_mgr:-}"
+    case "$OS-${ARCH_LINUX_PREFER_PAMAC:-false}" in
+        arch-true) local pkg_mgr='pamac, ' ;;
+        arch*) local pkg_mgr='yay, ' ;;
+        macos*) local pkg_mgr='brew, bash, ' ;;
+    esac
 
-  case "$OS" in
-    arch)
-      sudo pacman -Sy --noconfirm --needed curl git stow
+    printf "\n2) Installing prerequisite packages (%sgit, stow)...\n" "${pkg_mgr:-}"
 
-      if [[ "${ARCH_LINUX_PREFER_PAMAC:-false}" == true ]]; then
-        install_pamac
-      else
-        install_yay
-      fi
-      ;;
-    linuxmint|ubuntu)
-      sudo apt --quiet -y update
-      sudo apt --quiet -y install git stow
-      ;;
-    macos)
-      install_homebrew
-      brew update --quiet
-      brew install --quiet bash git stow
+    case "$OS" in
+        arch)
+            sudo pacman -Sy --noconfirm --needed curl git stow
 
-      if [[ "$SHELL" != '/usr/local/bin/bash' ]]; then
-        chsh -s /usr/local/bin/bash "$USER"
-      else
-        echo 'default shell is already /usr/local/bin/bash, skipping...'
-      fi
-      ;;
-  esac
+            if [[ "${ARCH_LINUX_PREFER_PAMAC:-false}" == true ]]; then
+                install_pamac
+            else
+                install_yay
+            fi
+            ;;
+        linuxmint|ubuntu)
+            sudo apt --quiet -y update
+            sudo apt --quiet -y install git stow
+            ;;
+        macos)
+            install_homebrew
+            brew update --quiet
+            brew install --quiet bash git stow
+
+            if [[ "$SHELL" != '/usr/local/bin/bash' ]]; then
+                chsh -s /usr/local/bin/bash "$USER"
+            else
+                echo 'default shell is already /usr/local/bin/bash, skipping...'
+            fi
+            ;;
+    esac
 }
 
 function clone_dotfiles() {
-  if [[ -d ~/.dotfiles ]]; then
-    printf '\n3) Found ~/.dotfiles directory; skipping git clone step...\n'
-  else
-    printf '\n3) Cloning ~/.dotfiles directory...\n'
-    git clone --recursive https://github.com/ebkalderon/dotfiles ~/.dotfiles
-    pushd ~/.dotfiles
-    git submodule foreach git checkout master
-  fi
+    if [[ -d ~/.dotfiles ]]; then
+        printf '\n3) Found ~/.dotfiles directory; skipping git clone step...\n'
+    else
+        printf '\n3) Cloning ~/.dotfiles directory...\n'
+        git clone --recursive https://github.com/ebkalderon/dotfiles ~/.dotfiles
+        pushd ~/.dotfiles
+        git submodule foreach git checkout master
+    fi
 }
 
 print_disclaimer
