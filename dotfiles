@@ -212,7 +212,10 @@ function package_uninstall() {
 # Main business logic for `dotfiles` script
 
 function read_packages() {
-    for dir in ./*; do
+    local package_dir
+    package_dir="$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")"
+
+    for dir in "$package_dir"/*; do
         package_load_from "$dir" || true
     done
 

@@ -72,13 +72,13 @@ setup, the `~/.dotfiles` directory can be safely discarded.
 To remove one or more specific dotfiles from your system:
 
 ```sh
-./dotfiles uninstall gnupg neovim
+dotfiles uninstall gnupg neovim
 ```
 
 To remove _all_ of my dotfiles your system:
 
 ```sh
-./dotfiles uninstall
+dotfiles uninstall
 ```
 
 A short summary of changes and an interactive confirmation prompt are shown
