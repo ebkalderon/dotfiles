@@ -26,14 +26,15 @@ format][pkgdocs]. Using the included `dotfiles` command, you can pick and
 choose which dotfiles to install. For instance:
 
 ```bash
-dotfiles install                # Installs all dotfiles compatible with your OS
+dotfiles list                   # Lists all available dotfiles and profiles
 dotfiles install bash+work fzf  # Installs `bash` configs (work profile) and `fzf` configs
+dotfiles install                # Installs _all_ dotfiles compatible with your OS
 ```
 
 [GNU Stow]: https://www.gnu.org/software/stow/
 [pkgdocs]: ./PACKAGES.md
 
-## Installation
+## Install
 
 > **Warning**
 > Please audit the `bootstrap` script first before executing the commands below!
@@ -46,36 +47,27 @@ cd ~/.dotfiles
 
 The `bootstrap` script from the snippet above performs a few pre-setup tasks
 (ensuring `git`, `stow`, and `bash` are installed and fully up-to-date) and
-`./dotfiles install` actually deploys the dotfiles to your `$HOME` directory.
+`./dotfiles install` actually deploys the dotfiles to your `~` directory.
 
 A short summary of changes and an interactive confirmation prompt are shown
 before any action is taken.
 
-### Testing in sandbox
+### Install alongside existing
 
-To try my dotfiles in a sandbox environment without affecting your existing
-setup, run the following commands:
+If you'd like to give my dotfiles a try, but don't want to replace your
+existing setup, you can override `$HOME` before running `./dotfiles install`:
 
 ```sh
-bash <(curl https://raw.githubusercontent.com/ebkalderon/dotfiles/master/bootstrap -sSf)
 cd ~/.dotfiles
-
-# Create sandbox $HOME directory & install dotfiles there
-mkdir .fake-home
-HOME=$(realpath -e .fake-home)
-./dotfiles install
-
-# See what `./dotfiles install` did to sandbox $HOME dir
-tree -a .fake-home
+mkdir .sandbox
+env HOME=~/.dotfiles/.sandbox ./dotfiles install
 ```
 
-This deploys the dotfiles into `~/.dotfiles/.fake-home/` instead of your actual
-`$HOME` directory, leaving your existing dotfiles completely unchanged. If you
-like my configuration, you may choose to deploy them (all or in part) into your
-real `$HOME` directory. Otherwise, the `.fake-home` directory can be safely
-discarded.
+This will deploy everything into the `~/.dotfiles/.sandbox/` directory instead
+of `~`, leaving your existing setup completely untouched. If you don't like my
+setup, the `~/.dotfiles` directory can be safely discarded.
 
-## Uninstallation
+## Uninstall
 
 To remove one or more specific dotfiles from your system:
 
