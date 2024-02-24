@@ -6,7 +6,7 @@ breakage may occur.
 
 ![Screenshot of terminal in active use](./screenshot.png)
 
-## Features
+## Overview
 
 This repository contains my [dotfiles](https://dotfiles.github.io/), along with
 a tiny package manager for managing and deploying them across both personal and
@@ -33,6 +33,28 @@ dotfiles install                # Installs _all_ dotfiles compatible with your O
 
 [GNU Stow]: https://www.gnu.org/software/stow/
 [pkgdocs]: ./PACKAGES.md
+
+## Highlights
+
+* **Supports Arch Linux, Linux Mint, and macOS**
+* Colorful `bash` prompt, displays the current [git]/[svn] repo branch
+* Fuzzy-find all the things with [fzf] + [ripgrep] (files, `bash` command history, `man` pages, and more)
+* Custom [Neovim] config with LSP and [telescope.nvim] for fuzzy-finding
+* [tmux] as terminal multiplexer and session manager ([my custom theme])
+* Music player with visualization: [mpd] and [ncmpcpp]
+* Beautiful [Monokai] color palette for everything :heart_eyes:
+
+[git]: https://git-scm.com/
+[svn]: https://subversion.apache.org/ 
+[fzf]: https://github.com/junegunn/fzf
+[ripgrep]: https://github.com/BurntSushi/ripgrep
+[Neovim]: https://neovim.io/
+[telescope.nvim]: https://github.com/nvim-telescope/telescope.nvim
+[tmux]: https://github.com/tmux/tmux
+[my custom theme]: https://github.com/ebkalderon/tmux-monokai-classic
+[mpd]: https://www.musicpd.org/
+[ncmpcpp]: https://github.com/ncmpcpp/ncmpcpp
+[Monokai]: https://monokai.nl/
 
 ## Install
 
@@ -84,9 +106,16 @@ dotfiles uninstall
 A short summary of changes and an interactive confirmation prompt are shown
 before any action is taken.
 
-## Compatibility
+## Key bindings
 
-Compatible with Arch Linux, Linux Mint, and macOS.
+### Command-line:
+
+Binding           | Description
+------------------|----------------------------------------------------------------------
+<kbd>Ctrl+R</kbd> | Fuzzy search command history with [fzf]/[ripgrep]
+<kbd>Ctrl+T</kbd> | Fuzzy search filesystem in the current directory with [fzf]/[ripgrep]
+
+TODO: List all the rest of the keybindings
 
 ## License
 
