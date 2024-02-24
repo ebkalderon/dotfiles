@@ -8,7 +8,7 @@ export BROWSER=firefox
 export EDITOR=nvim
 
 if command -v cargo > /dev/null; then
-    export PATH="$PATH:~/.cargo/bin"
+    export PATH="$PATH:$HOME/.cargo/bin"
 fi
 
 if command -v go > /dev/null; then
