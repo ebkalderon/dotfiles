@@ -43,26 +43,24 @@ function print_disclaimer() {
 
 function pre_setup_tasks() {
     case "$OSTYPE" in
-        darwin*) OS="macos" ;;
-        linux*)
-            source /etc/os-release
-            OS="$ID"
+        darwin*) OS='macos' ;;
+        linux*) source /etc/os-release && OS="$ID" ;;
+    esac
 
-            case "$OS" in
-                arch|linuxmint|ubuntu) ;;
-                *)
-                    >&2 echo "Error: Unsupported Linux distribution '$OS' [arch|linuxmint|ubuntu]"
-                    exit 1
-                    ;;
-            esac
+    case "$OSTYPE-${OS:-}" in
+        *-arch|*-linuxmint|*-ubuntu|*-macos)
+            printf "\n1) Detected supported OS: %s\n" "$OS"
+            return 0
+            ;;
+        linux-*)
+            >&2 echo "Error: Unsupported Linux distribution '$OS' [arch|linuxmint|ubuntu]"
             ;;
         *)
             >&2 echo "Error: Unsupported operating system: $OSTYPE [arch|linuxmint|macos|ubuntu]"
-            exit 1
             ;;
     esac
 
-    printf "\n1) Detected supported OS: %s\n" "$OS"
+    return 1
 }
 
 function install_packages() {
