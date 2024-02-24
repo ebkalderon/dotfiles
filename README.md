@@ -38,10 +38,11 @@ dotfiles install                # Installs _all_ dotfiles compatible with your O
 
 * **Supports Arch Linux, Linux Mint, and macOS**
 * Colorful `bash` prompt, displays the current [git]/[svn] repo branch
-* Fuzzy-find all the things with [fzf] + [ripgrep] (files, `bash` command history, `man` pages, and more)
+* Fuzzy-find all the things with [fzf] + [ripgrep] (files, `bash` history,
+  `man` pages, `git` branches, and more)
 * Custom [Neovim] config with LSP and [telescope.nvim] for fuzzy-finding
-* [tmux] as terminal multiplexer and session manager ([my custom theme])
-* Music player with visualization: [mpd] and [ncmpcpp]
+* [tmux] as terminal multiplexer and session manager ([with custom theme])
+* [mpd] and [ncmpcpp] for playing music in the terminal
 * Beautiful [Monokai] color palette for everything :heart_eyes:
 
 [git]: https://git-scm.com/
@@ -51,7 +52,7 @@ dotfiles install                # Installs _all_ dotfiles compatible with your O
 [Neovim]: https://neovim.io/
 [telescope.nvim]: https://github.com/nvim-telescope/telescope.nvim
 [tmux]: https://github.com/tmux/tmux
-[my custom theme]: https://github.com/ebkalderon/tmux-monokai-classic
+[with custom theme]: https://github.com/ebkalderon/tmux-monokai-classic
 [mpd]: https://www.musicpd.org/
 [ncmpcpp]: https://github.com/ncmpcpp/ncmpcpp
 [Monokai]: https://monokai.nl/
