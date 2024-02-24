@@ -293,7 +293,7 @@ function dotfiles_list() {
 
     if [[ "$*" =~ ^(-a|--all)$ ]]; then
         local display_mode='all'
-        local table_width=41
+        local table_width=42
         fmt_args=('' "${fmt_args[@]}")
     elif [[ -n "$*" ]]; then
         return 1
@@ -301,8 +301,8 @@ function dotfiles_list() {
 
     IFS=',' read -ra packages <<<"${PACKAGES[${display_mode:-all-installable}]}"
 
-    printf "${display_mode:+%-2s}%-21s%s\n" "${fmt_args[@]}"
-    printf "%${table_width:-39}s\n" ' ' | tr ' ' '='
+    printf "${display_mode:+%-2s}%-22s%s\n" "${fmt_args[@]}"
+    printf "%${table_width:-40}s\n" ' ' | tr ' ' '='
 
     for package_name in "${packages[@]}"; do
         local fmt_args=("$package_name" "${PACKAGES[$package_name,profiles]:-}")
@@ -311,7 +311,7 @@ function dotfiles_list() {
             package_is_compatible "$package_name" || not_compatible='✗ '
             fmt_args=("$not_compatible" "${fmt_args[@]}")
         fi
-        printf "${display_mode:+%-2s}%-21s%s\n" "${fmt_args[@]}"
+        printf "${display_mode:+%-2s}%-22s%s\n" "${fmt_args[@]}"
     done
 }
 
