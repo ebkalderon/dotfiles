@@ -13,13 +13,13 @@
 
 set -euo pipefail
 
-# If set to `true` on Arch Linux, script will install `pamac` instead of `yay`.
-readonly ARCH_LINUX_PREFER_PAMAC="${ARCH_LINUX_PREFER_PAMAC:-false}"
-# Location to `git clone` the dotfiles into.
+# If variable is set on Arch Linux, script will install `pamac` instead of `yay`.
+readonly ARCH_PREFER_PAMAC="${ARCH_PREFER_PAMAC:-}"
+# Script will `git clone` dotfiles into this directory, if missing.
 readonly CLONE_DIR="${CLONE_DIR:-$HOME/.dotfiles}"
 
 function print_disclaimer() {
-    [[ "${ARCH_LINUX_PREFER_PAMAC:-false}" = true ]] && local arch_aur_helper='pamac'
+    [[ -n "$ARCH_PREFER_PAMAC" ]] && local arch_aur_helper='pamac'
 
     printf 'This script will:\n\n'
     printf '1) Perform pre-setup tasks\n'
@@ -114,9 +114,9 @@ function install_packages() {
         NONINTERACTIVE=true /bin/bash <(curl https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh -sSf)
     }
 
-    case "$OS-${ARCH_LINUX_PREFER_PAMAC:-false}" in
-        arch-true) local pkg_mgr='pamac, ' ;;
-        arch*) local pkg_mgr='yay, ' ;;
+    case "$OS-$ARCH_PREFER_PAMAC" in
+        arch-) local pkg_mgr='yay, ' ;;
+        arch-*) local pkg_mgr='pamac, ' ;;
         macos*) local pkg_mgr='brew, bash, ' ;;
     esac
 
@@ -126,7 +126,7 @@ function install_packages() {
         arch)
             sudo pacman -Sy --noconfirm --needed curl git stow
 
-            if [[ "${ARCH_LINUX_PREFER_PAMAC:-false}" == true ]]; then
+            if [[ -n "$ARCH_PREFER_PAMAC" ]]; then
                 install_pamac
             else
                 install_yay
