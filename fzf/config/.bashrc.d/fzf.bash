@@ -47,9 +47,16 @@ _fzf_complete_git_post() {
 
 # Custom ** fuzzy search for man pages
 _fzf_complete_man() {
-    local pager='col -bx | bat -l man -p --color=always --theme="Monokai Extended"'
-    local preview_cmd="echo {} | cut -f 1 -d ' ' | xargs man | $pager"
-    _fzf_complete --multi --reverse --preview "$preview_cmd" -- "$@" < <(man -k . | sort)
+    if [[ "${COMP_WORDS[1]}" == '**' ]]; then
+        local pager='col -bx | bat -l man -p --color=always --theme="Monokai Extended"'
+        local preview_cmd="echo {} | cut -f 1 -d ' ' | xargs man | $pager"
+        _fzf_complete --multi --reverse --preview "$preview_cmd" -- "$@" < <(man -k . | sort)
+    else
+        _completion_loader man
+        _man
+        [[ "${#COMPREPLY[@]}" != 0 ]] && COMPREPLY[-1]="${COMPREPLY[-1]/%+([[:blank:]])/}"
+        complete -F _fzf_complete_man -o default -o bashdefault man
+    fi
 }
 
 _fzf_complete_man_post() {
