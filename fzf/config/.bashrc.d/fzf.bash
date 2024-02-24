@@ -25,6 +25,26 @@ fi
 _fzf_setup_completion dir tree
 _fzf_setup_completion path ll
 
+# Custom ** fuzzy search for "git checkout"
+_fzf_complete_git() {
+    if git rev-parse --git-dir &> /dev/null && [[ "${COMP_WORDS[*]:1:2}" = "checkout **" ]]; then
+        local branches
+        branches="$(printf '  FETCH_HEAD\n  HEAD\n  ORIG_HEAD\n'; git branch -vv --all)"
+        _fzf_complete --reverse -- "$@" < <(echo "$branches" | sed -E 's,^(\*| ) remotes/([^ ]+),\1 \2        ,')
+    else
+        _completion_loader git
+        __git_wrap__git_main
+        [[ "${#COMPREPLY[@]}" != 0 ]] && COMPREPLY[-1]="${COMPREPLY[-1]/%+([[:blank:]])/}"
+        complete -F _fzf_complete_git -o default -o bashdefault git
+    fi
+}
+
+_fzf_complete_git_post() {
+    cut -c 2- | awk '{print $1}'
+}
+
+[ -n "$BASH" ] && complete -F _fzf_complete_git -o default -o bashdefault git
+
 # Custom ** fuzzy search for man pages
 _fzf_complete_man() {
     local pager='col -bx | bat -l man -p --color=always --theme="Monokai Extended"'
