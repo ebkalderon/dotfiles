@@ -14,7 +14,9 @@
 set -euo pipefail
 
 # If set to `true` on Arch Linux, script will install `pamac` instead of `yay`.
-ARCH_LINUX_PREFER_PAMAC=false
+readonly ARCH_LINUX_PREFER_PAMAC="${ARCH_LINUX_PREFER_PAMAC:-false}"
+# Location to `git clone` the dotfiles into.
+readonly CLONE_DIR="${CLONE_DIR:-$HOME/.dotfiles}"
 
 function print_disclaimer() {
     [[ "${ARCH_LINUX_PREFER_PAMAC:-false}" = true ]] && local arch_aur_helper='pamac'
@@ -27,7 +29,7 @@ function print_disclaimer() {
     printf '   - On Arch Linux, this will update and install via pacman\n'
     printf '   - On Ubuntu/Debian/Linux Mint, this will update and install via apt\n'
     printf '   - On macOS, this will update and install via Homebrew\n'
-    printf "3) Clone 'ebkalderon/dotfiles' repo to ~/.dotfiles if not present (will skip otherwise)\n"
+    printf "3) Clone 'ebkalderon/dotfiles' repo to %s if not present (will skip otherwise)\n" "${CLONE_DIR/#$HOME/'~'}"
     printf '   - This script will NOT deploy the dotfiles to your home directory, in case you change your mind\n\n'
 
     read -p 'Would you like to continue? (y/N) ' -n 1 -r confirm
@@ -149,12 +151,12 @@ function install_packages() {
 }
 
 function clone_dotfiles() {
-    if [[ -d ~/.dotfiles ]]; then
-        printf '\n3) Found ~/.dotfiles directory; skipping git clone step...\n'
+    if [[ -d "$CLONE_DIR" ]]; then
+        printf '\n3) Found %s directory; skipping git clone step...\n' "${CLONE_DIR/#$HOME/'~'}"
     else
-        printf '\n3) Cloning ~/.dotfiles directory...\n'
-        git clone --recursive https://github.com/ebkalderon/dotfiles ~/.dotfiles
-        pushd ~/.dotfiles
+        printf '\n3) Cloning %s directory...\n' "${CLONE_DIR/#$HOME/'~'}"
+        git clone --recursive https://github.com/ebkalderon/dotfiles "$CLONE_DIR"
+        pushd "$CLONE_DIR"
         git submodule foreach git checkout master
     fi
 }
@@ -164,4 +166,4 @@ pre_setup_tasks
 install_packages
 clone_dotfiles
 
-printf '\nBootstrap successful! Install dotfiles with: cd ~/.dotfiles && ./dotfiles install\n'
+printf '\nBootstrap successful! Install dotfiles with: cd %s && ./dotfiles install\n' "${CLONE_DIR/#$HOME/'~'}"
