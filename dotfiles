@@ -5,7 +5,7 @@
 # Command-line utility for managing my dotfiles. This script is a thin wrapper
 # around GNU stow which natively supports platform-specific configs, multiple
 # profiles (e.g. personal vs. work), and scriptable transaction hooks, all in a
-# simple declarative format.
+# simple declarative format. See PACKAGES.md to learn how to make your own.
 
 set -euo pipefail
 
