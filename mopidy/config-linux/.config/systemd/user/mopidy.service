@@ -1,0 +1,12 @@
+[Unit]
+Description=Mopidy music server
+After=network-online.target
+Wants=network-online.target
+After=pipewire.service
+After=sound.target
+
+[Service]
+ExecStart=/usr/bin/mopidy --config ~/.config/mopidy
+
+[Install]
+WantedBy=default.target

@@ -42,7 +42,7 @@ dotfiles install                # Installs _all_ dotfiles compatible with your O
   `man` pages, `git` branches, and more)
 * Custom [Neovim] config with LSP and [telescope.nvim] for fuzzy-finding
 * [tmux] as terminal multiplexer and session manager ([with custom theme])
-* [mpd] and [ncmpcpp] for playing music in the terminal
+* [mpd]/[mopidy] and [ncmpcpp] for playing music in the terminal
 * Beautiful [Monokai] color palette for everything :heart_eyes:
 
 [git]: https://git-scm.com/
@@ -53,6 +53,7 @@ dotfiles install                # Installs _all_ dotfiles compatible with your O
 [telescope.nvim]: https://github.com/nvim-telescope/telescope.nvim
 [tmux]: https://github.com/tmux/tmux
 [with custom theme]: https://github.com/ebkalderon/tmux-monokai-classic
+[mopidy]: https://mopidy.com/
 [mpd]: https://www.musicpd.org/
 [ncmpcpp]: https://github.com/ncmpcpp/ncmpcpp
 [Monokai]: https://monokai.nl/
