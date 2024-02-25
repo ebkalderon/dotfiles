@@ -289,30 +289,28 @@ function dotfiles_uninstall() {
 }
 
 function dotfiles_list() {
-    local fmt_args=('Name:' 'Optional Profiles:')
-
     if [[ "$*" =~ ^(-a|--all)$ ]]; then
         local display_mode='all'
-        local table_width=42
-        fmt_args=('' "${fmt_args[@]}")
-    elif [[ -n "$*" ]]; then
+    elif [[ "$#" -ge 1 ]]; then
+        log 'ERROR' "unrecognized argument${2:+s}: $*"
         return 1
     fi
 
     IFS=',' read -ra packages <<<"${PACKAGES[${display_mode:-all-installable}]}"
 
-    printf "${display_mode:+%-2s}%-22s%s\n" "${fmt_args[@]}"
-    printf "%${table_width:-40}s\n" ' ' | tr ' ' '='
-
+    echo "Available packages${display_mode:+ (all)}:"
     for package_name in "${packages[@]}"; do
-        local fmt_args=("$package_name" "${PACKAGES[$package_name,profiles]:-}")
-        if [[ -n "${display_mode:-}" ]]; then
-            local not_compatible=''
-            package_is_compatible "$package_name" || not_compatible='✗ '
-            fmt_args=("$not_compatible" "${fmt_args[@]}")
-        fi
-        printf "${display_mode:+%-2s}%-22s%s\n" "${fmt_args[@]}"
+        local features not_compatible=' '
+        features="${PACKAGES[$package_name,profiles]:-}"
+        features="${features//,/, +}"
+        package_is_compatible "$package_name" || not_compatible='✗'
+        echo "$not_compatible $(tput bold)$package_name$(tput sgr0)${features:+ (+$features)}"
     done
+
+    printf "\nOpt-in profiles, if any, are listed in parentheses.\n"
+    if [[ -n "${display_mode:-}" ]]; then
+        echo "Packages marked ✗ cannot be installed on $OSTYPE."
+    fi
 }
 
 function dotfiles_help() {
