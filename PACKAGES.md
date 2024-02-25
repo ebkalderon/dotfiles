@@ -195,7 +195,7 @@ The grammar for _package specifier_ ("package spec") strings is as follows:
    * **Example:** `dotfiles install bash`
    * **Meaning:** "Install the `bash/config` Stow package to `$HOME`"
 2. Enable one or more profiles: `package+profile`, `package+profile1,profile2`
-   * **Example:** `dotfiles install bash+work,desktop`
+   * **Example:** `dotfiles install bash+work,laptop`
    * **Meaning:** "Install the `bash/config` + `bash/config-work` +
      `bash/config-laptop` Stow packages to `$HOME`"
 3. Enable all available profiles: `package+all`
