@@ -1,8 +1,10 @@
 gnupg/config-*/.gnupg/*
 !gnupg/config-*/.gnupg/gpg-agent.conf
 
-ncmpcpp/config/.config/ncmpcpp/*
-!ncmpcpp/config/.config/ncmpcpp/config
+ncmpcpp/config*/.config/ncmpcpp/*
+!ncmpcpp/config*/.config/ncmpcpp/config
+
+mopidy/config-*/.config/mopidy/jellyfin.conf
 
 mpd/config-*/.config/mpd/*
 !mpd/config-*/.config/mpd/mpd.conf
