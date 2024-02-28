@@ -116,7 +116,7 @@ function package_load_from() {
 
 function package_exists() {
     local package_name="$1"
-    [[ -n "${PACKAGES[$package_name]:-}" ]]
+    [[ -n "$package_name" && -n "${PACKAGES[$package_name]:-}" ]]
 }
 
 function package_normalize_spec() {
