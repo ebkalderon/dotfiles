@@ -317,6 +317,7 @@ function dotfiles_help() {
     echo 'dotfiles install [PACKAGE_SPEC]...'
     echo 'dotfiles uninstall [PACKAGE]...'
     echo 'dotfiles list [-a|--all]'
+    echo 'dotfiles [-h|--help]'
 }
 
 read_packages
