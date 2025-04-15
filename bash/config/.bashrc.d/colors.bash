@@ -50,7 +50,7 @@ fi
 
 # Colorized man pages (assumes colorized less)
 if command -v bat > /dev/null; then
-    export MANPAGER="sh -c 'col -bx | bat -l man --style=plain --paging=always --theme=\"Monokai Extended\"'"
+    export MANPAGER="sh -c 'sed -u -e \"s/\\x1B\[[0-9;]*m//g; s/.\\x08//g\" | bat -p -l man --paging=always'"
     export MANROFFOPT='-c'
 else
     # Applies LESS_TERMCAP_* to entire man page
