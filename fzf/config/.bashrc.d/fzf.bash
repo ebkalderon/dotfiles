@@ -6,7 +6,7 @@
 if [[ -d /usr/share/fzf ]]; then
     source /usr/share/fzf/key-bindings.bash
     source /usr/share/fzf/completion.bash
-elif [[ -d /usr/share/doc/fzf ]]; then
+elif [[ -d /usr/share/doc/fzf/examples ]]; then
     source /usr/share/doc/fzf/examples/key-bindings.bash
     source /usr/share/doc/fzf/examples/completion.bash
 elif command -v fzf-share > /dev/null; then
@@ -47,20 +47,12 @@ _fzf_complete_git_post() {
 
 # Custom ** fuzzy search for man pages
 _fzf_complete_man() {
-    if [[ "${COMP_WORDS[1]}" == '**' ]]; then
-        local pager='col -bx | bat -l man -p --color=always --theme="Monokai Extended"'
-        local preview_cmd="echo {} | cut -f 1 -d ' ' | xargs man | $pager"
-        _fzf_complete --multi --reverse --preview "$preview_cmd" -- "$@" < <(man -k . | sort)
-    else
-        _completion_loader man
-        _man
-        [[ "${#COMPREPLY[@]}" != 0 ]] && COMPREPLY[-1]="${COMPREPLY[-1]/%+([[:blank:]])/}"
-        complete -F _fzf_complete_man -o default -o bashdefault man
-    fi
+    local preview="echo {1,2} | sed 's/ (/./' | sed -E 's/\)\s*$//' | xargs man | bat -l man -pp -f"
+    _fzf_complete --multi --reverse --preview "$preview" -- "$@" < <(man -k . | sort)
 }
 
 _fzf_complete_man_post() {
-    cut -f 1 -d ' '
+    awk '{print $1 "." $2}' | tr -d '()'
 }
 
 [ -n "$BASH" ] && complete -F _fzf_complete_man -o default -o bashdefault man
