@@ -1,10 +1,8 @@
-require("ebk.config.options")
-require("ebk.config.lazy")
+-- Set to true if you have a Nerd Font installed and selected in the terminal
+vim.g.have_nerd_font = true
 
-vim.api.nvim_create_autocmd("User", {
-  pattern = "VeryLazy",
-  callback = function()
-    require("ebk.config.autocmds")
-    require("ebk.config.keymaps")
-  end,
-})
+require("ebk.options")
+require("ebk.keymaps")
+require("ebk.autocmds")
+require("ebk.lazy")
+require("ebk.lsp")
