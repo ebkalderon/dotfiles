@@ -6,6 +6,14 @@ return {
   filetypes = { "json", "jsonc" },
   root_markers = { ".git" },
   settings = {
-    provideFormatter = true,
+    json = {
+      format = { enable = true },
+      schemas = {
+        {
+          fileMatch = { "package.json" },
+          url = "https://json.schemastore.org/package.json"
+        },
+      },
+    },
   },
 }
