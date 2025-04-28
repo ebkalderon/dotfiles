@@ -31,6 +31,7 @@ vim.lsp.enable({
   "lua_ls",
   "marksman",
   "rust_analyzer",
+  "yamlls",
 })
 
 vim.api.nvim_create_autocmd("LspAttach", {
