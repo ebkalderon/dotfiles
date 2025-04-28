@@ -6,6 +6,9 @@
 if [[ -d /usr/share/fzf ]]; then
     source /usr/share/fzf/key-bindings.bash
     source /usr/share/fzf/completion.bash
+elif [[ -f /usr/share/bash-completion/completions/fzf ]]; then
+    source /usr/share/bash-completion/completions/fzf
+    source /usr/share/doc/fzf/examples/key-bindings.bash
 elif [[ -d /usr/share/doc/fzf/examples ]]; then
     source /usr/share/doc/fzf/examples/key-bindings.bash
     source /usr/share/doc/fzf/examples/completion.bash
