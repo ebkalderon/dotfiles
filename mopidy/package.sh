@@ -4,6 +4,7 @@ function config_prepare_linux() {
 
 function config_finish_linux() {
     echo 'To complete Mopidy setup:'
+    echo '  # Install `Mopidy-Jellyfin` PyPI package, if not present'
     echo '  nvim ~/.config/mopidy/jellyfin.conf # hostname, username, password'
     echo '  systemctl --user enable mopidy --now'
 }
@@ -14,6 +15,7 @@ function config_prepare_macos() {
 
 function config_finish_macos() {
     echo 'To complete Mopidy setup:'
+    echo '  # Install `Mopidy-Jellyfin` PyPI package, if not present'
     echo '  nvim ~/.config/mopidy/jellyfin.conf # hostname, username, password'
     echo '  brew services start mopidy/mopidy/mopidy'
 }
