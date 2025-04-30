@@ -7,6 +7,7 @@ local ensure_installed = {
   "codelldb",
   "dockerfile-language-server",
   "emmet-language-server",
+  "groovy-language-server",
   "html-lsp",
   "json-lsp",
   "lua-language-server",

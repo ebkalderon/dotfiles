@@ -26,6 +26,7 @@ vim.lsp.config("*", { capabilities = capabilities });
 vim.lsp.enable({
   "bashls",
   "emmet_language_server",
+  "groovyls",
   "html",
   "jsonls",
   "lua_ls",
