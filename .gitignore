@@ -1,4 +1,5 @@
 gnupg/config-*/.gnupg/*
+!gnupg/config-*/.gnupg/dirmngr.conf
 !gnupg/config-*/.gnupg/gpg-agent.conf
 
 ncmpcpp/config*/.config/ncmpcpp/*
