@@ -13,6 +13,7 @@ local ensure_installed = {
   "marksman",
   "pyright",
   "rust-analyzer",
+  "typescript-language-server",
   "yaml-language-server",
 }
 
