@@ -9,10 +9,11 @@ local ensure_installed = {
   "docker-language-server",
   "html-lsp",
   "json-lsp",
-  "lua-language-server",
+  { "lua-language-server", version = "3.16.4" }, -- https://github.com/folke/lazydev.nvim/issues/136
   "marksman",
   "pyright",
   "rust-analyzer",
+  "tree-sitter-cli",
   "typescript-language-server",
   "yaml-language-server",
 }
