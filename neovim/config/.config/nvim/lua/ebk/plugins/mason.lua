@@ -11,6 +11,7 @@ local ensure_installed = {
   "json-lsp",
   { "lua-language-server", version = "3.16.4" }, -- https://github.com/folke/lazydev.nvim/issues/136
   "marksman",
+  "prettierd",
   "pyright",
   "rust-analyzer",
   "tree-sitter-cli",
