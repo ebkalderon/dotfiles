@@ -5,6 +5,8 @@ return {
   {
     "kosayoda/nvim-lightbulb",
     event = "LspAttach",
+    ---@module "nvim-lightbulb.config"
+    ---@type nvim-lightbulb.Config
     opts = {
       sign = {
         enabled = true,

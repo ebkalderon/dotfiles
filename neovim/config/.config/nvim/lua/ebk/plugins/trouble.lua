@@ -4,6 +4,8 @@
 return {
   {
     "folke/trouble.nvim",
+    ---@module "trouble.config"
+    ---@type trouble.Config
     opts = {},
     cmd = "Trouble",
     keys = {

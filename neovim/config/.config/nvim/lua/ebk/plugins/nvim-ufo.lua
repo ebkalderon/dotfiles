@@ -6,6 +6,8 @@ return {
     "kevinhwang91/nvim-ufo",
     event = "BufReadPost",
     dependencies = { "kevinhwang91/promise-async", event = "BufReadPost" },
+    ---@module "ufo.config"
+    ---@type UfoConfig
     opts = {},
   },
 }

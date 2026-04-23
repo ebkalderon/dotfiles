@@ -8,6 +8,8 @@ return {
     dependencies = {
       { "nvim-tree/nvim-web-devicons", enabled = vim.g.have_nerd_font }
     },
+    ---@module "bufferline"
+    ---@type bufferline.UserConfig
     opts = {
       options = {
         diagnostics = "nvim_lsp",

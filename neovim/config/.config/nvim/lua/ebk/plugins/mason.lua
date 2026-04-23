@@ -1,6 +1,7 @@
 -- https://github.com/williamboman/mason.nvim
 -- https://github.com/WhoIsSethDaniel/mason-tool-installer.nvim
 
+---@type MasonToolEntry[]
 local ensure_installed = {
   "bash-language-server",
   "clangd",

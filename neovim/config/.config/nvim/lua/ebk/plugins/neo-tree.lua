@@ -60,6 +60,8 @@ return {
       "nvim-lua/plenary.nvim",
       { "nvim-tree/nvim-web-devicons", enabled = vim.g.have_nerd_font },
     },
+    ---@module "neo-tree"
+    ---@type neotree.Config
     opts = {
       sources = {
         "filesystem",

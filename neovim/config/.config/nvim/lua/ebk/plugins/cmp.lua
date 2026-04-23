@@ -33,6 +33,7 @@ return {
       local cmp = require("cmp")
       local luasnip = require("luasnip")
 
+      ---@type cmp.ConfigSchema
       return {
         snippet = {
           expand = function(args)

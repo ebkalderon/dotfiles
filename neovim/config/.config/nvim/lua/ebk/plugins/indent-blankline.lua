@@ -5,6 +5,8 @@ return {
   {
     "lukas-reineke/indent-blankline.nvim",
     event = { "BufReadPost", "BufWritePost", "BufNewFile" },
+    ---@module "indent_blankline"
+    ---@type ibl.config
     opts = {
       indent = { char = "▏" },
       scope = { enabled = false },
