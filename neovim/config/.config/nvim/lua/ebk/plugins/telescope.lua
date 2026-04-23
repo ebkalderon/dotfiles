@@ -5,9 +5,6 @@ return {
   {
     "nvim-telescope/telescope.nvim",
     event = "VimEnter",
-    -- FIXME: https://github.com/nvim-telescope/telescope.nvim/issues/3439
-    branch = "master", -- Fix for bug above is in `master`, switch away later
-    pin = true, -- Pin to tip of `master`, remove when next release occurs
     dependencies = {
       "nvim-lua/plenary.nvim",
       {
