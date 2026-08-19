@@ -25,6 +25,7 @@ vim.lsp.config("*", { capabilities = capabilities });
 
 vim.lsp.enable({
   "bashls",
+  "clangd",
   "cssls",
   "docker_language_server",
   "html",
