@@ -3,6 +3,8 @@
 #
 
 # Better than default `diff` command
-function diff() {
-    git diff --no-index "$@"
-}
+if command -v git > /dev/null; then
+    function diff() {
+        git diff --no-index "$@"
+    }
+fi

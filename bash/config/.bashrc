@@ -28,5 +28,5 @@ fi
 
 # Load all scripts in ~/.bashrc.d/
 for rc in ~/.bashrc.d/*; do
-  source "$rc"
+    source "$rc"
 done

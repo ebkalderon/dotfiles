@@ -32,7 +32,7 @@ fi
 # Colorized less output
 if command -v batpipe > /dev/null; then
     eval "$(batpipe)"
-else
+elif command -v tput > /dev/null; then
     export LESS_TERMCAP_mb=$(printf "\e[1;31m")
     export LESS_TERMCAP_md=$(printf "\e[1;31m")
     export LESS_TERMCAP_me=$(printf "\e[0m")
