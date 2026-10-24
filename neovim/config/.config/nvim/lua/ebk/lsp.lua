@@ -32,6 +32,8 @@ vim.lsp.enable({
   "jsonls",
   "lua_ls",
   "marksman",
+  "pyright",
+  "ruff",
   -- "rust_analyzer", -- Not needed while `rustaceanvim` is active.
   "ts_ls",
   "yamlls",

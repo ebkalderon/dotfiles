@@ -14,6 +14,7 @@ local ensure_installed = {
   "marksman",
   "prettierd",
   "pyright",
+  "ruff",
   "rust-analyzer",
   "shellcheck",
   "shfmt",
