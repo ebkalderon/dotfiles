@@ -15,7 +15,6 @@ local ensure_installed = {
   "prettierd",
   "pyright",
   "ruff",
-  "rust-analyzer",
   "shellcheck",
   "shfmt",
   "tree-sitter-cli",
