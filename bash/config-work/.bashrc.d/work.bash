@@ -21,3 +21,6 @@ if type -P rustup > /dev/null; then
   source <(rustup completions bash)
   source <(rustup completions bash cargo)
 fi
+
+# Added by sonarqube-cli installer
+export PATH="$HOME/.local/share/sonarqube-cli/bin:$PATH"
