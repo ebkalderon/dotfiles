@@ -11,6 +11,7 @@ if vim.g.have_nerd_font then
 end
 
 vim.diagnostic.config({
+  severity_sort = true,
   virtual_text = true,
   signs = signs or true,
 })
@@ -33,9 +34,9 @@ vim.lsp.enable({
 
 vim.api.nvim_create_autocmd("LspAttach", {
   group = vim.api.nvim_create_augroup("ebk_lsp_attach", { clear = true }),
-  callback = function(event)
+  callback = function(args)
     local map = function(keys, func, desc)
-      vim.keymap.set("n", keys, func, { buffer = event.buf, desc = "LSP: " .. desc })
+      vim.keymap.set("n", keys, func, { buffer = args.buf, desc = "LSP: " .. desc })
     end
 
     -- Jump to the definition of the word under your cursor.
@@ -84,17 +85,17 @@ vim.api.nvim_create_autocmd("LspAttach", {
     --    See `:help CursorHold` for information about when this is executed
     --
     -- When you move your cursor, the highlights will be cleared (the second autocommand).
-    local client = vim.lsp.get_client_by_id(event.data.client_id)
+    local client = vim.lsp.get_client_by_id(args.data.client_id)
     if client and client.server_capabilities.documentHighlightProvider then
       local highlight_augroup = vim.api.nvim_create_augroup("ebk_lsp_highlight", { clear = false })
       vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
-        buffer = event.buf,
+        buffer = args.buf,
         group = highlight_augroup,
         callback = vim.lsp.buf.document_highlight,
       })
 
       vim.api.nvim_create_autocmd({ "CursorMoved", "CursorMovedI" }, {
-        buffer = event.buf,
+        buffer = args.buf,
         group = highlight_augroup,
         callback = vim.lsp.buf.clear_references,
       })
@@ -114,7 +115,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
     -- This may be unwanted, since they displace some of your code
     if client and client.server_capabilities.inlayHintProvider and vim.lsp.inlay_hint then
       map("<leader>th", function()
-        vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({}))
+        vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
       end, "[T]oggle Inlay [H]ints")
     end
   end
