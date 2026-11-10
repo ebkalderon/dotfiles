@@ -15,6 +15,9 @@ return {
       require("monokai-pro").setup({
         devicons = vim.g.have_nerd_font,
         filter = "classic",
+        override = function(s)
+          return { DropBarIconKindFolder = { fg = s.breadcrumb.foreground } }
+        end,
       })
       vim.cmd.colorscheme("monokai-pro-classic")
     end,
