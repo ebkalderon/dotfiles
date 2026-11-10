@@ -12,7 +12,10 @@ return {
     lazy = false,
     priority = 1000,
     config = function()
-      require("monokai-pro").setup({ filter = "classic" })
+      require("monokai-pro").setup({
+        devicons = vim.g.have_nerd_font,
+        filter = "classic",
+      })
       vim.cmd.colorscheme("monokai-pro-classic")
     end,
   },
