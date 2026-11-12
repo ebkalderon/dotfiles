@@ -16,7 +16,10 @@ return {
         devicons = vim.g.have_nerd_font,
         filter = "classic",
         override = function(s)
-          return { DropBarIconKindFolder = { fg = s.breadcrumb.foreground } }
+          return {
+            DropBarIconKindFolder = { fg = s.breadcrumb.foreground },
+            ["@markup.raw.block.markdown"] = { bg = "NONE" },
+          }
         end,
       })
       vim.cmd.colorscheme("monokai-pro-classic")
